@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name" translatable="false">File Manager</string>
+    <string name="email_support" translatable="false">hoo309@gmail.com</string>
+    <string name="email_subject_format" translatable="false" formatted="true">[%s Android] - SUPPORT &#38; FEEDBACK</string>
+
+    <string name="str_settings_privacy_admob" translatable="false">AdMob privacy settings</string>
+
+
+    <string name="large_files">Large Files</string>
+    <string name="todo">TODO</string>
+    <string name="apps">Apps</string>
+    <string name="search_file">Search File</string>
+    <string name="no_apps">No Apps</string>
+    <string name="document">Document</string>
+    <string name="no_document">No Document</string>
+    <string name="_1_selected">1 Selected</string>
+    <string name="copy">Copy</string>
+    <string name="move">Move</string>
+    <string name="favourite">Favourite</string>
+    <string name="delete">Delete</string>
+    <string name="details">Details</string>
+    <string name="audio_file_mp3">Audio File.mp3</string>
+    <string name="_74_5mb">74.5MB</string>
+    <string name="_16_08_2012">16/08/2012</string>
+    <string name="_9_25_am">9.25 am</string>
+    <string name="external_storage">External Storage</string>
+    <string name="no_image_folder">No Image Folder</string>
+    <string name="more">More</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="no_songs">No Songs</string>
+    <string name="no_songs_folder">No Songs Folder</string>
+    <string name="_0_selected">0 Selected</string>
+    <string name="file_manager">File Manager</string>
+    <string name="simplify_your_filing_system">Simplify your filing system</string>
+    <string name="keep_your_files_more_managable_and_organized_easily">Keep your files more manageable and organized easily</string>
+    <string name="let_s_go">Let\'s Go</string>
+    <string name="no_video_folder">No Video Folder</string>
+    <string name="download">Download</string>
+    <string name="no_downloads">No Downloads</string>
+    <string name="no_favourite_files">No Favourite Files</string>
+    <string name="no_large_files">No Large Files</string>
+    <string name="storage_space">Storage Space</string>
+    <string name="image">Image</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="zips">Zips</string>
+    <string name="others">Others</string>
+    <string name="no_videos">No Videos</string>
+    <string name="no_zips">No Zips</string>
+    <string name="select_folder">Select Folder</string>
+    <string name="internal_storage">Internal Storage</string>
+    <string name="sd_card">SD Card</string>
+    <string name="no_images">No Images</string>
+    <string name="ok">ok</string>
+    <string name="folder">Folder</string>
+    <string name="create_folder">Create Folder</string>
+    <string name="move_file_to_recycler_bin">Move file to Recycler Bin ?</string>
+    <string name="delete_image_permanently">Delete Image Permanently…</string>
+    <string name="file">File</string>
+    <string name="location_">Location :</string>
+    <string name="date_">Date :</string>
+    <string name="size_">Size :</string>
+    <string name="recent">Recent</string>
+
+    <string name="security_error">File could not be opened using this app</string>
+    <string name="not_allowed">Not Allowed</string>
+
+
+    <string name="open">Open</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="play">Play store</string>
+    <string name="properties">Properties</string>
+    <string name="share">Share</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="no_app_found">No App found to open this file</string>
+
+    <string name="system_apps">System apps</string>
+    <string name="folders">Folders</string>
+    <string name="user_apps">User apps</string>
+    <string name="files">Files</string>
+    <string name="settings">Settings</string>
+
+
+    <string name="rate_us">Rate us</string>
+    <string name="feedback">Feedback</string>
+    <string name="format_version">Version: %1$s</string>
+
+</resources>

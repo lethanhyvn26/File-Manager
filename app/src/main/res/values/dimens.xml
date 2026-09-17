@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_18sp">18sp</dimen>
+    <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="dimen_15dp">15dp</dimen>
+
+
+    <dimen name="minimal_material_padding">16dp</dimen>
+    <dimen name="minimal_row_size">72dp</dimen>
+    <dimen name="minimal_icon_parent_width">56dp</dimen>
+    <dimen name="minimal_icon_size">40dp</dimen>
+    <dimen name="tick_icon_size">20dp</dimen>
+    <dimen name="check_icon_margin_bottom_right">10dp</dimen>
+    <dimen name="check_icon_padding">4dp</dimen>
+    <dimen name="list_header_height">48dp</dimen>
+    <dimen name="icon_width">72dp</dimen>
+    <dimen name="list_header_textsize">16sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_height">56dp</dimen>
+
+
+    <!--Dimen-->
+
+    <dimen name="dimen1dp">1dp</dimen>
+    <dimen name="dimen5dp">5dp</dimen>
+    <dimen name="dimen8dp">8dp</dimen>
+    <dimen name="dimen10dp">10dp</dimen>
+    <dimen name="dimen25dp">25dp</dimen>
+    <dimen name="dimen50dp">50dp</dimen>
+
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+
+
+    <dimen name="space_start_end">15dp</dimen>
+
+</resources>
