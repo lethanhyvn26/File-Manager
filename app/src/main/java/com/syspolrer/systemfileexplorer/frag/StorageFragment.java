@@ -5,7 +5,6 @@ import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowA
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -142,9 +141,7 @@ public class StorageFragment extends Fragment implements FileSelectedListener, A
     }
 
     ArrayList<File> shortFile(ArrayList<File> files) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            files.sort(Comparator.comparing(File::getName));
-        }
+        files.sort(Comparator.comparing(File::getName));
         return files;
     }
 

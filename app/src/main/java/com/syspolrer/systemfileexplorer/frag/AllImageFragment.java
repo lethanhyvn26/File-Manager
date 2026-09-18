@@ -108,7 +108,7 @@ public class AllImageFragment extends Fragment implements ActionModeListener {
                         imagesModels.add(new ImagesModel(imagesModel1.file, imagesModel1.date, null));
                     }
                 }
-                if (date.get(i).equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date().getTime()))) {
+                if (date.get(i).equals(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date().getTime()))) {
                     imagesShortModels.add(new ImagesShortModel(imagesModels, "Today"));
                 } else if (date.get(i).equals(getYesterday())) {
                     imagesShortModels.add(new ImagesShortModel(imagesModels, "Yesterday"));
@@ -128,7 +128,7 @@ public class AllImageFragment extends Fragment implements ActionModeListener {
     String getYesterday() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -1);
-        return new SimpleDateFormat("dd/MM/yyyy").format(calendar.getTime());
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.getTime());
     }
 
     ArrayList<ImagesModel> img(File file) {

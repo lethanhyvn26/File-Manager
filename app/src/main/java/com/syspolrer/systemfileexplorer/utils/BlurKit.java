@@ -28,13 +28,10 @@ public class BlurKit {
     public Bitmap blur(Bitmap src, int radius) {
         final Allocation input = Allocation.createFromBitmap(rs, src);
         final Allocation output = Allocation.createTyped(rs, input.getType());
-        final ScriptIntrinsicBlur script;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-            script.setRadius(radius);
-            script.setInput(input);
-            script.forEach(output);
-        }
+        final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+        script.setRadius(radius);
+        script.setInput(input);
+        script.forEach(output);
         output.copyTo(src);
         return src;
     }

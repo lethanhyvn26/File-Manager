@@ -2,9 +2,7 @@ package com.syspolrer.systemfileexplorer.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -22,11 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -77,14 +71,12 @@ public class Utils {
 
 
     public static void setStatusBarColor(int color, Activity activity, boolean isDark) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS|WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            if (!isDark) window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE);
-            else window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            window.setStatusBarColor(ContextCompat.getColor(activity, color));
-        }
+        Window window = activity.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS|WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (!isDark) window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE);
+        else window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        window.setStatusBarColor(ContextCompat.getColor(activity, color));
     }
 
     /**
@@ -157,38 +149,25 @@ public class Utils {
     }
 
     public static String[] getStorageDirectories(Context context) {
-        String[] storageDirectories;
         String rawSecondaryStoragesStr = System.getenv("SECONDARY_STORAGE");
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            List<String> results = new ArrayList<String>();
-            File[] externalDirs = context.getExternalFilesDirs(null);
-            for (File file : externalDirs) {
-                String path = null;
-                try {
-                    path = file.getPath().split("/Android")[0];
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    path = null;
-                }
-                if (path != null) {
-                    if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Environment.isExternalStorageRemovable(file))
-                            || rawSecondaryStoragesStr != null && rawSecondaryStoragesStr.contains(path)) {
-                        results.add(path);
-                    }
+        List<String> results = new ArrayList<String>();
+        File[] externalDirs = context.getExternalFilesDirs(null);
+        for (File file : externalDirs) {
+            String path = null;
+            try {
+                path = file.getPath().split("/Android")[0];
+            } catch (Exception e) {
+                e.printStackTrace();
+                path = null;
+            }
+            if (path != null) {
+                if (Environment.isExternalStorageRemovable(file)
+                        || rawSecondaryStoragesStr != null && rawSecondaryStoragesStr.contains(path)) {
+                    results.add(path);
                 }
             }
-            storageDirectories = results.toArray(new String[0]);
-        } else {
-            final Set<String> rv = new HashSet<String>();
-
-            if (!TextUtils.isEmpty(rawSecondaryStoragesStr)) {
-                final String[] rawSecondaryStorages = rawSecondaryStoragesStr.split(File.pathSeparator);
-                Collections.addAll(rv, rawSecondaryStorages);
-            }
-            storageDirectories = rv.toArray(new String[rv.size()]);
         }
-        return storageDirectories;
+        return results.toArray(new String[0]);
     }
 
     public static void aud(Context context) {

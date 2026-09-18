@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -117,7 +119,7 @@ public class ImageSelectFragment extends Fragment implements View.OnClickListene
             dialogFileInfoBinding.location.setVisibility(View.GONE);
             dialogFileInfoBinding.tvLocation.setVisibility(View.GONE);
             dialogFileInfoBinding.date.setText("Contains :");
-            dialogFileInfoBinding.tvDate.setText(String.format("%d Files",selectedList.size()));
+            dialogFileInfoBinding.tvDate.setText(String.format(Locale.getDefault(), "%d Files",selectedList.size()));
             dialogFileInfoBinding.size.setVisibility(View.GONE);
             dialogFileInfoBinding.tvSize.setVisibility(View.GONE);
         }else {

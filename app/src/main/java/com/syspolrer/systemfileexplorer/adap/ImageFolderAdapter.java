@@ -97,7 +97,7 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
                 fileSelectedListener.onBind(binding.icSelect, mediaModel.file);
             }
             binding.tvFolder.setText(mediaModel.file.getName());
-            binding.tvCounter.setText(String.format("%d photos", mediaModel.count));
+            binding.tvCounter.setText(String.format(Locale.getDefault(), "%d photos", mediaModel.count));
 
             binding.icSelect.setOnClickListener(v -> fileSelectedListener.onIvMediaSelectClick(fileList, getAdapterPosition(), binding.icSelect));
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.icSelect, mediaModel.file));

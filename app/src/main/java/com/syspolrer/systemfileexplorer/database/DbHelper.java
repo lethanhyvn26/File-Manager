@@ -53,15 +53,19 @@ public class DbHelper extends SQLiteOpenHelper {
         ArrayList<File> favFileList = new ArrayList<>();
 
         Cursor cursor = mInstance.getReadableDatabase().rawQuery("SELECT * FROM " + Utils.TABLE_FAV, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            do {
-                File file = new File(cursor.getString(0));
-                if (file.exists()) {
-                    favFileList.add(0,file);
-                }
-            } while (cursor.moveToNext());
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    File file = new File(cursor.getString(0));
+                    if (file.exists()) {
+                        favFileList.add(0, file);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         return favFileList;

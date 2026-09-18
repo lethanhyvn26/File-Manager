@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.activity;
 
+import java.util.Locale;
+
 
 import android.Manifest;
 import android.content.Intent;
@@ -102,7 +104,7 @@ public class SplashActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
             intent.addCategory("android.intent.category.DEFAULT");
-            intent.setData(Uri.parse(String.format("package:%s", getApplicationContext().getPackageName())));
+            intent.setData(Uri.parse(String.format(Locale.getDefault(), "package:%s", getApplicationContext().getPackageName())));
             activityResultLauncher.launch(intent);
         } catch (Exception e) {
             Intent intent = new Intent();

@@ -1,5 +1,9 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import androidx.core.content.ContextCompat;
+
+import java.util.Locale;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -107,14 +111,14 @@ public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.Nest
     public void imgSelect(ImagesModel imagesModel, ImageView imageView, int i, int j) {
         if (to == 9) {
             if (ImageSelectFragment.isActionModeOn) {
-                if (imageView.getDrawable().getConstantState().equals(activity.getResources().getDrawable(R.drawable.ic_selected).getConstantState())) {
+                if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(activity, R.drawable.ic_selected).getConstantState())) {
                     ImageSelectFragment.selectedList.remove(imagesModel.file);
                     imageView.setImageResource(R.drawable.no_select);
                 } else {
                     ImageSelectFragment.selectedList.add(imagesModel.file);
                     imageView.setImageResource(R.drawable.ic_selected);
                 }
-                ImageSelectFragment.tvCounter.setText(String.format("%d Selected", ImageSelectFragment.selectedList.size()));
+                ImageSelectFragment.tvCounter.setText(String.format(Locale.getDefault(), "%d Selected", ImageSelectFragment.selectedList.size()));
             }
         } else {
 

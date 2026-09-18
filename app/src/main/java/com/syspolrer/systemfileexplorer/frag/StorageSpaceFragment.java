@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -237,7 +239,7 @@ public class StorageSpaceFragment extends Fragment {
         double docPre = ((double) Utils.EXT_DOCUMENT_SIZE * 100 / (double) Utils.TOTAL_EXTERNAL_SIZE);
         double otherPre = ((double) others * 100 / (double) Utils.TOTAL_EXTERNAL_SIZE);
 
-        binding.textView4.setText(String.format("Used %s / %s", Formatter.formatFileSize(requireActivity(), Utils.TOTAL_AVAILABLE_EXTERNAL_SIZE), Formatter.formatFileSize(requireActivity(), Utils.TOTAL_EXTERNAL_SIZE)));
+        binding.textView4.setText(String.format(Locale.getDefault(), "Used %s / %s", Formatter.formatFileSize(requireActivity(), Utils.TOTAL_AVAILABLE_EXTERNAL_SIZE), Formatter.formatFileSize(requireActivity(), Utils.TOTAL_EXTERNAL_SIZE)));
         Log.d("STORAGEFRAG", String.valueOf(width));
 
 
@@ -296,7 +298,7 @@ public class StorageSpaceFragment extends Fragment {
         double sdDocPre = ((double) Utils.SD_DOCUMENT_SIZE * 100 / (double) Utils.TOTAL_SD_CARD_SIZE);
         double sdOtherPre = ((double) sdOthers * 100 / (double) Utils.TOTAL_SD_CARD_SIZE);
 
-        binding.textView4.setText(String.format("Used %s / %s", Formatter.formatFileSize(requireActivity(), Utils.TOTAL_AVAILABLE_SD_CARD_SIZE), Formatter.formatFileSize(requireActivity(), Utils.TOTAL_SD_CARD_SIZE)));
+        binding.textView4.setText(String.format(Locale.getDefault(), "Used %s / %s", Formatter.formatFileSize(requireActivity(), Utils.TOTAL_AVAILABLE_SD_CARD_SIZE), Formatter.formatFileSize(requireActivity(), Utils.TOTAL_SD_CARD_SIZE)));
 
         ViewGroup.LayoutParams params = binding.prImage.getLayoutParams();
         params.width = (int) (width * sdImgPre) / 100;

@@ -1,6 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -182,9 +181,7 @@ public class SelectStorageFileFragment extends Fragment implements FileSelectedL
     }
 
     ArrayList<File> shortFile(ArrayList<File> files) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            files.sort(Comparator.comparing(File::getName));
-        }
+        files.sort(Comparator.comparing(File::getName));
         return files;
     }
 

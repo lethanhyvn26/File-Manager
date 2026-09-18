@@ -2,7 +2,6 @@ package com.syspolrer.systemfileexplorer.frag;
 
 import java.util.Locale;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -85,9 +84,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.onFileClic
     }
 
     ArrayList<File> shortFile(ArrayList<File> files) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            files.sort(Comparator.comparing(File::lastModified));
-        }
+        files.sort(Comparator.comparing(File::lastModified));
         return files;
     }
 

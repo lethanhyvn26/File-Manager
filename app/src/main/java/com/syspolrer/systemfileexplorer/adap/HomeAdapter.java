@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -151,8 +153,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 Log.d("MAINADAPER", "+++++++++: " + (width * freePre) / 100);
 
-                binding.textView5.setText(String.format("%s / %s", Formatter.formatFileSize(mainActivity, Utils.TOTAL_AVAILABLE_EXTERNAL_SIZE), Formatter.formatFileSize(mainActivity, Utils.TOTAL_EXTERNAL_SIZE)));
-                binding.tvPr.setText(String.format("%d%%", 100 - (int) (((float) Utils.TOTAL_AVAILABLE_EXTERNAL_SIZE / (float) Utils.TOTAL_EXTERNAL_SIZE) * 100)));
+                binding.textView5.setText(String.format(Locale.getDefault(), "%s / %s", Formatter.formatFileSize(mainActivity, Utils.TOTAL_AVAILABLE_EXTERNAL_SIZE), Formatter.formatFileSize(mainActivity, Utils.TOTAL_EXTERNAL_SIZE)));
+                binding.tvPr.setText(String.format(Locale.getDefault(), "%d%%", 100 - (int) (((float) Utils.TOTAL_AVAILABLE_EXTERNAL_SIZE / (float) Utils.TOTAL_EXTERNAL_SIZE) * 100)));
 
                 ViewGroup.LayoutParams params = binding.prImage.getLayoutParams();
                 params.width = (int) (width * imgPre) / 100;
@@ -230,8 +232,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 double sdDocPre = ((double) sdDoc * 100 / (double) sdTotal);
                 double sdOtherPre = ((double) sdOthers * 100 / (double) sdTotal);
 
-                binding.tvSd.setText(String.format("%s / %s", Formatter.formatFileSize(mainActivity, Utils.TOTAL_AVAILABLE_SD_CARD_SIZE), Formatter.formatFileSize(mainActivity, Utils.TOTAL_SD_CARD_SIZE)));
-                binding.sdPr.setText(String.format("%d%%", 100 - (int) (((float) Utils.TOTAL_AVAILABLE_SD_CARD_SIZE / (float) Utils.TOTAL_SD_CARD_SIZE) * 100)));
+                binding.tvSd.setText(String.format(Locale.getDefault(), "%s / %s", Formatter.formatFileSize(mainActivity, Utils.TOTAL_AVAILABLE_SD_CARD_SIZE), Formatter.formatFileSize(mainActivity, Utils.TOTAL_SD_CARD_SIZE)));
+                binding.sdPr.setText(String.format(Locale.getDefault(), "%d%%", 100 - (int) (((float) Utils.TOTAL_AVAILABLE_SD_CARD_SIZE / (float) Utils.TOTAL_SD_CARD_SIZE) * 100)));
 
 
                 ViewGroup.LayoutParams sdImageParam = binding.prSdImage.getLayoutParams();

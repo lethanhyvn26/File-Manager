@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.utils;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,10 +82,8 @@ public class ShareTask extends AsyncTask<String, String, Void> {
         targetShareIntents.add(intent);
         labels.add(contextc.getString(R.string.bluetooth));
         drawables.add(
-            contextc
-                .getResources()
-                .getDrawable(
-                        R.drawable.ic_settings_bluetooth_black_24dp));
+            ContextCompat.getDrawable(
+                contextc, R.drawable.ic_settings_bluetooth_black_24dp));
       }
     }
     return null;

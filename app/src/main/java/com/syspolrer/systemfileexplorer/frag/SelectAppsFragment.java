@@ -1,6 +1,8 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import static java.lang.String.format;
+import androidx.core.content.ContextCompat;
+
+import java.util.Locale;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -144,14 +146,14 @@ public class SelectAppsFragment extends Fragment implements FileSelectedListener
 
     @Override
     public void onIvSelectClick(ArrayList<File> files, int position, ImageView imageView) {
-        if (imageView.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.ic_selected).getConstantState())) {
+        if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(requireContext(), R.drawable.ic_selected).getConstantState())) {
             selectedList.remove(files.get(position));
             imageView.setImageResource(R.drawable.no_select);
         } else {
             selectedList.add(files.get(position));
             imageView.setImageResource(R.drawable.ic_selected);
         }
-        binding.tvCounter.setText(format("%d Selected", selectedList.size()));
+        binding.tvCounter.setText(String.format(Locale.getDefault(), "%d Selected", selectedList.size()));
     }
 
     @Override
@@ -221,7 +223,7 @@ public class SelectAppsFragment extends Fragment implements FileSelectedListener
             dialogFileInfoBinding.location.setVisibility(View.GONE);
             dialogFileInfoBinding.tvLocation.setVisibility(View.GONE);
             dialogFileInfoBinding.date.setText("Contains :");
-            dialogFileInfoBinding.tvDate.setText(format("%d Files", selectedList.size()));
+            dialogFileInfoBinding.tvDate.setText(String.format(Locale.getDefault(), "%d Files", selectedList.size()));
             dialogFileInfoBinding.size.setVisibility(View.GONE);
             dialogFileInfoBinding.tvSize.setVisibility(View.GONE);
         } else {

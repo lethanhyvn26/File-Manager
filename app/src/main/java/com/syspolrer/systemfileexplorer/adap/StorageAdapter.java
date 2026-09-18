@@ -137,7 +137,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
             binding.tvFileName.setText(file.getName());
             binding.tvDate.setText(DateFormat.format("dd/MM/yy", file.lastModified()));
-            binding.tvSongCount.setText(String.format("%d Item", getCount(file)));
+            binding.tvSongCount.setText(String.format(Locale.getDefault(), "%d Item", getCount(file)));
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.imageView4, file));
             binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getAdapterPosition(), binding.ivSelect));
