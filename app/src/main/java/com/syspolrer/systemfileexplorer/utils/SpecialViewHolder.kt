@@ -20,7 +20,6 @@
 
 package com.syspolrer.systemfileexplorer.utils
 
-import android.content.Context
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +27,6 @@ import com.syspolrer.systemfileexplorer.R
 
 
 class SpecialViewHolder(
-    c: Context,
     view: View,
     val type: Int,
 ) : RecyclerView.ViewHolder(view) {

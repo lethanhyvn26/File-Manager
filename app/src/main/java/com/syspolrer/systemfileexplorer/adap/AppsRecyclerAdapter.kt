@@ -93,7 +93,6 @@ class AppsRecyclerAdapter(
             TYPE_HEADER_SYSTEM, TYPE_HEADER_THIRD_PARTY -> {
                 view = mInflater.inflate(R.layout.list_header, parent, false)
                 return SpecialViewHolder(
-                    fragment.requireContext(),
                     view,
                     if (viewType == TYPE_HEADER_SYSTEM) {
                         SpecialViewHolder.HEADER_SYSTEM_APP
@@ -248,7 +247,6 @@ class AppsRecyclerAdapter(
 //            }
             val popupMenu = PopupMenu(view!!.context, view)
             popupMenu.setOnMenuItemClickListener { item: MenuItem ->
-                val themedActivity: MainActivity = fragment.requireActivity() as MainActivity
                 val colorAccent = R.color.primary
                 when (item.itemId) {
                     R.id.open -> {
@@ -510,8 +508,9 @@ class AppsRecyclerAdapter(
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             appDataParcelableList.clear()
-            if (results?.values is List<*>) {
-                appDataParcelableList.addAll(results.values as List<AppDataParcelable>)
+            val values = results?.values
+            if (values is List<*>) {
+                appDataParcelableList.addAll(values.filterIsInstance<AppDataParcelable>())
             }
             appDataListItem = mutableListOf() // Recreate the app data list with headers and items
             notifyDataSetChanged()
