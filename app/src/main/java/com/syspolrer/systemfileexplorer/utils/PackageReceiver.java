@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import androidx.core.content.ContextCompat;
+
 /**
  *
  * <p>A broadcast receiver that watches over app installation and removal and notifies {@link
@@ -23,12 +25,14 @@ public class PackageReceiver extends BroadcastReceiver {
     filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
     filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
     filter.addDataScheme("package");
-    listLoader.getContext().registerReceiver(this, filter);
+    ContextCompat.registerReceiver(
+        listLoader.getContext(), this, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
 
     // Register for events related to SD card installation
     IntentFilter sdcardFilter = new IntentFilter(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
     sdcardFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE);
-    listLoader.getContext().registerReceiver(this, sdcardFilter);
+    ContextCompat.registerReceiver(
+        listLoader.getContext(), this, sdcardFilter, ContextCompat.RECEIVER_NOT_EXPORTED);
   }
 
   @Override
