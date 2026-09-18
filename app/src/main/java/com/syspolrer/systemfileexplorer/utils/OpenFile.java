@@ -15,15 +15,15 @@ public class OpenFile {
     public static OpenFile openFile = null;
     private final Context context;
 
-    public static OpenFile init(Context context){
-        if (openFile == null){
-            openFile = new OpenFile(context);
-        }
-        return openFile;
+    public OpenFile(Context context) {
+        this.context = context.getApplicationContext();
     }
 
-    public OpenFile(Context context) {
-        this.context = context;
+    public static OpenFile init(Context context){
+        if (openFile == null){
+            openFile = new OpenFile(context.getApplicationContext());
+        }
+        return openFile;
     }
 
     public static void open(File file){
@@ -57,7 +57,7 @@ public class OpenFile {
             } else {
                 intent.setDataAndType(uri, "*/*");
             }
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
             openFile.context.startActivity(intent);
         }catch (ActivityNotFoundException e){
             Toast.makeText(openFile.context, "No App Found", Toast.LENGTH_SHORT).show();

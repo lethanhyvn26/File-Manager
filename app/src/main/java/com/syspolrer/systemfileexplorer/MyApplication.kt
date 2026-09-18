@@ -16,13 +16,14 @@ import com.google.android.gms.ads.appopen.AppOpenAd
 import com.syspolrer.systemfileexplorer.activity.SplashActivity
 import com.syspolrer.systemfileexplorer.ads.AdmobHelp
 import com.syspolrer.systemfileexplorer.utils.isInternetAvailable
+import java.lang.ref.WeakReference
 import java.util.Date
 
 class MyApplication : Application(), Application.ActivityLifecycleCallbacks, DefaultLifecycleObserver {
 
 
     private lateinit var appOpenAdManager: AppOpenAdManager
-    private var currentActivity: Activity? = null
+    private var currentActivity: WeakReference<Activity>? = null
 
     companion object {
         fun getInstance(): MyApplication {
@@ -59,7 +60,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
 
     /** Shows the app open ad when the app moves to foreground. */
     override fun onStart(owner: LifecycleOwner) {
-        currentActivity?.let {
+        currentActivity?.get()?.let {
             appOpenAdManager.showAdIfAvailable(it)
         }
     }
@@ -74,7 +75,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
         // currentActivity only when an ad is not showing will ensure it is not an ad activity, but the
         // one that shows the ad.
         if (!appOpenAdManager.isShowingAd) {
-            currentActivity = activity
+            currentActivity = WeakReference(activity)
         }
     }
 

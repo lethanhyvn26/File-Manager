@@ -24,6 +24,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.content.pm.SigningInfo;
+import android.os.Build;
 import android.text.format.Formatter;
 import android.util.Log;
 
@@ -46,11 +49,8 @@ public class AppListLoader extends AsyncTaskLoader<List<AppDataParcelable>> {
     private final int sortBy;
     private final boolean isAscending;
 
-    private Context mContext;
-
     public AppListLoader(Context context, int sortBy, boolean isAscending) {
-        super(context);
-        mContext = context;
+        super(context.getApplicationContext());
         this.sortBy = sortBy;
         this.isAscending = isAscending;
 
@@ -61,66 +61,13 @@ public class AppListLoader extends AsyncTaskLoader<List<AppDataParcelable>> {
         packageManager = getContext().getPackageManager();
     }
 
-    @Override
-    public List<AppDataParcelable> loadInBackground() {
-        List<ApplicationInfo> apps =
-                packageManager.getInstalledApplications(
-                        PackageManager.MATCH_UNINSTALLED_PACKAGES
-                                | PackageManager.MATCH_DISABLED_UNTIL_USED_COMPONENTS);
-
-        if (apps == null) return Collections.emptyList();
-        mApps = new ArrayList<>(apps.size());
-        PackageInfo androidInfo = null;
-        try {
-            androidInfo = packageManager.getPackageInfo("android", PackageManager.GET_SIGNATURES);
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("failed to find android package name while loading apps list", e.getMessage());
+    @SuppressWarnings("deprecation")
+    private static PackageInfo getPackageInfoWithSigners(PackageManager packageManager, String packageName)
+            throws PackageManager.NameNotFoundException {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES);
         }
-
-        for (ApplicationInfo object : apps) {
-            if (object.sourceDir == null) {
-                continue;
-            }
-            File sourceDir = new File(object.sourceDir);
-
-            String label = object.loadLabel(packageManager).toString();
-            PackageInfo info;
-
-            try {
-                info = packageManager.getPackageInfo(object.packageName, PackageManager.GET_SIGNATURES);
-            } catch (PackageManager.NameNotFoundException e) {
-                Log.e("failed to find package name {} while loading apps list", object.packageName, e);
-                info = null;
-            }
-            boolean isSystemApp = isAppInSystemPartition(object) || isSignedBySystem(info, androidInfo);
-//
-//            List<String> splitPathList = null;
-//            if (object.splitPublicSourceDirs != null) {
-//                splitPathList = Arrays.asList(object.splitPublicSourceDirs);
-//            }
-
-
-            AppDataParcelable elem =
-                    new AppDataParcelable(
-                            label == null ? object.packageName : label,
-                            object.sourceDir,
-                            //  object.loadIcon(packageManager),
-                            //  splitPathList,
-                            object.packageName,
-                            // object.flags + "_" + (info != null ? info.versionName : ""),
-                            Formatter.formatFileSize(getContext(), sourceDir.length()),
-                            sourceDir.length(),
-                            sourceDir.lastModified(),
-                            isSystemApp,
-                            null);
-
-            mApps.add(elem);
-        }
-
-        Collections.sort(mApps, new AppDataSorter(sortBy, isAscending));
-        StorageUtils.INSTANCE.saveAppDataList(mContext, mApps);
-
-        return mApps;
+        return packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
     }
 
     @Override
@@ -213,13 +160,95 @@ public class AppListLoader extends AsyncTaskLoader<List<AppDataParcelable>> {
                 != 0);
     }
 
+    @SuppressWarnings("deprecation")
+    private static Signature[] getSigners(PackageInfo packageInfo) {
+        if (packageInfo == null) {
+            return null;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            SigningInfo signingInfo = packageInfo.signingInfo;
+            if (signingInfo == null) {
+                return null;
+            }
+            return signingInfo.hasMultipleSigners()
+                    ? signingInfo.getApkContentsSigners()
+                    : signingInfo.getSigningCertificateHistory();
+        }
+        return packageInfo.signatures;
+    }
+
+    @Override
+    public List<AppDataParcelable> loadInBackground() {
+        List<ApplicationInfo> apps =
+                packageManager.getInstalledApplications(
+                        PackageManager.MATCH_UNINSTALLED_PACKAGES
+                                | PackageManager.MATCH_DISABLED_UNTIL_USED_COMPONENTS);
+
+        if (apps == null) return Collections.emptyList();
+        mApps = new ArrayList<>(apps.size());
+        PackageInfo androidInfo = null;
+        try {
+            androidInfo = getPackageInfoWithSigners(packageManager, "android");
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("failed to find android package name while loading apps list", e.getMessage());
+        }
+
+        for (ApplicationInfo object : apps) {
+            if (object.sourceDir == null) {
+                continue;
+            }
+            File sourceDir = new File(object.sourceDir);
+
+            String label = object.loadLabel(packageManager).toString();
+            PackageInfo info;
+
+            try {
+                info = getPackageInfoWithSigners(packageManager, object.packageName);
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e("failed to find package name {} while loading apps list", object.packageName, e);
+                info = null;
+            }
+            boolean isSystemApp = isAppInSystemPartition(object) || isSignedBySystem(info, androidInfo);
+//
+//            List<String> splitPathList = null;
+//            if (object.splitPublicSourceDirs != null) {
+//                splitPathList = Arrays.asList(object.splitPublicSourceDirs);
+//            }
+
+
+            AppDataParcelable elem =
+                    new AppDataParcelable(
+                            label == null ? object.packageName : label,
+                            object.sourceDir,
+                            //  object.loadIcon(packageManager),
+                            //  splitPathList,
+                            object.packageName,
+                            // object.flags + "_" + (info != null ? info.versionName : ""),
+                            Formatter.formatFileSize(getContext(), sourceDir.length()),
+                            sourceDir.length(),
+                            sourceDir.lastModified(),
+                            isSystemApp,
+                            null);
+
+            mApps.add(elem);
+        }
+
+        Collections.sort(mApps, new AppDataSorter(sortBy, isAscending));
+        StorageUtils.INSTANCE.saveAppDataList(getContext(), mApps);
+
+        return mApps;
+    }
+
     /**
      * Check if an App is signed by system or not.
      */
     public boolean isSignedBySystem(PackageInfo piApp, PackageInfo piSys) {
-        return (piApp != null
-                && piSys != null
-                && piApp.signatures != null
-                && piSys.signatures[0].equals(piApp.signatures[0]));
+        Signature[] appSigners = getSigners(piApp);
+        Signature[] sysSigners = getSigners(piSys);
+        return appSigners != null
+                && sysSigners != null
+                && sysSigners.length > 0
+                && appSigners.length > 0
+                && sysSigners[0].equals(appSigners[0]);
     }
 }

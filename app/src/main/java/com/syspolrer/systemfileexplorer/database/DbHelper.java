@@ -16,21 +16,19 @@ import java.util.ArrayList;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static DbHelper mInstance = null;
-    private final Context context;
     private static final String DB_NAME = "FAV.DB";
     private static final int DB_VERSION = 1;
     private static final String COL_PATH = "PATH";
 
     public static DbHelper getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new DbHelper(context);
+            mInstance = new DbHelper(context.getApplicationContext());
         }
         return mInstance;
     }
 
     public DbHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        this.context = context;
     }
 
     @Override
