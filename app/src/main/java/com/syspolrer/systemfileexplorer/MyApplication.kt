@@ -44,7 +44,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
 
 
     override fun onCreate() {
-        super.onCreate()
+        super<Application>.onCreate()
         registerActivityLifecycleCallbacks(this)
         if (instance == null) {
             setInstance(this)
