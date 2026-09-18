@@ -1,0 +1,36 @@
+[versions]
+agp = "9.4.0"
+kotlin = "2.4.20"
+appcompat = "1.8.0"
+material = "1.14.0"
+constraintlayout = "2.2.2"
+playServicesAds = "25.4.0"
+glide = "5.0.9"
+gson = "2.14.0"
+commonsIo = "2.22.0"
+junit = "4.13.2"
+androidxJunit = "1.3.0"
+espresso = "3.7.0"
+mkloader = "1.4.0"
+materialDialogs = "0.9.6.0"
+
+[libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-recyclerview = { group = "com.github.bumptech.glide", name = "recyclerview-integration", version.ref = "glide" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+commons-io = { group = "commons-io", name = "commons-io", version.ref = "commonsIo" }
+mkloader = { group = "com.tuyenmonkey", name = "mkloader", version.ref = "mkloader" }
+material-dialogs = { group = "com.afollestad.material-dialogs", name = "core", version.ref = "materialDialogs" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
