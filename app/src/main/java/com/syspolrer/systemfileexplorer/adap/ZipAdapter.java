@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -118,7 +120,7 @@ public class ZipAdapter extends RecyclerView.Adapter<ZipAdapter.ZipViewHolder> i
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             files.clear();
-            files.addAll((ArrayList)results.values);
+            files.addAll(Utils.filterInstances(results.values, File.class));
             notifyDataSetChanged();
         }
     };

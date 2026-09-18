@@ -58,7 +58,7 @@ public class SelectStorageFragment extends Fragment implements FileSelectedListe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            files = (ArrayList<File>) BundleCompat.getSerializable(getArguments(), "path", ArrayList.class);
+            files = Utils.filterInstances(BundleCompat.getSerializable(getArguments(), "path", ArrayList.class), File.class);
             position = getArguments().getInt("position");
         }
     }

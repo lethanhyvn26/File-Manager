@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.bumptech.glide.load.MultiTransformation;
+
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
@@ -55,7 +57,7 @@ public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.Nest
         } else {
             spanCount = 3;
         }
-        requestOptions =  new RequestOptions().transform(new CenterCrop(), new RoundedCorners(18))
+        requestOptions =  new RequestOptions().transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                 .skipMemoryCache(true)
                 .priority(Priority.LOW)
                 .format(DecodeFormat.PREFER_ARGB_8888);

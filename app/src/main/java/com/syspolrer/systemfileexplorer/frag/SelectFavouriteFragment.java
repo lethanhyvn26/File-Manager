@@ -39,7 +39,7 @@ public class SelectFavouriteFragment extends Fragment implements FileSelectedLis
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null){
-            files = (ArrayList<File>) BundleCompat.getSerializable(getArguments(), "file", ArrayList.class);
+            files = Utils.filterInstances(BundleCompat.getSerializable(getArguments(), "file", ArrayList.class), File.class);
             position = getArguments().getInt("position");
         }
     }

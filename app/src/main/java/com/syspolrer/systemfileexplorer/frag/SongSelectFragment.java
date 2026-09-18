@@ -58,7 +58,7 @@ public class SongSelectFragment extends Fragment implements FileSelectedListener
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             position = getArguments().getInt("position");
-            audioList = (ArrayList<File>) BundleCompat.getSerializable(getArguments(), "val", ArrayList.class);
+            audioList = Utils.filterInstances(BundleCompat.getSerializable(getArguments(), "val", ArrayList.class), File.class);
         }
     }
 

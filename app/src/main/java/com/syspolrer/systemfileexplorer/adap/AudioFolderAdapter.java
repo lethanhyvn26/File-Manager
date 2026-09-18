@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -130,7 +132,7 @@ public class AudioFolderAdapter extends RecyclerView.Adapter<AudioFolderAdapter.
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             fileList.clear();
-            fileList.addAll((ArrayList) results.values);
+            fileList.addAll(Utils.filterInstances(results.values, MediaModel.class));
             notifyDataSetChanged();
         }
     };

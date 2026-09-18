@@ -1,5 +1,9 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.bumptech.glide.load.MultiTransformation;
+
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -116,7 +120,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
-                                .transform(new CenterCrop(), new RoundedCorners(18))
+                                .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                 .skipMemoryCache(true)
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
@@ -157,7 +161,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             downloadList.clear();
-            downloadList.addAll((ArrayList)results.values);
+            downloadList.addAll(Utils.filterInstances(results.values, File.class));
             notifyDataSetChanged();
         }
     };

@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -139,7 +141,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             docFile.clear();
-            docFile.addAll((ArrayList)results.values);
+            docFile.addAll(Utils.filterInstances(results.values, File.class));
             notifyDataSetChanged();
         }
     };

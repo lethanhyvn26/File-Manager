@@ -1,5 +1,9 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.bumptech.glide.load.MultiTransformation;
+
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -107,7 +111,7 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
                     Glide.with(itemView.getContext())
                             .load(file)
                             .apply(new RequestOptions()
-                                    .transform(new CenterCrop(), new RoundedCorners(18))
+                                    .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                     .skipMemoryCache(true)
                                     .priority(Priority.LOW)
                                     .format(DecodeFormat.PREFER_ARGB_8888))
@@ -140,7 +144,7 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             fileList.clear();
-            fileList.addAll((ArrayList) results.values);
+            fileList.addAll(Utils.filterInstances(results.values, MediaModel.class));
             notifyDataSetChanged();
         }
     };

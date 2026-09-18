@@ -68,7 +68,7 @@ public class ImageSelectFragment extends Fragment implements View.OnClickListene
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            imagesShortModels = (ArrayList<ImagesShortModel>) BundleCompat.getSerializable(getArguments(), "data", ArrayList.class);
+            imagesShortModels = Utils.filterInstances(BundleCompat.getSerializable(getArguments(), "data", ArrayList.class), ImagesShortModel.class);
             selectedFile = new File(getArguments().getString("file"));
             position = getArguments().getInt("position");
             p = getArguments().getInt("p");

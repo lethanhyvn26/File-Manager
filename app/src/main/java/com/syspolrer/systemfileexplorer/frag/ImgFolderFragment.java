@@ -56,7 +56,7 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            list = (ArrayList<MediaModel>) BundleCompat.getSerializable(getArguments(), "val", ArrayList.class);
+            list = Utils.filterInstances(BundleCompat.getSerializable(getArguments(), "val", ArrayList.class), MediaModel.class);
             position = getArguments().getInt("position");
         }
     }

@@ -1,5 +1,9 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.bumptech.glide.load.MultiTransformation;
+
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -175,7 +179,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
-                                .transform(new CenterCrop(), new RoundedCorners(18))
+                                .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                 .skipMemoryCache(true)
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
@@ -186,7 +190,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
-                                .transform(new CenterCrop(), new RoundedCorners(18))
+                                .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                 .skipMemoryCache(true)
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
@@ -237,7 +241,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
-                                .transform(new CenterCrop(), new RoundedCorners(18))
+                                .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                 .skipMemoryCache(true)
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
@@ -248,7 +252,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
-                                .transform(new CenterCrop(), new RoundedCorners(18))
+                                .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                 .skipMemoryCache(true)
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
@@ -305,7 +309,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             files.clear();
-            files.addAll((ArrayList) results.values);
+            files.addAll(Utils.filterInstances(results.values, File.class));
             notifyDataSetChanged();
         }
     };

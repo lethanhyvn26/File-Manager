@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -122,7 +124,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             appsList.clear();
-            appsList.addAll((ArrayList)results.values);
+            appsList.addAll(Utils.filterInstances(results.values, File.class));
             notifyDataSetChanged();
         }
     };

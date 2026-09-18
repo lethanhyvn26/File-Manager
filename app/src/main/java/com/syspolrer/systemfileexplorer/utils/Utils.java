@@ -230,6 +230,18 @@ public class Utils {
     }
 
 
+    public static <T> ArrayList<T> filterInstances(Object values, Class<T> type) {
+        ArrayList<T> out = new ArrayList<>();
+        if (values instanceof ArrayList<?>) {
+            for (Object item : (ArrayList<?>) values) {
+                if (type.isInstance(item)) {
+                    out.add(type.cast(item));
+                }
+            }
+        }
+        return out;
+    }
+
     /**
      * Gets color
      *

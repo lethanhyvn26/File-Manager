@@ -64,7 +64,7 @@ public class SelectAppsFragment extends Fragment implements FileSelectedListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            files = (ArrayList<File>) BundleCompat.getSerializable(getArguments(), "List", ArrayList.class);
+            files = Utils.filterInstances(BundleCompat.getSerializable(getArguments(), "List", ArrayList.class), File.class);
             position = getArguments().getInt("Position");
             from = getArguments().getString("From");
         }

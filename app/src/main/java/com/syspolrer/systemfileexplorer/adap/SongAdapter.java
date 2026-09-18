@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -130,7 +132,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MusicViewHolde
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             song.clear();
-            song.addAll((ArrayList) results.values);
+            song.addAll(Utils.filterInstances(results.values, File.class));
             notifyDataSetChanged();
         }
     };

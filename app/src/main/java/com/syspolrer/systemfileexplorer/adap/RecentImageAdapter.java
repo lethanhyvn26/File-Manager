@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.bumptech.glide.load.MultiTransformation;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,7 @@ public class RecentImageAdapter extends RecyclerView.Adapter<RecentImageAdapter.
         Glide.with(holder.itemView.getContext())
                 .load(files.get(position).getPath())
                 .apply(new RequestOptions()
-                        .transform(new CenterCrop(), new RoundedCorners(18))
+                        .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                         .skipMemoryCache(true)
                         .priority(Priority.LOW)
                         .format(DecodeFormat.PREFER_ARGB_8888))

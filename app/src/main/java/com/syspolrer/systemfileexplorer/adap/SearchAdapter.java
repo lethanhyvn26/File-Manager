@@ -1,5 +1,9 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import com.bumptech.glide.load.MultiTransformation;
+
+import com.syspolrer.systemfileexplorer.utils.Utils;
+
 import java.util.Locale;
 
 import android.app.Activity;
@@ -93,7 +97,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
-                                .transform(new CenterCrop(), new RoundedCorners(18))
+                                .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                 .skipMemoryCache(true)
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
@@ -104,7 +108,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
-                                .transform(new CenterCrop(), new RoundedCorners(18))
+                                .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                                 .skipMemoryCache(true)
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
@@ -144,7 +148,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filesList.clear();
-            filesList.addAll((ArrayList)results.values);
+            filesList.addAll(Utils.filterInstances(results.values, File.class));
             notifyDataSetChanged();
         }
     };
