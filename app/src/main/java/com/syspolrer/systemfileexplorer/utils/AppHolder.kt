@@ -1,15 +1,11 @@
 package com.syspolrer.systemfileexplorer.utils
+
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.marginBottom
-import androidx.core.view.marginLeft
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
-
 import com.syspolrer.systemfileexplorer.R
 
 class AppHolder(view: View) : RecyclerView.ViewHolder(view) {

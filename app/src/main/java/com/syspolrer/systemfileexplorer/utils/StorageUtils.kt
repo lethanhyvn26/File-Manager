@@ -2,6 +2,7 @@ package com.syspolrer.systemfileexplorer.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -16,7 +17,9 @@ object StorageUtils {
     fun saveAppDataList(context: Context, appDataList: List<AppDataParcelable>) {
         val gson = Gson()
         val json = gson.toJson(appDataList)
-        getSharedPreferences(context).edit().putString(KEY_APP_DATA_LIST, json).apply()
+        getSharedPreferences(context).edit {
+            putString(KEY_APP_DATA_LIST, json)
+        }
     }
 
     fun loadAppDataList(context: Context): List<AppDataParcelable> {

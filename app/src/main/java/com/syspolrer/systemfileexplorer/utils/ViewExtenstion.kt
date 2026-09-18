@@ -3,7 +3,6 @@ package com.syspolrer.systemfileexplorer.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import kotlinx.coroutines.CoroutineScope
 import java.net.InetAddress
 import java.net.UnknownHostException
 

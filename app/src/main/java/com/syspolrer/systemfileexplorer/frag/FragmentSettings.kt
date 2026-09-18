@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.syspolrer.systemfileexplorer.R
 import com.syspolrer.systemfileexplorer.databinding.FragmentSettingsBinding
@@ -93,7 +93,7 @@ class FragmentSettings : Fragment() {
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)
+                "https://play.google.com/store/apps/details?id=$packageName".toUri()
             )
         )
     }
@@ -125,7 +125,7 @@ class FragmentSettings : Fragment() {
         }
 
         val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("mailto:") // only email apps should handle this
+        intent.data = "mailto:".toUri() // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_support)))
         intent.putExtra(
             Intent.EXTRA_SUBJECT,
