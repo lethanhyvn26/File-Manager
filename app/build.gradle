@@ -4,22 +4,22 @@ plugins {
 }
 
 android {
-    namespace 'com.syspolrer.systemfileexplorer'
-    compileSdk 37
+    namespace = 'com.syspolrer.systemfileexplorer'
+    compileSdk = 37
 
     defaultConfig {
-        applicationId "com.syspolrer.systemfileexplorer"
-        minSdk 24
-        targetSdk 37
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.syspolrer.systemfileexplorer"
+        minSdk = 24
+        targetSdk = 37
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "str_ads_google_app_id", "ca-app-pub-4824353242373249~3839716541"
             resValue "string", "str_ads_banner", "ca-app-pub-4824353242373249/6434090290"
@@ -27,7 +27,7 @@ android {
             resValue "string", "str_ads_open", "ca-app-pub-4824353242373249/1181763616"
         }
         debug {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "str_ads_google_app_id", "ca-app-pub-3940256099942544~3347511713"
             resValue "string", "str_ads_banner", "ca-app-pub-3940256099942544/6300978111"
@@ -36,21 +36,23 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
-        dataBinding true
-        resValues true
+        dataBinding = true
+        resValues = true
     }
     lint {
-        checkReleaseBuilds true
-        abortOnError false
-        disable 'ContentDescription'
-        // TODO(upgrade): Glide NotificationTarget pulls POST_NOTIFICATIONS; app does not post notifications.
-        // Adding the permission would show on Play. https://developer.android.com/develop/ui/views/notifications/notification-permission
-        disable 'NotificationPermission'
+        checkReleaseBuilds = true
+        abortOnError = false
+        disable += [
+                'ContentDescription',
+                // TODO(upgrade): Glide NotificationTarget pulls POST_NOTIFICATIONS; app does not post notifications.
+                // Adding the permission would show on Play. https://developer.android.com/develop/ui/views/notifications/notification-permission
+                'NotificationPermission',
+        ]
     }
 }
 
