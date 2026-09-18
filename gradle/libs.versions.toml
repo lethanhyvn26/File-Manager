@@ -4,6 +4,7 @@ kotlin = "2.4.20"
 appcompat = "1.8.0"
 material = "1.14.0"
 constraintlayout = "2.2.2"
+coreKtx = "1.19.0"
 playServicesAds = "25.4.0"
 glide = "5.0.9"
 gson = "2.14.0"
@@ -18,6 +19,7 @@ materialDialogs = "0.9.6.0"
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-recyclerview = { group = "com.github.bumptech.glide", name = "recyclerview-integration", version.ref = "glide" }
