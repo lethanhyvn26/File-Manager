@@ -8,12 +8,17 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,6 +85,31 @@ public class Utils {
             else window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             window.setStatusBarColor(ContextCompat.getColor(activity, color));
         }
+    }
+
+    /**
+     * Keep content clear of system bars once edge-to-edge is enforced (API 35+).
+     * Padding only — does not change layout XML / colors / hierarchy.
+     * Splash keeps FLAG_LAYOUT_NO_LIMITS and must not call this.
+     */
+    public static void applySystemBarInsets(Activity activity) {
+        Window window = activity.getWindow();
+        WindowCompat.setDecorFitsSystemWindows(window, false);
+        View content = activity.findViewById(android.R.id.content);
+        if (!(content instanceof ViewGroup)) {
+            return;
+        }
+        ViewGroup host = (ViewGroup) content;
+        if (host.getChildCount() == 0) {
+            return;
+        }
+        View root = host.getChildAt(0);
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, windowInsets) -> {
+            Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            return windowInsets;
+        });
+        ViewCompat.requestApplyInsets(root);
     }
 
 //    public static float convertPixelsToDp(float px, Context context) {

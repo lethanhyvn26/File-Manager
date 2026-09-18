@@ -20,6 +20,7 @@ public class SelectFileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_select_file);
+        Utils.applySystemBarInsets(this);
 
         SELECT_FILE_CON = binding.container.getId();
 
