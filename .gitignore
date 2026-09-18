@@ -1,0 +1,41 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local SDK / NDK paths (machine-specific)
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+output.json
+
+# Built artifacts
+*.apk
+*.aar
+*.ap_
+*.aab
+*.dex
+*.class
+
+# Kotlin incremental
+.kotlin/
+
+# OS / editor
+.DS_Store
+*.swp
+*~
+
+# Logs and profiler dumps
+*.log
+*.hprof
+
+# Upgrade session Gradle logs (not source)
+docs/upgrade/raw/
