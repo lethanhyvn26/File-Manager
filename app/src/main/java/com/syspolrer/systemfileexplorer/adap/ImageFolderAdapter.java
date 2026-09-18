@@ -1,11 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.bumptech.glide.load.MultiTransformation;
-
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -30,10 +25,12 @@ import com.syspolrer.systemfileexplorer.databinding.ImageFolderItemBinding;
 import com.syspolrer.systemfileexplorer.frag.ImgFolderFragment;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.model.MediaModel;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.ImgFolderViewHolder>  implements Filterable {
@@ -101,7 +98,7 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
                 fileSelectedListener.onBind(binding.icSelect, mediaModel.file);
             }
             binding.tvFolder.setText(mediaModel.file.getName());
-            binding.tvCounter.setText(String.format(Locale.getDefault(), "%d photos", mediaModel.count));
+            binding.tvCounter.setText(activity.getResources().getQuantityString(R.plurals.format_photos_count, mediaModel.count, mediaModel.count));
 
             binding.icSelect.setOnClickListener(v -> fileSelectedListener.onIvMediaSelectClick(fileList, getBindingAdapterPosition(), binding.icSelect));
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.icSelect, mediaModel.file));

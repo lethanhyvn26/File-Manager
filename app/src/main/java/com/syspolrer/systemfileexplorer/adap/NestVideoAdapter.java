@@ -1,11 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.bumptech.glide.load.MultiTransformation;
-
-import androidx.core.content.ContextCompat;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -23,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -35,7 +32,6 @@ import com.syspolrer.systemfileexplorer.model.ImagesShortModel;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.NestVideoViewHolder> implements VideoAdapter.ImageSelect {
@@ -120,7 +116,12 @@ public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.Nest
                     ImageSelectFragment.selectedList.add(imagesModel.file);
                     imageView.setImageResource(R.drawable.ic_selected);
                 }
-                ImageSelectFragment.tvCounter.setText(String.format(Locale.getDefault(), "%d Selected", ImageSelectFragment.selectedList.size()));
+                TextView counter = ImageSelectFragment.tvCounter != null
+                        ? ImageSelectFragment.tvCounter.get() : null;
+                if (counter != null) {
+                    int selected = ImageSelectFragment.selectedList.size();
+                    counter.setText(activity.getResources().getQuantityString(R.plurals.format_selected, selected, selected));
+                }
             }
         } else {
 

@@ -53,10 +53,10 @@ public class SelectStorageFileFragment extends Fragment implements FileSelectedL
 
         if (action.equals("move")) {
             binding.icAction.setImageResource(R.drawable.ic_move);
-            binding.tvAction.setText("Move");
+            binding.tvAction.setText(R.string.move);
         } else if (action.equals("copy")) {
             binding.icAction.setImageResource(R.drawable.ic_copy);
-            binding.tvAction.setText("Copy");
+            binding.tvAction.setText(R.string.copy);
         }
 
         if (from.equals("storage")) {

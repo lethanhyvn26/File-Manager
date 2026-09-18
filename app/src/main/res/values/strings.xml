@@ -60,6 +60,8 @@
     <string name="file">File</string>
     <string name="location_">Location :</string>
     <string name="date_">Date :</string>
+    <string name="contains_">Contains :</string>
+    <string name="format_file_size_pipe">%s |</string>
     <string name="size_">Size :</string>
     <string name="recent">Recent</string>
 
@@ -85,5 +87,26 @@
     <string name="rate_us">Rate us</string>
     <string name="feedback">Feedback</string>
     <string name="format_version">Version: %1$s</string>
+
+    <plurals name="format_selected">
+        <item quantity="one">%d Selected</item>
+        <item quantity="other">%d Selected</item>
+    </plurals>
+    <plurals name="format_files_count">
+        <item quantity="one">%d Files</item>
+        <item quantity="other">%d Files</item>
+    </plurals>
+    <plurals name="format_photos_count">
+        <item quantity="one">%d photos</item>
+        <item quantity="other">%d photos</item>
+    </plurals>
+    <plurals name="format_songs_count">
+        <item quantity="one">%d Songs</item>
+        <item quantity="other">%d Songs</item>
+    </plurals>
+    <plurals name="format_item_count">
+        <item quantity="one">%d Item</item>
+        <item quantity="other">%d Item</item>
+    </plurals>
 
 </resources>

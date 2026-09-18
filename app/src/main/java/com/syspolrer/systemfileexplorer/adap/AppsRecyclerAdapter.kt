@@ -17,17 +17,15 @@ import android.widget.Filterable
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.IntDef
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.syspolrer.systemfileexplorer.R
-import com.syspolrer.systemfileexplorer.activity.MainActivity
 import com.syspolrer.systemfileexplorer.utils.AppDataParcelable
 import com.syspolrer.systemfileexplorer.utils.AppHolder
 import com.syspolrer.systemfileexplorer.utils.EmptyViewHolder
 import com.syspolrer.systemfileexplorer.utils.FileUtils
 import com.syspolrer.systemfileexplorer.utils.SpecialViewHolder
-import com.syspolrer.systemfileexplorer.utils.checkShowAdsFull
 import java.io.File
 import java.util.Locale
 import kotlin.math.roundToInt
@@ -145,7 +143,8 @@ class AppsRecyclerAdapter(
                 holder.txtTitle.text = rowItem.label
                 holder.packageName.text = rowItem.packageName
                 holder.packageName.isSelected = true // for marquee
-                holder.txtDesc.text = rowItem.fileSize + " |"
+                holder.txtDesc.text =
+                    fragment.getString(R.string.format_file_size_pipe, rowItem.fileSize)
 
                 holder.rl.isClickable = true
                 holder.rl.nextFocusRightId = holder.about.id
@@ -177,13 +176,13 @@ class AppsRecyclerAdapter(
             notifyDataSetChanged()
         }
     }
-    fun removeUninstalledApp(packageName: String) {
-        Log.i("HAOHAO", "removeUninstalledApp $packageName")
-        appDataParcelableListFull.removeIf { it.packageName == packageName }
-        appDataParcelableList.removeIf { it.packageName == packageName }
-        appDataListItem = mutableListOf()
-        notifyDataSetChanged()
-    }
+//    fun removeUninstalledApp(packageName: String) {
+//        Log.i("HAOHAO", "removeUninstalledApp $packageName")
+//        appDataParcelableListFull.removeIf { it.packageName == packageName }
+//        appDataParcelableList.removeIf { it.packageName == packageName }
+//        appDataListItem = mutableListOf()
+//        notifyDataSetChanged()
+//    }
 
     private fun startActivityForRowItem(rowItem: AppDataParcelable?) {
         rowItem?.run {
@@ -277,9 +276,7 @@ class AppsRecyclerAdapter(
                         fragment.startActivity(
                             Intent(
                                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                Uri.parse(
-                                    String.format("package:%s", rowItem!!.packageName),
-                                ),
+                                "package:${rowItem!!.packageName}".toUri(),
                             ),
                         )
                         return@setOnMenuItemClickListener true
@@ -332,22 +329,11 @@ class AppsRecyclerAdapter(
         val intent1 =
             Intent(Intent.ACTION_VIEW)
         try {
-            intent1.data =
-                Uri.parse(
-                    String.format(
-                        "market://details?id=%s",
-                        appDataParcelable.packageName,
-                    ),
-                )
+            intent1.data = "market://details?id=${appDataParcelable.packageName}".toUri()
             fragment.startActivity(intent1)
-        } catch (ifPlayStoreNotInstalled: ActivityNotFoundException) {
+        } catch (_: ActivityNotFoundException) {
             intent1.data =
-                Uri.parse(
-                    String.format(
-                        "https://play.google.com/store/apps/details?id=%s",
-                        appDataParcelable.packageName,
-                    ),
-                )
+                "https://play.google.com/store/apps/details?id=${appDataParcelable.packageName}".toUri()
             fragment.startActivity(intent1)
         }
     }
@@ -490,7 +476,7 @@ class AppsRecyclerAdapter(
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filteredList = mutableListOf<AppDataParcelable>()
 
-            if (constraint == null || constraint.isEmpty()) {
+            if (constraint.isNullOrEmpty()) {
                 filteredList.addAll(appDataParcelableListFull)
             } else {
                 val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()

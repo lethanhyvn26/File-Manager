@@ -1,11 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.bumptech.glide.load.MultiTransformation;
-
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.text.format.DateFormat;
 import android.text.format.Formatter;
@@ -24,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -33,12 +28,14 @@ import com.syspolrer.systemfileexplorer.databinding.FolderItemBinding;
 import com.syspolrer.systemfileexplorer.databinding.LargeFileItemBinding;
 import com.syspolrer.systemfileexplorer.frag.SelectStorageFragment;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
@@ -141,7 +138,8 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
             binding.tvFileName.setText(file.getName());
             binding.tvDate.setText(DateFormat.format("dd/MM/yy", file.lastModified()));
-            binding.tvSongCount.setText(String.format(Locale.getDefault(), "%d Item", getCount(file)));
+            int itemCount = getCount(file);
+            binding.tvSongCount.setText(activity.getResources().getQuantityString(R.plurals.format_item_count, itemCount, itemCount));
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.imageView4, file));
             binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getBindingAdapterPosition(), binding.ivSelect));

@@ -1,9 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +18,11 @@ import com.syspolrer.systemfileexplorer.databinding.MediaFolderItemBinding;
 import com.syspolrer.systemfileexplorer.frag.SelectVideoFolderFragment;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.model.MediaModel;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AudioFolderAdapter extends RecyclerView.Adapter<AudioFolderAdapter.AudioFolderViewHolder> implements Filterable {
 
@@ -102,7 +100,7 @@ public class AudioFolderAdapter extends RecyclerView.Adapter<AudioFolderAdapter.
             }
 
             binding.tvFileName.setText(mediaModel.file.getName());
-            binding.tvSongCount.setText(mediaModel.count + " Songs");
+            binding.tvSongCount.setText(activity.getResources().getQuantityString(R.plurals.format_songs_count, mediaModel.count, mediaModel.count));
 
             itemView.setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.imageView5, mediaModel.file));
 

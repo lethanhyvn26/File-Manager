@@ -1,9 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import androidx.core.os.BundleCompat;
-
-import java.util.Locale;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.os.BundleCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,10 +24,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.activity.SelectFileActivity;
 import com.syspolrer.systemfileexplorer.adap.NestVideoAdapter;
+import com.syspolrer.systemfileexplorer.database.DbHelper;
 import com.syspolrer.systemfileexplorer.databinding.DialogDeleteBinding;
 import com.syspolrer.systemfileexplorer.databinding.DialogFileInfoBinding;
 import com.syspolrer.systemfileexplorer.databinding.FragmentImageSelectBinding;
-import com.syspolrer.systemfileexplorer.database.DbHelper;
 import com.syspolrer.systemfileexplorer.interfaces.ActionModeListener;
 import com.syspolrer.systemfileexplorer.model.ImagesShortModel;
 import com.syspolrer.systemfileexplorer.utils.Utils;
@@ -39,6 +36,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 
@@ -50,7 +48,7 @@ public class ImageSelectFragment extends Fragment implements View.OnClickListene
     public static boolean isActionModeOn = true;
     public static ArrayList<File> selectedList = new ArrayList<>();
     NestVideoAdapter adapter;
-    public static TextView tvCounter;
+    public static WeakReference<TextView> tvCounter;
     public int position;
     public int p;
     public static ActionModeListener actionModeListener;
@@ -81,7 +79,7 @@ public class ImageSelectFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         binding = FragmentImageSelectBinding.inflate(inflater);
         actionModeListener = this;
-        tvCounter = binding.tvCounter;
+        tvCounter = new WeakReference<>(binding.tvCounter);
 
         binding.rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
         adapter = new NestVideoAdapter(requireActivity(), 0,9);
@@ -120,14 +118,14 @@ public class ImageSelectFragment extends Fragment implements View.OnClickListene
         if (selectedList.size()>1){
             dialogFileInfoBinding.location.setVisibility(View.GONE);
             dialogFileInfoBinding.tvLocation.setVisibility(View.GONE);
-            dialogFileInfoBinding.date.setText("Contains :");
-            dialogFileInfoBinding.tvDate.setText(String.format(Locale.getDefault(), "%d Files",selectedList.size()));
+            dialogFileInfoBinding.date.setText(R.string.contains_);
+            dialogFileInfoBinding.tvDate.setText(getResources().getQuantityString(R.plurals.format_files_count, selectedList.size(), selectedList.size()));
             dialogFileInfoBinding.size.setVisibility(View.GONE);
             dialogFileInfoBinding.tvSize.setVisibility(View.GONE);
         }else {
             dialogFileInfoBinding.location.setVisibility(View.VISIBLE);
             dialogFileInfoBinding.tvLocation.setVisibility(View.VISIBLE);
-            dialogFileInfoBinding.date.setText("Date :");
+            dialogFileInfoBinding.date.setText(R.string.date_);
             dialogFileInfoBinding.tvDate.setText(DateFormat.format("dd - MM- yyyy",selectedList.get(0).lastModified()));
             dialogFileInfoBinding.size.setVisibility(View.VISIBLE);
             dialogFileInfoBinding.tvSize.setVisibility(View.VISIBLE);

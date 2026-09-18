@@ -1,11 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import androidx.core.os.BundleCompat;
-
-import androidx.core.content.ContextCompat;
-
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.os.BundleCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.adap.StorageAdapter;
-import com.syspolrer.systemfileexplorer.databinding.FragmentSelectFavouriteBinding;
 import com.syspolrer.systemfileexplorer.database.DbHelper;
+import com.syspolrer.systemfileexplorer.databinding.FragmentSelectFavouriteBinding;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.model.MediaModel;
 import com.syspolrer.systemfileexplorer.utils.Utils;
@@ -92,7 +88,7 @@ public class SelectFavouriteFragment extends Fragment implements FileSelectedLis
             selectedList.add(files.get(position));
             imageView.setImageResource(R.drawable.ic_selected);
         }
-        binding.tvCounter.setText(String.format(Locale.getDefault(), "%d Selected", selectedList.size()));
+        binding.tvCounter.setText(getResources().getQuantityString(R.plurals.format_selected, selectedList.size(), selectedList.size()));
     }
 
     @Override

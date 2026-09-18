@@ -1,11 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import androidx.core.os.BundleCompat;
-
-import androidx.core.content.ContextCompat;
-
-import java.util.Locale;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.os.BundleCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,10 +23,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.activity.SelectFileActivity;
 import com.syspolrer.systemfileexplorer.adap.ImageFolderAdapter;
+import com.syspolrer.systemfileexplorer.database.DbHelper;
 import com.syspolrer.systemfileexplorer.databinding.DialogDeleteBinding;
 import com.syspolrer.systemfileexplorer.databinding.DialogFileInfoBinding;
 import com.syspolrer.systemfileexplorer.databinding.FragmentImgFolderBinding;
-import com.syspolrer.systemfileexplorer.database.DbHelper;
 import com.syspolrer.systemfileexplorer.interfaces.ActionModeListener;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.model.MediaModel;
@@ -126,7 +122,7 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
             selectedList.add(files.get(position).file);
             imageView.setImageResource(R.drawable.ic_selected);
         }
-        binding.tvCounter.setText(String.format(Locale.getDefault(), "%d Selected", selectedList.size()));
+        binding.tvCounter.setText(getResources().getQuantityString(R.plurals.format_selected, selectedList.size(), selectedList.size()));
     }
 
     private boolean isAvailable(File file) {
@@ -176,14 +172,14 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
         if (selectedList.size() > 1) {
             dialogFileInfoBinding.location.setVisibility(View.GONE);
             dialogFileInfoBinding.tvLocation.setVisibility(View.GONE);
-            dialogFileInfoBinding.date.setText("Contains :");
-            dialogFileInfoBinding.tvDate.setText(String.format(Locale.getDefault(), "%d Files", selectedList.size()));
+            dialogFileInfoBinding.date.setText(R.string.contains_);
+            dialogFileInfoBinding.tvDate.setText(getResources().getQuantityString(R.plurals.format_files_count, selectedList.size(), selectedList.size()));
             dialogFileInfoBinding.size.setVisibility(View.GONE);
             dialogFileInfoBinding.tvSize.setVisibility(View.GONE);
         } else {
             dialogFileInfoBinding.location.setVisibility(View.VISIBLE);
             dialogFileInfoBinding.tvLocation.setVisibility(View.VISIBLE);
-            dialogFileInfoBinding.date.setText("Date :");
+            dialogFileInfoBinding.date.setText(R.string.date_);
             dialogFileInfoBinding.tvDate.setText(DateFormat.format("dd - MM- yyyy", selectedList.get(0).lastModified()));
             dialogFileInfoBinding.size.setVisibility(View.VISIBLE);
             dialogFileInfoBinding.tvSize.setVisibility(View.VISIBLE);
