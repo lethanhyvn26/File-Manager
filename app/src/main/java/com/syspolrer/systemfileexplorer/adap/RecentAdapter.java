@@ -129,7 +129,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.DownloadVi
             binding.tvSize.setText(Formatter.formatFileSize(activity, file.length()));
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect, file));
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(recentList, getAdapterPosition(), binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(recentList, getBindingAdapterPosition(), binding.ivSelect));
 
         }
     }

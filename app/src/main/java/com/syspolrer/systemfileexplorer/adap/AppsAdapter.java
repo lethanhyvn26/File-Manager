@@ -96,7 +96,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect,file));
 
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(appsList,getAdapterPosition(),binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(appsList,getBindingAdapterPosition(),binding.ivSelect));
         }
     }
 

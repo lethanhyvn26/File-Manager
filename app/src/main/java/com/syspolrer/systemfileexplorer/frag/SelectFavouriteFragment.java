@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import androidx.core.os.BundleCompat;
+
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
@@ -37,7 +39,7 @@ public class SelectFavouriteFragment extends Fragment implements FileSelectedLis
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null){
-            files = (ArrayList<File>) getArguments().getSerializable("file");
+            files = (ArrayList<File>) BundleCompat.getSerializable(getArguments(), "file", ArrayList.class);
             position = getArguments().getInt("position");
         }
     }

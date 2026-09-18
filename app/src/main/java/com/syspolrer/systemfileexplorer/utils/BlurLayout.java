@@ -102,7 +102,7 @@ public class BlurLayout extends FrameLayout {
         super.invalidate();
         Bitmap bitmap = blur();
         if (bitmap != null) {
-            setBackground(new BitmapDrawable(bitmap));
+            setBackground(new BitmapDrawable(getResources(), bitmap));
         }
     }
 

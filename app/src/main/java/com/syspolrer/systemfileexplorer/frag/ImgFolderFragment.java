@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import androidx.core.os.BundleCompat;
+
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
@@ -54,7 +56,7 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            list = (ArrayList<MediaModel>) getArguments().getSerializable("val");
+            list = (ArrayList<MediaModel>) BundleCompat.getSerializable(getArguments(), "val", ArrayList.class);
             position = getArguments().getInt("position");
         }
     }

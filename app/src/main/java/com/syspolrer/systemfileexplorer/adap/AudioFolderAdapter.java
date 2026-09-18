@@ -104,7 +104,7 @@ public class AudioFolderAdapter extends RecyclerView.Adapter<AudioFolderAdapter.
 
             itemView.setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.imageView5, mediaModel.file));
 
-            binding.imageView5.setOnClickListener(v -> fileSelectedListener.onIvMediaSelectClick(fileList, getAdapterPosition(), binding.imageView5));
+            binding.imageView5.setOnClickListener(v -> fileSelectedListener.onIvMediaSelectClick(fileList, getBindingAdapterPosition(), binding.imageView5));
         }
     }
 

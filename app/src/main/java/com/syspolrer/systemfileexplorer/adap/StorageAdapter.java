@@ -140,7 +140,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.tvSongCount.setText(String.format(Locale.getDefault(), "%d Item", getCount(file)));
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.imageView4, file));
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getAdapterPosition(), binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getBindingAdapterPosition(), binding.ivSelect));
         }
     }
 
@@ -201,7 +201,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.tvSize.setText(Formatter.formatFileSize(activity, file.length()));
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.imageView4, file));
 
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getAdapterPosition(), binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getBindingAdapterPosition(), binding.ivSelect));
         }
     }
 
@@ -266,7 +266,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.tvPath.setText(file.getAbsolutePath());
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.imageView4, file));
 
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getAdapterPosition(), binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getBindingAdapterPosition(), binding.ivSelect));
         }
     }
 

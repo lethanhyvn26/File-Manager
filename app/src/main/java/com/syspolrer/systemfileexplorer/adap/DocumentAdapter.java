@@ -112,7 +112,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect,file));
 
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(docFile,getAdapterPosition(),binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(docFile,getBindingAdapterPosition(),binding.ivSelect));
         }
     }
 

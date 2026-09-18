@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import androidx.core.os.BundleCompat;
+
 import java.util.Locale;
 
 import android.app.Dialog;
@@ -66,7 +68,7 @@ public class ImageSelectFragment extends Fragment implements View.OnClickListene
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            imagesShortModels = (ArrayList<ImagesShortModel>) getArguments().getSerializable("data");
+            imagesShortModels = (ArrayList<ImagesShortModel>) BundleCompat.getSerializable(getArguments(), "data", ArrayList.class);
             selectedFile = new File(getArguments().getString("file"));
             position = getArguments().getInt("position");
             p = getArguments().getInt("p");

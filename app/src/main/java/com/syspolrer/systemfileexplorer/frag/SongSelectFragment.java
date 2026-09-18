@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import androidx.core.os.BundleCompat;
+
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
@@ -56,7 +58,7 @@ public class SongSelectFragment extends Fragment implements FileSelectedListener
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             position = getArguments().getInt("position");
-            audioList = (ArrayList<File>) getArguments().getSerializable("val");
+            audioList = (ArrayList<File>) BundleCompat.getSerializable(getArguments(), "val", ArrayList.class);
         }
     }
 

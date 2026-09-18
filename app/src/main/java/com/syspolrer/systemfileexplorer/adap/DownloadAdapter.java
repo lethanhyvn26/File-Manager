@@ -129,7 +129,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
             binding.tvSize.setText(Formatter.formatFileSize(activity, file.length()));
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect, file));
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(downloadList, getAdapterPosition(), binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(downloadList, getBindingAdapterPosition(), binding.ivSelect));
 
         }
     }

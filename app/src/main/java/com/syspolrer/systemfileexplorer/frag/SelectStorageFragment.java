@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import androidx.core.os.BundleCompat;
+
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
@@ -56,7 +58,7 @@ public class SelectStorageFragment extends Fragment implements FileSelectedListe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            files = (ArrayList<File>) getArguments().getSerializable("path");
+            files = (ArrayList<File>) BundleCompat.getSerializable(getArguments(), "path", ArrayList.class);
             position = getArguments().getInt("position");
         }
     }

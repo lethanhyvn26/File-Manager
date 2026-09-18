@@ -91,7 +91,7 @@ public class ZipAdapter extends RecyclerView.Adapter<ZipAdapter.ZipViewHolder> i
 
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect,file));
 
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files,getAdapterPosition(),binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files,getBindingAdapterPosition(),binding.ivSelect));
 
         }
     }

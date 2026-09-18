@@ -104,7 +104,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     .into(binding.iv);
             binding.iv.setOnClickListener(v -> OpenFile.open(file));
 
-            binding.tvLength.setText(files.get(getAdapterPosition()).duration);
+            binding.tvLength.setText(files.get(getBindingAdapterPosition()).duration);
         }
     }
     public class ImageViewHolder extends RecyclerView.ViewHolder {
@@ -133,7 +133,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             binding.iv.setOnClickListener(v -> OpenFile.open(file));
 
-            binding.icSelect.setOnClickListener(v -> imageSelect.imgSelect(new ImagesModel(file, null, null), binding.icSelect, position, getAdapterPosition()));
+            binding.icSelect.setOnClickListener(v -> imageSelect.imgSelect(new ImagesModel(file, null, null), binding.icSelect, position, getBindingAdapterPosition()));
         }
     }
 }
