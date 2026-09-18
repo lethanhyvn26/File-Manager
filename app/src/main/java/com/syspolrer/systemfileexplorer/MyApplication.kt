@@ -156,11 +156,12 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Lif
                 return
             }
             val request = AdRequest.Builder().build()
+            // GMA 24+ removed orientation overloads; orientation is taken from the request.
+            // https://developers.google.com/admob/android/migration
             AppOpenAd.load(
                 context,
                 getString(R.string.str_ads_open),
                 request,
-                AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
                 object : AppOpenAd.AppOpenAdLoadCallback() {
                     /**
                      * Called when an app open ad has loaded.
