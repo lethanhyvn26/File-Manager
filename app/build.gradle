@@ -48,6 +48,9 @@ android {
         checkReleaseBuilds true
         abortOnError false
         disable 'ContentDescription'
+        // TODO(upgrade): Glide NotificationTarget pulls POST_NOTIFICATIONS; app does not post notifications.
+        // Adding the permission would show on Play. https://developer.android.com/develop/ui/views/notifications/notification-permission
+        disable 'NotificationPermission'
     }
 }
 
