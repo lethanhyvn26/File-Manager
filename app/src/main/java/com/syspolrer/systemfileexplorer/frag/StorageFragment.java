@@ -201,16 +201,16 @@ public class StorageFragment extends Fragment implements FileSelectedListener, A
     public void onEventListener(int event) {
         if (event == Utils.EVENT_DELETE) {
             setFile();
-            activity.getOnBackPressedDispatcher().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         } else if (event == Utils.EVENT_COPY) {
             setFile();
             new Handler(Looper.getMainLooper()).post(() -> {
-                activity.getOnBackPressedDispatcher().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
             });
 
         } else if (event == Utils.EVENT_MOVE) {
             setFile();
-            activity.getOnBackPressedDispatcher().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         }
         showAdsFull();
     }
