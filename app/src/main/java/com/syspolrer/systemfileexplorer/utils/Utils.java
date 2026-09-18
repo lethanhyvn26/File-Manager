@@ -70,12 +70,12 @@ public class Utils {
     }
 
 
+    @SuppressWarnings("deprecation")
     public static void setStatusBarColor(int color, Activity activity, boolean isDark) {
         Window window = activity.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS|WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        if (!isDark) window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE);
-        else window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        WindowCompat.getInsetsController(window, window.getDecorView())
+                .setAppearanceLightStatusBars(isDark);
         window.setStatusBarColor(ContextCompat.getColor(activity, color));
     }
 

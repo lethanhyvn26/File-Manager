@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -14,6 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.syspolrer.systemfileexplorer.databinding.FragmentStorageSpaceBinding;
 import com.syspolrer.systemfileexplorer.utils.Utils;
+
+import java.util.Locale;
 
 
 public class StorageSpaceFragment extends Fragment {
@@ -43,7 +43,7 @@ public class StorageSpaceFragment extends Fragment {
         treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                binding.linearLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 int measuredHeight = binding.linearLayout.getMeasuredHeight();
                 int measuredWidth = binding.linearLayout.getMeasuredWidth();
 
@@ -63,7 +63,7 @@ public class StorageSpaceFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
 
-                binding.mainImage.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.mainImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 int measuredWidth = binding.mainImage.getMeasuredWidth();
                 Log.d("FILEMANHBDJBHDJ", "onBind: " + measuredWidth);
@@ -85,7 +85,7 @@ public class StorageSpaceFragment extends Fragment {
         binding.mainAudio.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                binding.mainAudio.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.mainAudio.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 int measuredWidth = binding.mainAudio.getMeasuredWidth();
                 Log.d("FILEMANHBDJBHDJ", "onBind: " + measuredWidth);
@@ -108,7 +108,7 @@ public class StorageSpaceFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
 
-                binding.mainVideo.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.mainVideo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 int measuredWidth = binding.mainVideo.getMeasuredWidth();
                 Log.d("FILEMANHBDJBHDJ", "onBind: " + measuredWidth);
@@ -131,7 +131,7 @@ public class StorageSpaceFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
 
-                binding.mainZips.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.mainZips.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 int measuredWidth = binding.mainZips.getMeasuredWidth();
                 Log.d("FILEMANHBDJBHDJ", "onBind: " + measuredWidth);
@@ -154,7 +154,7 @@ public class StorageSpaceFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
 
-                binding.mainApps.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.mainApps.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 int measuredWidth = binding.mainApps.getMeasuredWidth();
                 Log.d("FILEMANHBDJBHDJ", "onBind: " + measuredWidth);
@@ -177,7 +177,7 @@ public class StorageSpaceFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
 
-                binding.mainDoc.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.mainDoc.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 int measuredWidth = binding.mainDoc.getMeasuredWidth();
                 Log.d("FILEMANHBDJBHDJ", "onBind: " + measuredWidth);
@@ -201,7 +201,7 @@ public class StorageSpaceFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
 
-                binding.mainOther.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                binding.mainOther.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 int measuredWidth = binding.mainOther.getMeasuredWidth();
 

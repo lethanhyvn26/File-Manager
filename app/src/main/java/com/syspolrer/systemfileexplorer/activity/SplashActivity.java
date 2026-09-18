@@ -1,8 +1,5 @@
 package com.syspolrer.systemfileexplorer.activity;
 
-import java.util.Locale;
-
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,6 +19,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,6 +28,8 @@ import androidx.databinding.DataBindingUtil;
 import com.syspolrer.systemfileexplorer.MyApplication;
 import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.databinding.ActivitySplashBinding;
+
+import java.util.Locale;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -100,6 +100,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     });
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     private void takePermission() {
         try {
             Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
