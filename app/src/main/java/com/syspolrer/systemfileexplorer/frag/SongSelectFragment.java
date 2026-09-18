@@ -89,7 +89,7 @@ public class SongSelectFragment extends Fragment implements FileSelectedListener
         binding.lyMove.setOnClickListener(this);
         binding.lyCopy.setOnClickListener(this);
 
-        binding.ivExit.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivExit.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }

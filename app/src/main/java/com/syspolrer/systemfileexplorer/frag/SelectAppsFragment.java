@@ -179,7 +179,7 @@ public class SelectAppsFragment extends Fragment implements FileSelectedListener
                     listener.onEventListener(Utils.EVENT_ADD_TO_FAV);
                 }
             }
-            requireActivity().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         } else if (v.equals(binding.ivClose)) {
             if (listener != null) {
                 listener.onEventListener(Utils.EVENT_CLOSE);

@@ -49,16 +49,16 @@ public class SelectFavouriteFragment extends Fragment implements FileSelectedLis
         storageAdapter.addAll(files,this,null,null);
         binding.rv.scrollToPosition(position);
 
-        binding.lyCancel.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.lyCancel.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         binding.lyAction.setOnClickListener(v -> {
             for (File file : selectedList){
                 DbHelper.removeFavourite(file.getAbsolutePath());
             }
             FavouriteFragment.actionModeListener.onEventListener(Utils.EVENT_DELETE);
-            requireActivity().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
-        binding.ivClose.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivClose.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }

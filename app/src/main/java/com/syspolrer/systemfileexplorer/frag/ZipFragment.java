@@ -52,7 +52,7 @@ public class ZipFragment extends Fragment implements FileSelectedListener, Actio
 
         actionModeListener = this;
 
-        binding.ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
         binding.rootZip.setOnClickListener(v -> Utils.hideKeyboard(requireActivity()));
         binding.et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -152,18 +152,18 @@ public class ZipFragment extends Fragment implements FileSelectedListener, Actio
             case Utils.EVENT_ADD_TO_FAV:
 
             case Utils.EVENT_CLOSE:
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
 
             case Utils.EVENT_DELETE:
                 setData();
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
 
             case Utils.EVENT_COPY:
             case Utils.EVENT_MOVE:
                 setData();
-                new Handler(Looper.getMainLooper()).post(() -> requireActivity().onBackPressed());
+                new Handler(Looper.getMainLooper()).post(() -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
                 break;
         }
         showAdsFull();

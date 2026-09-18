@@ -101,7 +101,7 @@ public class SelectVideoFolderFragment extends Fragment implements FileSelectedL
         binding.lyFavourite.setOnClickListener(this);
         binding.lyMove.setOnClickListener(this);
         binding.lyCopy.setOnClickListener(this);
-        binding.ivClose.setOnClickListener(v ->   requireActivity().onBackPressed());
+        binding.ivClose.setOnClickListener(v ->   requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }

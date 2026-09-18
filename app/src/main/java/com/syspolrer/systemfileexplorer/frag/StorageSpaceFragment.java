@@ -35,7 +35,7 @@ public class StorageSpaceFragment extends Fragment {
 
         binding = FragmentStorageSpaceBinding.inflate(inflater);
 
-        binding.ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         ViewTreeObserver treeObserver = binding.linearLayout.getViewTreeObserver();
         treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

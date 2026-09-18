@@ -46,7 +46,7 @@ public class FavouriteFragment extends Fragment implements FileSelectedListener,
 
         setData();
 
-        binding.ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }

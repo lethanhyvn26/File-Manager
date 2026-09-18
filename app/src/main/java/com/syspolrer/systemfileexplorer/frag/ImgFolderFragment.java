@@ -79,7 +79,7 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
         binding.lyCopy.setOnClickListener(this);
         binding.lyFavourite.setOnClickListener(this);
         binding.lyMove.setOnClickListener(this);
-        binding.ivClose.setOnClickListener(v ->   requireActivity().onBackPressed());
+        binding.ivClose.setOnClickListener(v ->   requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }
@@ -218,7 +218,7 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
             dialog.dismiss();
 
             ImageFolderFragment.actionModeListener.onEventListener(Utils.EVENT_DELETE);
-            requireActivity().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
 
         binding.btnCancel.setOnClickListener(v -> dialog.dismiss());

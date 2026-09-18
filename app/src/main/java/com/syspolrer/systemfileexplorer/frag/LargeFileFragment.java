@@ -60,7 +60,7 @@ public class LargeFileFragment extends Fragment implements FileSelectedListener,
         });
 
 
-        binding.ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
         binding.rootLargeFile.setOnClickListener(v -> Utils.hideKeyboard(requireActivity()));
         binding.et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -145,18 +145,18 @@ public class LargeFileFragment extends Fragment implements FileSelectedListener,
     public void onEventListener(int event) {
         switch (event) {
             case Utils.EVENT_ADD_TO_FAV:
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
             case Utils.EVENT_CLOSE:
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
             case Utils.EVENT_DELETE:
              //   setData();
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
             case Utils.EVENT_COPY:
             case Utils.EVENT_MOVE:
               //  setData();
-                new Handler(Looper.getMainLooper()).post(() -> requireActivity().onBackPressed());
+                new Handler(Looper.getMainLooper()).post(() -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
                 break;
         }
 

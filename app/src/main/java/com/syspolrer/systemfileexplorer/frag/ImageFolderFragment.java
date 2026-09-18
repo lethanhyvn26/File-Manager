@@ -206,7 +206,7 @@ public class ImageFolderFragment extends Fragment implements FileSelectedListene
     public void onEventListener(int event) {
         switch (event) {
             case Utils.EVENT_ADD_TO_FAV:
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
             case Utils.EVENT_DELETE:
                 setData();
@@ -214,7 +214,7 @@ public class ImageFolderFragment extends Fragment implements FileSelectedListene
             case Utils.EVENT_COPY:
             case Utils.EVENT_MOVE:
                 setData();
-                new Handler(Looper.getMainLooper()).post(() -> requireActivity().onBackPressed());
+                new Handler(Looper.getMainLooper()).post(() -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
                 break;
 
         }

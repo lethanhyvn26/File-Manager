@@ -89,7 +89,7 @@ public class SelectStorageFragment extends Fragment implements FileSelectedListe
         binding.lyCopy.setOnClickListener(this);
         binding.lyFavourite.setOnClickListener(this);
 
-        binding.ivClose.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivClose.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }
@@ -184,7 +184,7 @@ public class SelectStorageFragment extends Fragment implements FileSelectedListe
             for (File file : selectedList) {
                 DbHelper.addToFavourite(file.getAbsolutePath());
             }
-            requireActivity().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         }
     }
 
@@ -234,12 +234,12 @@ public class SelectStorageFragment extends Fragment implements FileSelectedListe
     public void onEventListener(int event) {
         if (event == Utils.EVENT_COPY) {
             isMoCo = true;
-//            activity.onBackPressed();
+//            activity.getOnBackPressedDispatcher().onBackPressed();
 //            StorageFragment.actionModeListener.onEventListener(Utils.EVENT_COPY);
 
         } else if (event == Utils.EVENT_MOVE) {
             isMoCo = true;
-//            activity.onBackPressed();
+//            activity.getOnBackPressedDispatcher().onBackPressed();
 //            StorageFragment.actionModeListener.onEventListener(Utils.EVENT_MOVE);
         }
     }

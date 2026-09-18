@@ -204,16 +204,16 @@ public class VideoFolderFragment extends Fragment implements FileSelectedListene
         switch (event) {
             case Utils.EVENT_CLOSE:
             case Utils.EVENT_ADD_TO_FAV:
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
             case Utils.EVENT_DELETE:
                 setData();
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
             case Utils.EVENT_COPY:
             case Utils.EVENT_MOVE:
                 setData();
-                new Handler(Looper.getMainLooper()).post(() -> requireActivity().onBackPressed());
+                new Handler(Looper.getMainLooper()).post(() -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
                 break;
         }
         showAdsFull();

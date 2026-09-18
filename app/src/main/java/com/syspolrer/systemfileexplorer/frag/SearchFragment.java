@@ -41,7 +41,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.onFileClic
 
         getData();
 
-        binding.ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
         binding.rootSearch.setOnClickListener(v -> Utils.hideKeyboard(requireActivity()));
         binding.et.addTextChangedListener(new TextWatcher() {
             @Override

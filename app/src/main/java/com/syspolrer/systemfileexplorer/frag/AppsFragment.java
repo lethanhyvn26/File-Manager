@@ -32,7 +32,7 @@ public class AppsFragment extends Fragment {
         binding.viewPager.setAdapter(pagerAdapter);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
-        binding.ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
         binding.rootApps.setOnClickListener(v -> Utils.hideKeyboard(requireActivity()));
 
         return binding.getRoot();

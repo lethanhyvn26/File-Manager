@@ -74,7 +74,7 @@ public class StorageFragment extends Fragment implements FileSelectedListener, A
         actionModeListener = this;
 
         binding.ivBack.setOnClickListener(v -> {
-            requireActivity().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
         binding.container.setOnClickListener(v -> Utils.hideKeyboard(requireActivity()));
         binding.et.addTextChangedListener(new TextWatcher() {
@@ -201,16 +201,16 @@ public class StorageFragment extends Fragment implements FileSelectedListener, A
     public void onEventListener(int event) {
         if (event == Utils.EVENT_DELETE) {
             setFile();
-            activity.onBackPressed();
+            activity.getOnBackPressedDispatcher().onBackPressed();
         } else if (event == Utils.EVENT_COPY) {
             setFile();
             new Handler(Looper.getMainLooper()).post(() -> {
-                activity.onBackPressed();
+                activity.getOnBackPressedDispatcher().onBackPressed();
             });
 
         } else if (event == Utils.EVENT_MOVE) {
             setFile();
-            activity.onBackPressed();
+            activity.getOnBackPressedDispatcher().onBackPressed();
         }
         showAdsFull();
     }

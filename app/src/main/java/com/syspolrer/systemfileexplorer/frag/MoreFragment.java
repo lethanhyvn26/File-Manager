@@ -29,7 +29,7 @@ public class MoreFragment extends Fragment implements HomeAppClickListener {
         binding.rv.setLayoutManager(new GridLayoutManager(getContext(), 4));
         HomeAppAdapter homeAppAdapter = new HomeAppAdapter(requireActivity(), apps, this);
         binding.rv.setAdapter(homeAppAdapter);
-        binding.ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         binding.icFavourite.setOnClickListener(v ->
                 {

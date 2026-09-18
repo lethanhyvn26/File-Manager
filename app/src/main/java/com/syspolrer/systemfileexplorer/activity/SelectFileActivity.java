@@ -53,7 +53,7 @@ public class SelectFileActivity extends AppCompatActivity {
 
         });
 
-        binding.ivClose.setOnClickListener(v -> onBackPressed());
+        binding.ivClose.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
     }
 }
