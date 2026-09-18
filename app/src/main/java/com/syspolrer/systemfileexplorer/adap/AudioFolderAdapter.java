@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,9 +115,9 @@ public class AudioFolderAdapter extends RecyclerView.Adapter<AudioFolderAdapter.
             if (constraint == null || constraint.length() == 0) {
                 filList.addAll(filterList);
             } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (MediaModel mediaModel : filterList) {
-                    if (mediaModel.file.getName().toLowerCase().trim().contains(filterPattern)) {
+                    if (mediaModel.file.getName().toLowerCase(Locale.ROOT).trim().contains(filterPattern)) {
                         filList.add(mediaModel);
                     }
                 }

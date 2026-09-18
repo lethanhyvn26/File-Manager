@@ -146,7 +146,7 @@ public final class MimeTypes {
    */
   public static String getExtension(@Nullable String path) {
     if (path != null && path.contains("."))
-      return path.substring(path.lastIndexOf(".") + 1).toLowerCase();
+      return path.substring(path.lastIndexOf(".") + 1).toLowerCase(Locale.ROOT);
     else return "";
   }
 }

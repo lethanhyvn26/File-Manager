@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -137,7 +139,7 @@ public class AllImageFragment extends Fragment implements ActionModeListener {
                 if (singleFile.isDirectory() && !singleFile.isHidden() && !singleFile.getName().contains("Telegram") && !singleFile.getParent().contains("Telegram")) {
                     fileArrayList.addAll(img(singleFile));
                 } else {
-                    if (!singleFile.isHidden()&& !singleFile.getParent().contains("Telegram")  && singleFile.getName().toLowerCase().endsWith(".jpg") || singleFile.getName().toLowerCase().endsWith(".jpeg") || singleFile.getName().toLowerCase().endsWith(".png")) {
+                    if (!singleFile.isHidden()&& !singleFile.getParent().contains("Telegram")  && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                         fileArrayList.add(new ImagesModel(singleFile, String.valueOf(DateFormat.format("dd/MM/yyyy", singleFile.lastModified())), null));
                     }
                 }

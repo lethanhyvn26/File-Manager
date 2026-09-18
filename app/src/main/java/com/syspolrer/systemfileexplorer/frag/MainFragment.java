@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -191,17 +193,17 @@ public class MainFragment extends Fragment implements StorageClickListener, Home
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     arrayList.addAll(getFiles(singleFile));
                 } else {
-                    if (singleFile.getName().toLowerCase().endsWith(".jpeg") || singleFile.getName().toLowerCase().endsWith(".jpg") || singleFile.getName().toLowerCase().endsWith(".png")) {
+                    if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                         Utils.EXT_IMAGE_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".mp4")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                         Utils.EXT_VIDEO_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".mp3") || singleFile.getName().toLowerCase().endsWith(".wav")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                         Utils.EXT_AUDIO_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".zip") || singleFile.getName().toLowerCase().endsWith(".zipx")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zip") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zipx")) {
                         Utils.EXT_ZIPS_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".apk")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".apk")) {
                         Utils.EXT_APPS_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".doc") || singleFile.getName().toLowerCase().endsWith(".docx") || singleFile.getName().toLowerCase().endsWith(".xls") || singleFile.getName().toLowerCase().endsWith(".xlsx") || singleFile.getName().toLowerCase().endsWith(".txt") || singleFile.getName().toLowerCase().endsWith(".ppt") || singleFile.getName().toLowerCase().endsWith(".pdf")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".doc") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".docx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xls") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".txt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".ppt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                         Utils.EXT_DOCUMENT_SIZE += singleFile.length();
                     }
                 }
@@ -240,17 +242,17 @@ public class MainFragment extends Fragment implements StorageClickListener, Home
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     arrayList.addAll(getFiles(singleFile));
                 } else {
-                    if (singleFile.getName().toLowerCase().endsWith(".jpeg") || singleFile.getName().toLowerCase().endsWith(".jpg") || singleFile.getName().toLowerCase().endsWith(".png")) {
+                    if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                         Utils.SD_IMAGE_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".mp4")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                         Utils.SD_VIDEO_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".mp3") || singleFile.getName().toLowerCase().endsWith(".wav")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                         Utils.SD_AUDIO_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".zip") || singleFile.getName().toLowerCase().endsWith(".zipx")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zip") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zipx")) {
                         Utils.SD_ZIPS_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".apk")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".apk")) {
                         Utils.SD_APPS_SIZE += singleFile.length();
-                    } else if (singleFile.getName().toLowerCase().endsWith(".doc") || singleFile.getName().toLowerCase().endsWith(".docx") || singleFile.getName().toLowerCase().endsWith(".xls") || singleFile.getName().toLowerCase().endsWith(".xlsx") || singleFile.getName().toLowerCase().endsWith(".txt") || singleFile.getName().toLowerCase().endsWith(".ppt") || singleFile.getName().toLowerCase().endsWith(".pdf")) {
+                    } else if (singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".doc") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".docx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xls") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".txt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".ppt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                         Utils.SD_DOCUMENT_SIZE += singleFile.length();
                     }
                 }

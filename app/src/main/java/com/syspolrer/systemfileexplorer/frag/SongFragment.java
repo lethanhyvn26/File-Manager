@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -124,7 +126,7 @@ public class SongFragment extends Fragment implements FileSelectedListener, Acti
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     fileArrayList.addAll(audio(singleFile));
                 } else {
-                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".mp3") || singleFile.getName().toLowerCase().endsWith(".wav")) {
+                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                         fileArrayList.add(singleFile);
                     }
                 }

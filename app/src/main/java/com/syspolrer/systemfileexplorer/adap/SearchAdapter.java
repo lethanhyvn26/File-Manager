@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -73,21 +75,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         public void onBind(File file) {
 
-            if (file.getName().toLowerCase().endsWith(".doc")) {
+            if (file.getName().toLowerCase(Locale.ROOT).endsWith(".doc")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_doc);
-            } else if (file.getName().toLowerCase().endsWith(".docx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".docx")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_docx);
-            } else if (file.getName().toLowerCase().endsWith(".xls")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xls")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".xlsx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".txt")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".txt")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_txt);
-            } else if (file.getName().toLowerCase().endsWith("ppt") || file.getName().toLowerCase().endsWith(".pptx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith("ppt") || file.getName().toLowerCase(Locale.ROOT).endsWith(".pptx")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_ppt);
-            } else if (file.getName().toLowerCase().endsWith(".pdf")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_pdf);
-            }else if (file.getName().toLowerCase().endsWith(".mp4")){
+            }else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")){
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -96,9 +98,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
                         .into(binding.ivIcon);
-            } else if (file.getName().toLowerCase().endsWith(".mp3") || file.getName().toLowerCase().endsWith(".wav")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || file.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_audio);
-            } else if (file.getName().toLowerCase().endsWith(".jpeg") || file.getName().toLowerCase().endsWith(".jpg") || file.getName().toLowerCase().endsWith(".png")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -107,7 +109,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
                         .into(binding.ivIcon);
-            }else if (file.getName().toLowerCase().endsWith(".apk")){
+            }else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".apk")){
                 binding.ivIcon.setImageDrawable(activity.getPackageManager().getPackageArchiveInfo(file.getAbsolutePath(), 0).applicationInfo.loadIcon(activity.getPackageManager()));
             }else {
                 binding.ivIcon.setImageResource(R.drawable.ic_folder);
@@ -127,9 +129,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             if (constraint == null || constraint.length() == 0){
                 files.addAll(filterList);
             }else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (File file:filterList){
-                    if (file.getName().toLowerCase().contains(filterPattern)){
+                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)){
                         files.add(file);
                     }
                 }

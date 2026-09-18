@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -125,7 +127,7 @@ public class SongFolderFragment extends Fragment implements FileSelectedListener
         int count = 0;
         File[] files = file.listFiles();
         for (File file1 : files) {
-            if (file1.getName().toLowerCase().endsWith(".mp3") || file1.getName().toLowerCase().endsWith(".wav") || file1.getName().toLowerCase().endsWith(".amr")) {
+            if (file1.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".wav") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".amr")) {
                 count += 1;
             }
         }
@@ -146,7 +148,7 @@ public class SongFolderFragment extends Fragment implements FileSelectedListener
                     }
 
                 } else {
-                    if (!file1.isHidden() && file1.getName().toLowerCase().endsWith(".mp3") || file1.getName().toLowerCase().endsWith(".wav") || file1.getName().toLowerCase().endsWith(".amr")) {
+                    if (!file1.isHidden() && file1.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".wav") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".amr")) {
                         return file;
                     }
                 }
@@ -168,7 +170,7 @@ public class SongFolderFragment extends Fragment implements FileSelectedListener
                     isDir(file1);
 
                 } else {
-                    if (!file1.isHidden() && file1.getName().toLowerCase().endsWith(".mp3")  || file1.getName().toLowerCase().endsWith(".wav") || file1.getName().toLowerCase().endsWith(".amr")) {
+                    if (!file1.isHidden() && file1.getName().toLowerCase(Locale.ROOT).endsWith(".mp3")  || file1.getName().toLowerCase(Locale.ROOT).endsWith(".wav") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".amr")) {
                         return file1;
                     }
                 }

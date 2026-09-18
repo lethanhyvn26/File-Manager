@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -147,7 +149,7 @@ public class RecentFragment extends Fragment implements FileSelectedListener, Ac
 
     // Method to check if a file has a valid extension
     private static boolean hasValidExtension(File file) {
-        String name = file.getName().toLowerCase();
+        String name = file.getName().toLowerCase(Locale.ROOT);
         for (String ext : VALID_EXTENSIONS) {
             if (name.endsWith("." + ext)) {
                 return true;

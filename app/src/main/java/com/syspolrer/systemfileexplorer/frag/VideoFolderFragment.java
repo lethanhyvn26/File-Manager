@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -130,7 +132,7 @@ public class VideoFolderFragment extends Fragment implements FileSelectedListene
                     }
 
                 } else {
-                    if (file1.getName().toLowerCase().endsWith(".mp4")) {
+                    if (file1.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                         return file;
                     }
                 }
@@ -152,7 +154,7 @@ public class VideoFolderFragment extends Fragment implements FileSelectedListene
                     isDir(file1);
 
                 } else {
-                    if (file1.getName().toLowerCase().endsWith(".mp4")) {
+                    if (file1.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                         return file1;
                     }
                 }

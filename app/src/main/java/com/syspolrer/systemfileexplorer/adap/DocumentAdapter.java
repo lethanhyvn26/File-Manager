@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
@@ -86,21 +88,21 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
 
             fileSelectedListener.onBind(binding.ivSelect,file);
 
-            if (file.getName().toLowerCase().endsWith(".doc")) {
+            if (file.getName().toLowerCase(Locale.ROOT).endsWith(".doc")) {
                 binding.imageView4.setImageResource(R.drawable.ic_doc);
-            } else if (file.getName().toLowerCase().endsWith(".docx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".docx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_docx);
-            } else if (file.getName().toLowerCase().endsWith(".xls")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xls")) {
                 binding.imageView4.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".xlsx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".txt")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".txt")) {
                 binding.imageView4.setImageResource(R.drawable.ic_txt);
-            } else if (file.getName().toLowerCase().endsWith("ppt")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith("ppt")) {
                 binding.imageView4.setImageResource(R.drawable.ic_ppt);
-            } else if (file.getName().toLowerCase().endsWith(".pdf")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                 binding.imageView4.setImageResource(R.drawable.ic_pdf);
-            }else if (file.getName().toLowerCase().endsWith(".zip")||file.getName().toLowerCase().endsWith(".rar")) {
+            }else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".zip")||file.getName().toLowerCase(Locale.ROOT).endsWith(".rar")) {
                 binding.imageView4.setImageResource(R.drawable.ic_zips);
             }
 
@@ -121,9 +123,9 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
             if (constraint == null||constraint.length() == 0){
                 filList.addAll(filterList);
             }else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (File file : filterList){
-                    if (file.getName().toLowerCase().contains(filterPattern)){
+                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)){
                         filList.add(file);
                     }
                 }

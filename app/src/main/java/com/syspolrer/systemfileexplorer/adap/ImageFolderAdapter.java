@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,7 +103,7 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
             binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.icSelect, mediaModel.file));
 
             for (File file : Objects.requireNonNull(mediaModel.file.listFiles())) {
-                if (file.getName().toLowerCase().endsWith(".jpg") || file.getName().toLowerCase().endsWith(".jpeg") || file.getName().toLowerCase().endsWith(".png")) {
+                if (file.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                     Glide.with(itemView.getContext())
                             .load(file)
                             .apply(new RequestOptions()
@@ -123,9 +125,9 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
             if (constraint == null || constraint.length() == 0) {
                 filList.addAll(filterList);
             } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (MediaModel mediaModel : filterList) {
-                    if (mediaModel.file.getName().toLowerCase().trim().contains(filterPattern)) {
+                    if (mediaModel.file.getName().toLowerCase(Locale.ROOT).trim().contains(filterPattern)) {
                         filList.add(mediaModel);
                     }
                 }

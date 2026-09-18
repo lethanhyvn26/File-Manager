@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -102,7 +104,7 @@ public class SongSelectFragment extends Fragment implements FileSelectedListener
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     fileArrayList.addAll(audio(singleFile));
                 } else {
-                    if (!singleFile.isHidden() && singleFile.getName().endsWith(".mp3") || singleFile.getName().toLowerCase().endsWith(".wav")) {
+                    if (!singleFile.isHidden() && singleFile.getName().endsWith(".mp3") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                         fileArrayList.add(singleFile);
                     }
                 }

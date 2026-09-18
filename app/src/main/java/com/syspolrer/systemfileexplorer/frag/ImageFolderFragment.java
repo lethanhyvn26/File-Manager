@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -119,7 +121,7 @@ public class ImageFolderFragment extends Fragment implements FileSelectedListene
         int count = 0;
         File[] files = file.listFiles();
         for (File file1 : files) {
-            if (file1.getName().toLowerCase().endsWith(".jpg") || file1.getName().toLowerCase().endsWith(".jpeg") || file1.getName().toLowerCase().endsWith(".png")) {
+            if (file1.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                 count += 1;
             }
         }
@@ -141,7 +143,7 @@ public class ImageFolderFragment extends Fragment implements FileSelectedListene
                     }
 
                 } else {
-                    if (file1.getName().toLowerCase().endsWith(".jpg") || file1.getName().toLowerCase().endsWith(".jpeg") || file1.getName().toLowerCase().endsWith(".png")) {
+                    if (file1.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                         return file;
                     }
                 }
@@ -161,7 +163,7 @@ public class ImageFolderFragment extends Fragment implements FileSelectedListene
                     isDir(file1);
 
                 } else {
-                    if (file1.getName().toLowerCase().endsWith(".jpg") || file1.getName().toLowerCase().endsWith(".jpeg") || file1.getName().toLowerCase().endsWith(".png")) {
+                    if (file1.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                         return file1;
                     }
                 }

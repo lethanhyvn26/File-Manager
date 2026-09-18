@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -104,7 +106,7 @@ public class ZipFragment extends Fragment implements FileSelectedListener, Actio
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     fileArrayList.addAll(zip(singleFile));
                 } else {
-                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".zip") || singleFile.getName().toLowerCase().endsWith(".zipx")) {
+                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zip") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zipx")) {
                         fileArrayList.add(singleFile);
                     }
                 }

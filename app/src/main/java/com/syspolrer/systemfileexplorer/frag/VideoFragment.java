@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -155,7 +157,7 @@ public class VideoFragment extends Fragment {
                 if (singleFile.isDirectory() && !singleFile.isHidden() && !singleFile.getParent().equals("Telegram") && !singleFile.getName().equals("Telegram")) {
                     fileArrayList.addAll(vid(singleFile));
                 } else {
-                    if (!singleFile.isHidden() && !singleFile.getParent().equals("Telegram") && singleFile.getName().toLowerCase().endsWith(".mp4")) {
+                    if (!singleFile.isHidden() && !singleFile.getParent().equals("Telegram") && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                         fileArrayList.add(new ImagesModel(singleFile, String.valueOf(DateFormat.format("dd/MM/yyyy", singleFile.lastModified())), null));
                     }
                 }

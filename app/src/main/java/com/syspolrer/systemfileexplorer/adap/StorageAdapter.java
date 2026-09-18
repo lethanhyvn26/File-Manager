@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.text.format.DateFormat;
 import android.text.format.Formatter;
@@ -155,21 +157,21 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (SelectStorageFragment.isActionModeOn) {
                 fileSelectedListener.onBind(binding.ivSelect, file);
             }
-            if (file.getName().toLowerCase().endsWith(".doc")) {
+            if (file.getName().toLowerCase(Locale.ROOT).endsWith(".doc")) {
                 binding.imageView4.setImageResource(R.drawable.ic_doc);
-            } else if (file.getName().toLowerCase().endsWith(".docx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".docx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_docx);
-            } else if (file.getName().toLowerCase().endsWith(".xls")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xls")) {
                 binding.imageView4.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".xlsx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".txt")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".txt")) {
                 binding.imageView4.setImageResource(R.drawable.ic_txt);
-            } else if (file.getName().toLowerCase().endsWith("ppt") || file.getName().toLowerCase().endsWith(".pptx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith("ppt") || file.getName().toLowerCase(Locale.ROOT).endsWith(".pptx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_ppt);
-            } else if (file.getName().toLowerCase().endsWith(".pdf")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                 binding.imageView4.setImageResource(R.drawable.ic_pdf);
-            } else if (file.getName().toLowerCase().endsWith(".mp4")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -178,9 +180,9 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
                         .into(binding.imageView4);
-            } else if (file.getName().toLowerCase().endsWith(".mp3") || file.getName().toLowerCase().endsWith(".wav")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || file.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                 binding.imageView4.setImageResource(R.drawable.ic_audio);
-            } else if (file.getName().toLowerCase().endsWith(".jpeg") || file.getName().toLowerCase().endsWith(".jpg") || file.getName().toLowerCase().endsWith(".png")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -189,7 +191,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
                         .into(binding.imageView4);
-            } else if (file.getName().toLowerCase().endsWith(".apk")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".apk")) {
                 binding.imageView4.setImageDrawable(activity.getPackageManager().getPackageArchiveInfo(file.getAbsolutePath(), 0).applicationInfo.loadIcon(activity.getPackageManager()));
             } else {
                 binding.imageView4.setImageResource(R.drawable.ic_folder);
@@ -217,21 +219,21 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 fileSelectedListener.onBind(binding.ivSelect, file);
             }
 
-            if (file.getName().toLowerCase().endsWith(".doc")) {
+            if (file.getName().toLowerCase(Locale.ROOT).endsWith(".doc")) {
                 binding.imageView4.setImageResource(R.drawable.ic_doc);
-            } else if (file.getName().toLowerCase().endsWith(".docx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".docx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_docx);
-            } else if (file.getName().toLowerCase().endsWith(".xls")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xls")) {
                 binding.imageView4.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".xlsx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_xls);
-            } else if (file.getName().toLowerCase().endsWith(".txt")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".txt")) {
                 binding.imageView4.setImageResource(R.drawable.ic_txt);
-            } else if (file.getName().toLowerCase().endsWith("ppt") || file.getName().toLowerCase().endsWith(".pptx")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith("ppt") || file.getName().toLowerCase(Locale.ROOT).endsWith(".pptx")) {
                 binding.imageView4.setImageResource(R.drawable.ic_ppt);
-            } else if (file.getName().toLowerCase().endsWith(".pdf")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                 binding.imageView4.setImageResource(R.drawable.ic_pdf);
-            } else if (file.getName().toLowerCase().endsWith(".mp4")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -240,9 +242,9 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
                         .into(binding.imageView4);
-            } else if (file.getName().toLowerCase().endsWith(".mp3") || file.getName().toLowerCase().endsWith(".wav")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || file.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                 binding.imageView4.setImageResource(R.drawable.ic_audio);
-            } else if (file.getName().toLowerCase().endsWith(".jpeg") || file.getName().toLowerCase().endsWith(".jpg") || file.getName().toLowerCase().endsWith(".png")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -251,7 +253,7 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
                         .into(binding.imageView4);
-            } else if (file.getName().toLowerCase().endsWith(".apk")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".apk")) {
                 binding.imageView4.setImageDrawable(activity.getPackageManager().getPackageArchiveInfo(file.getAbsolutePath(), 0).applicationInfo.loadIcon(activity.getPackageManager()));
             } else {
                 binding.imageView4.setImageResource(R.drawable.ic_folder);
@@ -288,9 +290,9 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (constraint == null || constraint.length() == 0) {
                 files.addAll(filterList);
             } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (File file : filterList) {
-                    if (file.getName().toLowerCase().contains(filterPattern)) {
+                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)) {
                         files.add(file);
                     }
                 }

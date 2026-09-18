@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.adap;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
@@ -105,7 +107,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
             if (constraint == null || constraint.length() == 0){
                 filList.addAll(filterList);
             }else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (File file : filterList){
                     if (file.getName().contains(filterPattern)){
                         filList.add(file);

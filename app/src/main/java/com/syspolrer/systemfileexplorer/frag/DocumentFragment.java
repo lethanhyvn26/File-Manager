@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -118,7 +120,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     fileArrayList.addAll(doc(singleFile));
                 } else {
-                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".doc") || singleFile.getName().toLowerCase().endsWith(".docx") || singleFile.getName().toLowerCase().endsWith(".xls") || singleFile.getName().toLowerCase().endsWith(".xlsx") || singleFile.getName().toLowerCase().endsWith(".txt") || singleFile.getName().toLowerCase().endsWith(".ppt") || singleFile.getName().toLowerCase().endsWith(".pdf")) {
+                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".doc") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".docx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xls") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".txt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".ppt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                         fileArrayList.add(singleFile);
                     }
                 }
@@ -137,32 +139,32 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 filterList.add(file);
             } else {
                 if (cbPdf) {
-                    if (file.getName().toLowerCase().endsWith(".pdf")) {
+                    if (file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                         filterList.add(file);
                     }
                 }
                 if (cbDoc) {
-                    if (file.getName().toLowerCase().endsWith(".doc") || file.getName().toLowerCase().endsWith(".docx")) {
+                    if (file.getName().toLowerCase(Locale.ROOT).endsWith(".doc") || file.getName().toLowerCase(Locale.ROOT).endsWith(".docx")) {
                         filterList.add(file);
                     }
                 }
                 if (cbXls) {
-                    if (file.getName().toLowerCase().endsWith(".xls")) {
+                    if (file.getName().toLowerCase(Locale.ROOT).endsWith(".xls")) {
                         filterList.add(file);
                     }
                 }
                 if (cbPpt) {
-                    if (file.getName().toLowerCase().endsWith("ppt") || file.getName().toLowerCase().endsWith("pptx")) {
+                    if (file.getName().toLowerCase(Locale.ROOT).endsWith("ppt") || file.getName().toLowerCase(Locale.ROOT).endsWith("pptx")) {
                         filterList.add(file);
                     }
                 }
                 if (cbTxt) {
-                    if (file.getName().toLowerCase().endsWith(".txt")) {
+                    if (file.getName().toLowerCase(Locale.ROOT).endsWith(".txt")) {
                         filterList.add(file);
                     }
                 }
                 if (cbOthers) {
-                    if (!file.getName().toLowerCase().endsWith(".pdf") || !file.getName().toLowerCase().endsWith(".doc") || !file.getName().toLowerCase().endsWith(".docx") || !file.getName().toLowerCase().endsWith(".xls") || !file.getName().toLowerCase().endsWith("ppt") || !file.getName().toLowerCase().endsWith("pptx") || !file.getName().toLowerCase().endsWith(".txt")) {
+                    if (!file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf") || !file.getName().toLowerCase(Locale.ROOT).endsWith(".doc") || !file.getName().toLowerCase(Locale.ROOT).endsWith(".docx") || !file.getName().toLowerCase(Locale.ROOT).endsWith(".xls") || !file.getName().toLowerCase(Locale.ROOT).endsWith("ppt") || !file.getName().toLowerCase(Locale.ROOT).endsWith("pptx") || !file.getName().toLowerCase(Locale.ROOT).endsWith(".txt")) {
                         filterList.add(file);
                     }
                 }

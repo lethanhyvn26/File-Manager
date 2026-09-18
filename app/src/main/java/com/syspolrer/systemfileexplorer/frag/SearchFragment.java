@@ -1,5 +1,7 @@
 package com.syspolrer.systemfileexplorer.frag;
 
+import java.util.Locale;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -98,17 +100,17 @@ public class SearchFragment extends Fragment implements SearchAdapter.onFileClic
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     fileArrayList.addAll(getFile(singleFile));
                 }                                           else {
-                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".zip") || singleFile.getName().toLowerCase().endsWith(".zipx")) {
+                    if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zip") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zipx")) {
                         fileArrayList.add(singleFile);
-                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".jpg") || singleFile.getName().toLowerCase().endsWith(".jpeg") || singleFile.getName().toLowerCase().endsWith(".png")) {
+                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                         fileArrayList.add(singleFile);
-                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".mp4")) {
+                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                         fileArrayList.add(singleFile);
-                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".mp3") || singleFile.getName().toLowerCase().endsWith(".wav")) {
+                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                         fileArrayList.add(singleFile);
-                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".apk")) {
+                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".apk")) {
                         fileArrayList.add(singleFile);
-                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase().endsWith(".doc") || singleFile.getName().toLowerCase().endsWith(".docx") || singleFile.getName().toLowerCase().endsWith(".xls") || singleFile.getName().toLowerCase().endsWith(".xlsx") || singleFile.getName().toLowerCase().endsWith(".txt") || singleFile.getName().toLowerCase().endsWith(".ppt") || singleFile.getName().toLowerCase().endsWith(".pdf")) {
+                    } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".doc") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".docx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xls") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".xlsx") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".txt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".ppt") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                         fileArrayList.add(singleFile);
                     }
                 }
