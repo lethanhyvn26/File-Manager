@@ -75,7 +75,7 @@ dependencies {
 
     // Pinned: abandoned, used in layouts — do not replace (R1).
     implementation libs.mkloader
-    // Pinned: 0.9 Java API; 3.x would change dialog visuals (R1).
+    // AndroidX rewrite of the share sheet; 0.9 was Support Library.
     implementation libs.material.dialogs
 
     implementation libs.play.services.ads

@@ -1,10 +1,5 @@
 package com.syspolrer.systemfileexplorer.utils;
 
-import androidx.core.content.ContextCompat;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -15,14 +10,22 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
+import com.afollestad.materialdialogs.WhichButton;
+import com.afollestad.materialdialogs.actions.DialogActionExtKt;
+import com.afollestad.materialdialogs.list.DialogListExtKt;
 import com.syspolrer.systemfileexplorer.R;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Created by Arpit on 01-07-2015. */
 public class ShareTask extends AsyncTask<String, String, Void> {
 
-  private final Activity contextc;
+  private final WeakReference<Activity> contextc;
   private final int fab_skin;
   private final ArrayList<Uri> sharingUris;
   private final ArrayList<Intent> targetShareIntents = new ArrayList<>();
@@ -30,18 +33,22 @@ public class ShareTask extends AsyncTask<String, String, Void> {
   private final ArrayList<Drawable> drawables = new ArrayList<>();
 
   public ShareTask(Activity context, ArrayList<Uri> sharingUris, int fab_skin) {
-    this.contextc = context;
+    this.contextc = new WeakReference<>(context);
     this.sharingUris = sharingUris;
     this.fab_skin = fab_skin;
   }
 
   @Override
   protected Void doInBackground(String... strings) {
+    Activity activity = contextc.get();
+    if (activity == null) {
+      return null;
+    }
     if (sharingUris.size() > 0) {
       String mime = strings[0];
       boolean bluetooth_present = false;
       Intent shareIntent = new Intent().setAction(getShareIntentAction()).setType(mime);
-      PackageManager packageManager = contextc.getPackageManager();
+      PackageManager packageManager = activity.getPackageManager();
       List<ResolveInfo> resInfos = packageManager.queryIntentActivities(shareIntent, 0);
       if (!resInfos.isEmpty()) {
         for (ResolveInfo resInfo : resInfos) {
@@ -80,10 +87,10 @@ public class ShareTask extends AsyncTask<String, String, Void> {
         }
         intent.setPackage("com.android.bluetooth");
         targetShareIntents.add(intent);
-        labels.add(contextc.getString(R.string.bluetooth));
+        labels.add(activity.getString(R.string.bluetooth));
         drawables.add(
             ContextCompat.getDrawable(
-                contextc, R.drawable.ic_settings_bluetooth_black_24dp));
+                    activity, R.drawable.ic_settings_bluetooth_black_24dp));
       }
     }
     return null;
@@ -95,19 +102,21 @@ public class ShareTask extends AsyncTask<String, String, Void> {
 
   @Override
   public void onPostExecute(Void v) {
+    Activity activity = contextc.get();
+    if (activity == null || activity.isFinishing()) {
+      return;
+    }
     if (!targetShareIntents.isEmpty()) {
-      MaterialDialog.Builder builder = new MaterialDialog.Builder(contextc);
-      builder.title(R.string.share);
-      builder.theme(Theme.LIGHT);
-      ShareAdapter shareAdapter = new ShareAdapter(contextc, targetShareIntents, labels, drawables);
-      builder.adapter(shareAdapter, null);
-      builder.negativeText(R.string.cancel);
-      builder.negativeColor(fab_skin);
-      MaterialDialog b = builder.build();
-      shareAdapter.updateMatDialog(b);
-      b.show();
+      MaterialDialog dialog = new MaterialDialog(activity, MaterialDialog.getDEFAULT_BEHAVIOR());
+      dialog.title(R.string.share, null);
+      ShareAdapter shareAdapter = new ShareAdapter(activity, targetShareIntents, labels, drawables);
+      DialogListExtKt.customListAdapter(dialog, shareAdapter, null);
+      dialog.negativeButton(R.string.cancel, null, null);
+      DialogActionExtKt.getActionButton(dialog, WhichButton.NEGATIVE).setTextColor(fab_skin);
+      shareAdapter.updateMatDialog(dialog);
+      dialog.show();
     } else {
-      Toast.makeText(contextc, R.string.no_app_found, Toast.LENGTH_SHORT).show();
+      Toast.makeText(activity, R.string.no_app_found, Toast.LENGTH_SHORT).show();
     }
   }
 }
