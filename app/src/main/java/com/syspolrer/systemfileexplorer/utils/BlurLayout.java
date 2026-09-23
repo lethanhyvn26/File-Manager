@@ -56,6 +56,16 @@ public class BlurLayout extends FrameLayout {
      * Reference to View for top-parent. For retrieval see {@link #getActivityView() getActivityView}.
      */
     private WeakReference<View> mActivityView;
+    /**
+     * Choreographer callback that re-draws the blur and schedules another callback.
+     */
+    private final Choreographer.FrameCallback invalidationLoop = new Choreographer.FrameCallback() {
+        @Override
+        public void doFrame(long frameTimeNanos) {
+            invalidate();
+            Choreographer.getInstance().postFrameCallbackDelayed(this, 1000 / mFPS);
+        }
+    };
 
     public BlurLayout(Context context) {
         super(context, null);
@@ -82,17 +92,6 @@ public class BlurLayout extends FrameLayout {
             Choreographer.getInstance().postFrameCallback(invalidationLoop);
         }
     }
-
-    /**
-     * Choreographer callback that re-draws the blur and schedules another callback.
-     */
-    private final Choreographer.FrameCallback invalidationLoop = new Choreographer.FrameCallback() {
-        @Override
-        public void doFrame(long frameTimeNanos) {
-            invalidate();
-            Choreographer.getInstance().postFrameCallbackDelayed(this, 1000 / mFPS);
-        }
-    };
 
     /**
      * {@inheritDoc}

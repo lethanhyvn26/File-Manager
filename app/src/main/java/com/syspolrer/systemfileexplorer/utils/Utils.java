@@ -25,16 +25,20 @@ import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
+    public static final String TABLE_FAV = "TABLE_FAV";
+    public static final int EVENT_CLOSE = 0;
+    public static final int EVENT_COPY = 1;
+    public static final int EVENT_MOVE = 2;
+    public static final int EVENT_ADD_TO_FAV = 3;
+    public static final int EVENT_DELETE = 4;
+    public static final int EVENT_DETAILS = 5;
     public static File EXTERNAL_FILE;
     public static File SD_CARD_FILE;
     public static boolean IS_SD_CARD_EXIST;
-
     public static long TOTAL_EXTERNAL_SIZE = 0;
     public static long TOTAL_AVAILABLE_EXTERNAL_SIZE = 0;
-
     public static long TOTAL_SD_CARD_SIZE = 0;
     public static long TOTAL_AVAILABLE_SD_CARD_SIZE = 0;
-
     public static long EXT_IMAGE_SIZE = 0;
     public static long EXT_AUDIO_SIZE = 0;
     public static long EXT_VIDEO_SIZE = 0;
@@ -42,23 +46,12 @@ public class Utils {
     public static long EXT_APPS_SIZE = 0;
     public static long EXT_DOCUMENT_SIZE = 0;
     public static long EXT_DOWNLOAD_SIZE = 0;
-
     public static long SD_IMAGE_SIZE = 0;
     public static long SD_AUDIO_SIZE = 0;
     public static long SD_VIDEO_SIZE = 0;
     public static long SD_ZIPS_SIZE = 0;
     public static long SD_APPS_SIZE = 0;
     public static long SD_DOCUMENT_SIZE = 0;
-
-    public static final String TABLE_FAV = "TABLE_FAV";
-
-    public static final int EVENT_CLOSE = 0;
-    public static final int EVENT_COPY = 1;
-    public static final int EVENT_MOVE = 2;
-    public static final int EVENT_ADD_TO_FAV = 3;
-    public static final int EVENT_DELETE = 4;
-    public static final int EVENT_DETAILS = 5;
-
 
     static public boolean hasStorage(boolean requireWriteAccess) {
         String state = Environment.getExternalStorageState();
@@ -88,10 +81,9 @@ public class Utils {
         Window window = activity.getWindow();
         WindowCompat.setDecorFitsSystemWindows(window, false);
         View content = activity.findViewById(android.R.id.content);
-        if (!(content instanceof ViewGroup)) {
+        if (!(content instanceof ViewGroup host)) {
             return;
         }
-        ViewGroup host = (ViewGroup) content;
         if (host.getChildCount() == 0) {
             return;
         }

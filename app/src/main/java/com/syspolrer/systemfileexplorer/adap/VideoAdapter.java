@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.bumptech.glide.load.MultiTransformation;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -79,16 +78,15 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return files.size();
+    }
 
     interface ImageSelect {
         void imgSelect(ImagesModel imagesModel, ImageView imageView, int i, int j);
 
         void onImageBind(ImageView imageView, File file);
-    }
-
-    @Override
-    public int getItemCount() {
-        return files.size();
     }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {
@@ -109,6 +107,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             binding.tvLength.setText(files.get(getBindingAdapterPosition()).duration);
         }
     }
+
     public class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageItemBinding binding;
 

@@ -25,6 +25,14 @@ public class BlurKit {
         instance.rs = RenderScript.create(context);
     }
 
+    public static BlurKit getInstance() {
+        if (instance == null) {
+            throw new RuntimeException("BlurKit not initialized!");
+        }
+
+        return instance;
+    }
+
     public Bitmap blur(Bitmap src, int radius) {
         final Allocation input = Allocation.createFromBitmap(rs, src);
         final Allocation output = Allocation.createTyped(rs, input.getType());
@@ -60,14 +68,6 @@ public class BlurKit {
         src.draw(canvas);
 
         return bitmap;
-    }
-
-    public static BlurKit getInstance() {
-        if (instance == null) {
-            throw new RuntimeException("BlurKit not initialized!");
-        }
-
-        return instance;
     }
 
 }

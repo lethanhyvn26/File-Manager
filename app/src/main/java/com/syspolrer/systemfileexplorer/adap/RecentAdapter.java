@@ -1,11 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.bumptech.glide.load.MultiTransformation;
-
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
@@ -23,16 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.databinding.FileItemBinding;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.DownloadViewHolder> implements Filterable {
 
@@ -40,6 +37,33 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.DownloadVi
     ArrayList<File> recentList = new ArrayList<>();
     FileSelectedListener fileSelectedListener;
     ArrayList<File> filterList = new ArrayList<>();
+    private final Filter filter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<File> filList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filList.addAll(filterList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
+                for (File file : filterList) {
+                    if (file.getName().contains(filterPattern)) {
+                        filList.add(file);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            recentList.clear();
+            recentList.addAll(Utils.filterInstances(results.values, File.class));
+            notifyDataSetChanged();
+        }
+    };
 
     public RecentAdapter(Activity activity, FileSelectedListener fileSelectedListener) {
         this.activity = activity;
@@ -66,14 +90,14 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.DownloadVi
         this.recentList.clear();
         this.recentList.addAll(downloadList);
         this.filterList = new ArrayList<>(this.recentList);
-        if (fragment!=null){
+        if (fragment != null) {
             activity.runOnUiThread(() -> notifyDataSetChanged());
-            if (mkLoader != null && linearLayout != null){
-                activity.runOnUiThread(()-> {
+            if (mkLoader != null && linearLayout != null) {
+                activity.runOnUiThread(() -> {
                     mkLoader.setVisibility(View.GONE);
-                    if (downloadList.size()>0){
+                    if (downloadList.size() > 0) {
                         linearLayout.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         linearLayout.setVisibility(View.VISIBLE);
                     }
                 });
@@ -110,13 +134,13 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.DownloadVi
                 binding.imageView4.setImageResource(R.drawable.ic_txt);
             } else if (file.getName().toLowerCase(Locale.ROOT).endsWith("ppt")) {
                 binding.imageView4.setImageResource(R.drawable.ic_ppt);
-            }else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".zip")||file.getName().toLowerCase(Locale.ROOT).endsWith(".rar")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".zip") || file.getName().toLowerCase(Locale.ROOT).endsWith(".rar")) {
                 binding.imageView4.setImageResource(R.drawable.ic_zips);
             } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                 binding.imageView4.setImageResource(R.drawable.ic_pdf);
             } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || file.getName().toLowerCase(Locale.ROOT).endsWith(".wav")) {
                 binding.imageView4.setImageResource(R.drawable.ic_audio);
-            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".png")|| file.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || file.getName().toLowerCase(Locale.ROOT).endsWith(".png") || file.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -137,32 +161,4 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.DownloadVi
 
         }
     }
-
-    private final Filter filter = new Filter() {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<File> filList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filList.addAll(filterList);
-            }else {
-                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (File file : filterList){
-                    if (file.getName().contains(filterPattern)){
-                        filList.add(file);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filList;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            recentList.clear();
-            recentList.addAll(Utils.filterInstances(results.values, File.class));
-            notifyDataSetChanged();
-        }
-    };
 }

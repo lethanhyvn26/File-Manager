@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,15 +25,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 
 public class VideoFragment extends Fragment {
 
-    private FragmentVideoBinding binding;
     private final ArrayList<ImagesModel> videos = new ArrayList<>();
     private final ArrayList<ImagesShortModel> imagesShortModels = new ArrayList<>();
     String path;
+    private FragmentVideoBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,8 +48,6 @@ public class VideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentVideoBinding.inflate(inflater);
-
-
 
 
         binding.rv.setLayoutManager(new LinearLayoutManager(requireActivity()));

@@ -3,7 +3,6 @@ package com.syspolrer.systemfileexplorer.adap;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,11 +61,12 @@ public class AppsAdapterPreloadModel implements ListPreloader.PreloadModelProvid
         request.load(getApplicationIconFromPackageName(packageName)).into(v);
 
     }
+
     private Drawable getApplicationIconFromPackageName(String packageName) {
         try {
             return mContext.getPackageManager().getApplicationIcon(packageName);
         } catch (PackageManager.NameNotFoundException e) {
-           // LOG.warn(getClass().getSimpleName(), e);
+            // LOG.warn(getClass().getSimpleName(), e);
             return ContextCompat.getDrawable(mContext, R.drawable.ic_image);
         }
     }

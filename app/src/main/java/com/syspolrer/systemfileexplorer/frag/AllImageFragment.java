@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -29,17 +27,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class AllImageFragment extends Fragment implements ActionModeListener {
 
-    private FragmentAllImageBinding binding;
+    public static ActionModeListener actionModeListener;
     private final ArrayList<ImagesModel> imgList = new ArrayList<>();
     private final ArrayList<ImagesShortModel> imagesShortModels = new ArrayList<>();
+    private FragmentAllImageBinding binding;
     private String path;
-    public static ActionModeListener actionModeListener;
     private NestVideoAdapter adapter;
 
     @Override
@@ -81,7 +79,7 @@ public class AllImageFragment extends Fragment implements ActionModeListener {
                 binding.tvTitle.setText(new File(path).getName());
 
             } else {
-                requireActivity().runOnUiThread(()->binding.appBarLayout.setVisibility(View.GONE));
+                requireActivity().runOnUiThread(() -> binding.appBarLayout.setVisibility(View.GONE));
 
                 if (Utils.EXTERNAL_FILE != null) {
                     imgList.addAll(img(Utils.EXTERNAL_FILE));
@@ -139,7 +137,7 @@ public class AllImageFragment extends Fragment implements ActionModeListener {
                 if (singleFile.isDirectory() && !singleFile.isHidden() && !singleFile.getName().contains("Telegram") && !singleFile.getParent().contains("Telegram")) {
                     fileArrayList.addAll(img(singleFile));
                 } else {
-                    if (!singleFile.isHidden()&& !singleFile.getParent().contains("Telegram")  && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
+                    if (!singleFile.isHidden() && !singleFile.getParent().contains("Telegram") && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
                         fileArrayList.add(new ImagesModel(singleFile, String.valueOf(DateFormat.format("dd/MM/yyyy", singleFile.lastModified())), null));
                     }
                 }

@@ -1,9 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
@@ -22,17 +18,46 @@ import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.databinding.FileItemBinding;
 import com.syspolrer.systemfileexplorer.frag.SelectAppsFragment;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder> implements Filterable {
 
-    ArrayList<File> appsList  = new ArrayList<>();
+    ArrayList<File> appsList = new ArrayList<>();
     Activity activity;
     FileSelectedListener fileSelectedListener;
     ArrayList<File> filterList = new ArrayList<>();
+    private final Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<File> filList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filList.addAll(filterList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
+                for (File file : filterList) {
+                    if (file.getName().contains(filterPattern)) {
+                        filList.add(file);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            appsList.clear();
+            appsList.addAll(Utils.filterInstances(results.values, File.class));
+            notifyDataSetChanged();
+        }
+    };
 
     public AppsAdapter(Activity activity, FileSelectedListener fileSelectedListener) {
         this.activity = activity;
@@ -42,7 +67,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
     @NonNull
     @Override
     public AppsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AppsViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.file_item,parent,false));
+        return new AppsViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.file_item, parent, false));
     }
 
     @Override
@@ -50,18 +75,18 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         holder.onBind(appsList.get(position));
     }
 
-    public void addAll(ArrayList<File> appsList, Fragment fragment, MKLoader mkLoader, LinearLayout linearLayout){
+    public void addAll(ArrayList<File> appsList, Fragment fragment, MKLoader mkLoader, LinearLayout linearLayout) {
         this.appsList.clear();
         this.appsList.addAll(appsList);
         this.filterList = new ArrayList<>(this.appsList);
-        if (fragment!=null) {
+        if (fragment != null) {
             activity.runOnUiThread(() -> notifyDataSetChanged());
-            if (mkLoader != null && linearLayout != null){
-                activity.runOnUiThread(()-> {
+            if (mkLoader != null && linearLayout != null) {
+                activity.runOnUiThread(() -> {
                     mkLoader.setVisibility(View.GONE);
-                    if (appsList.size()>0){
+                    if (!appsList.isEmpty()) {
                         linearLayout.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         linearLayout.setVisibility(View.VISIBLE);
                     }
                 });
@@ -81,52 +106,26 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
 
     public class AppsViewHolder extends RecyclerView.ViewHolder {
         FileItemBinding binding;
+
         public AppsViewHolder(@NonNull FileItemBinding itemView) {
             super(itemView.getRoot());
-            binding= itemView;
+            binding = itemView;
         }
 
         public void onBind(File file) {
 
-            if (SelectAppsFragment.isActionModeOn){
-                fileSelectedListener.onBind(binding.ivSelect,file);
+            if (SelectAppsFragment.isActionModeOn) {
+                fileSelectedListener.onBind(binding.ivSelect, file);
             }
 
-            binding.imageView4.setImageDrawable(activity.getPackageManager().getPackageArchiveInfo(file.getAbsolutePath(), 0).applicationInfo.loadIcon(activity.getPackageManager()));
+            binding.imageView4.setImageDrawable(Objects.requireNonNull(activity.getPackageManager().getPackageArchiveInfo(file.getAbsolutePath(), 0)).applicationInfo.loadIcon(activity.getPackageManager()));
             binding.tvFileName.setText(file.getName());
-            binding.tvSize.setText(Formatter.formatFileSize(activity,file.length()));
+            binding.tvSize.setText(Formatter.formatFileSize(activity, file.length()));
 
-            binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect,file));
+            binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect, file));
 
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(appsList,getBindingAdapterPosition(),binding.ivSelect));
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(appsList, getBindingAdapterPosition(), binding.ivSelect));
         }
     }
-
-    private final Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<File> filList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0){
-                filList.addAll(filterList);
-            }else {
-                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (File file : filterList){
-                    if (file.getName().contains(filterPattern)){
-                        filList.add(file);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filList;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            appsList.clear();
-            appsList.addAll(Utils.filterInstances(results.values, File.class));
-            notifyDataSetChanged();
-        }
-    };
 
 }

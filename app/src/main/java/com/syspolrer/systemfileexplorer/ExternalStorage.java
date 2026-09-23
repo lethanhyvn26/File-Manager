@@ -48,7 +48,7 @@ public class ExternalStorage {
 
         try {
             File mountFile = new File("/proc/mounts");
-            if(mountFile.exists()){
+            if (mountFile.exists()) {
                 Scanner scanner = new Scanner(mountFile);
                 while (scanner.hasNext()) {
                     String line = scanner.nextLine();
@@ -69,7 +69,7 @@ public class ExternalStorage {
 
         try {
             File voldFile = new File("/system/etc/vold.fstab");
-            if(voldFile.exists()){
+            if (voldFile.exists()) {
                 Scanner scanner = new Scanner(voldFile);
                 while (scanner.hasNext()) {
                     String line = scanner.nextLine();
@@ -98,18 +98,18 @@ public class ExternalStorage {
 
         List<String> mountHash = new ArrayList<String>(10);
 
-        for(String mount : mMounts){
+        for (String mount : mMounts) {
             File root = new File(mount);
             if (root.exists() && root.isDirectory() && root.canWrite()) {
                 File[] list = root.listFiles();
                 String hash = "[";
-                if(list!=null){
-                    for(File f : list){
-                        hash += f.getName().hashCode()+":"+f.length()+", ";
+                if (list != null) {
+                    for (File f : list) {
+                        hash += f.getName().hashCode() + ":" + f.length() + ", ";
                     }
                 }
                 hash += "]";
-                if(!mountHash.contains(hash)){
+                if (!mountHash.contains(hash)) {
                     String key = SD_CARD + "_" + map.size();
                     if (map.size() == 0) {
                         key = SD_CARD;
@@ -124,8 +124,8 @@ public class ExternalStorage {
 
         mMounts.clear();
 
-        if(map.isEmpty()){
-                 map.put(SD_CARD, Environment.getExternalStorageDirectory());
+        if (map.isEmpty()) {
+            map.put(SD_CARD, Environment.getExternalStorageDirectory());
         }
         return map;
     }

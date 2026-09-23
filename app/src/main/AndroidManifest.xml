@@ -38,12 +38,12 @@
         <activity
             android:name=".activity.SelectFileActivity"
             android:configChanges="uiMode"
-            android:screenOrientation="portrait" />
+            />
         <activity
             android:configChanges="uiMode"
             android:exported="true"
             android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +53,7 @@
         <activity
             android:configChanges="uiMode"
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait" />
+            />
 
         <provider
             android:name="androidx.core.content.FileProvider"

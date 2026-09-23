@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -30,112 +28,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class RecentFragment extends Fragment implements FileSelectedListener, ActionModeListener {
-
-    private FragmentRecentBinding binding;
-    private final ArrayList<File> download = new ArrayList<>();
-    public static ActionModeListener actionModeListener;
-    private RecentAdapter downloadAdapter;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentRecentBinding.inflate(inflater);
-
-        actionModeListener = this;
-        binding.rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        downloadAdapter = new RecentAdapter(requireActivity(), this);
-        binding.rv.setAdapter(downloadAdapter);
-
-        binding.loader.setVisibility(View.VISIBLE);
-        setData();
-
-        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
-        binding.rootRecent.setOnClickListener(v -> Utils.hideKeyboard(requireActivity()));
-        binding.et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                downloadAdapter.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        return binding.getRoot();
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        Utils.hideKeyboard(requireActivity());
-    }
-
-
-    private void setData() {
-        download.clear();
-        ArrayList<File> recentFiles = getRecentFilesFromAllDirectories( 15);
-        downloadAdapter.addAll(recentFiles,this,binding.loader,binding.noData);
-
-    }
-
-
-
-
-
-    @Override
-    public void onFileSelect(ImageView imageView, File file) {
-        OpenFile.open(file);
-    }
-
-    @Override
-    public void onBind(ImageView imageView, File file) {
-
-    }
-
-    @Override
-    public void onIvSelectClick(ArrayList<File> files, int position, ImageView imageView) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("List", files);
-        bundle.putInt("Position", position);
-        bundle.putString("From", "Recent");
-        SelectAppsFragment selectAppsFragment = new SelectAppsFragment();
-        selectAppsFragment.setArguments(bundle);
-        requireActivity().getSupportFragmentManager().beginTransaction().add(MainActivity.MAIN_CONTAINER, selectAppsFragment).addToBackStack(null).commit();
-
-    }
-
-    @Override
-    public void onIvMediaSelectClick(ArrayList<MediaModel> files, int position, ImageView imageView) {
-
-    }
-
-    @Override
-    public void onEventListener(int event) {
-        switch (event) {
-            case Utils.EVENT_ADD_TO_FAV:
-                requireActivity().getOnBackPressedDispatcher().onBackPressed();
-            case Utils.EVENT_CLOSE:
-                requireActivity().getOnBackPressedDispatcher().onBackPressed();
-                break;
-            case Utils.EVENT_DELETE:
-                setData();
-                requireActivity().getOnBackPressedDispatcher().onBackPressed();
-                break;
-            case Utils.EVENT_COPY:
-            case Utils.EVENT_MOVE:
-                setData();
-                new Handler(Looper.getMainLooper()).post(() -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
-                break;
-        }
-    }
-
 
     // List of valid file extensions
     private static final String[] VALID_EXTENSIONS = {
@@ -146,6 +41,10 @@ public class RecentFragment extends Fragment implements FileSelectedListener, Ac
             "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", // document files
             "mp3", "wav", "aac", "flac", "ogg" // audio files
     };
+    public static ActionModeListener actionModeListener;
+    private final ArrayList<File> download = new ArrayList<>();
+    private FragmentRecentBinding binding;
+    private RecentAdapter downloadAdapter;
 
     // Method to check if a file has a valid extension
     private static boolean hasValidExtension(File file) {
@@ -157,33 +56,6 @@ public class RecentFragment extends Fragment implements FileSelectedListener, Ac
         }
         return false;
     }
-
-//    public static ArrayList<File> getRecentFiles(File directory, int months) {
-//        ArrayList<File> recentFiles = new ArrayList<>();
-//        if (directory.isDirectory()) {
-//            File[] files = directory.listFiles();
-//            if (files != null) {
-//                long currentTime = System.currentTimeMillis();
-//                long monthsInMillis = (long) months * 30L * 24L * 60L * 60L * 1000L;
-//
-//                for (File file : files) {
-//                    if (file.isFile() && hasValidExtension(file) && (currentTime - file.lastModified() <= monthsInMillis)) {
-//                        recentFiles.add(file);
-//                    }
-//                }
-//
-//                // Sort files by last modified date in ascending order
-//                Collections.sort(recentFiles, new Comparator<File>() {
-//                    @Override
-//                    public int compare(File file1, File file2) {
-//                        return Long.compare(file1.lastModified(), file2.lastModified());
-//                    }
-//                });
-//            }
-//        }
-//        return recentFiles;
-//    }
-
 
     // Method to recursively get all files from a directory
     private static void getAllFiles(File directory, List<File> allFiles) {
@@ -234,6 +106,126 @@ public class RecentFragment extends Fragment implements FileSelectedListener, Ac
             return new ArrayList<>(allFiles.subList(0, limit));
         }
         return allFiles;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentRecentBinding.inflate(inflater);
+
+        actionModeListener = this;
+        binding.rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        downloadAdapter = new RecentAdapter(requireActivity(), this);
+        binding.rv.setAdapter(downloadAdapter);
+
+        binding.loader.setVisibility(View.VISIBLE);
+        setData();
+
+        binding.ivBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
+        binding.rootRecent.setOnClickListener(v -> Utils.hideKeyboard(requireActivity()));
+        binding.et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                downloadAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Utils.hideKeyboard(requireActivity());
+    }
+
+    private void setData() {
+        download.clear();
+        ArrayList<File> recentFiles = getRecentFilesFromAllDirectories(15);
+        downloadAdapter.addAll(recentFiles, this, binding.loader, binding.noData);
+
+    }
+
+    @Override
+    public void onFileSelect(ImageView imageView, File file) {
+        OpenFile.open(file);
+    }
+
+    @Override
+    public void onBind(ImageView imageView, File file) {
+
+    }
+
+    @Override
+    public void onIvSelectClick(ArrayList<File> files, int position, ImageView imageView) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("List", files);
+        bundle.putInt("Position", position);
+        bundle.putString("From", "Recent");
+        SelectAppsFragment selectAppsFragment = new SelectAppsFragment();
+        selectAppsFragment.setArguments(bundle);
+        requireActivity().getSupportFragmentManager().beginTransaction().add(MainActivity.MAIN_CONTAINER, selectAppsFragment).addToBackStack(null).commit();
+
+    }
+
+//    public static ArrayList<File> getRecentFiles(File directory, int months) {
+//        ArrayList<File> recentFiles = new ArrayList<>();
+//        if (directory.isDirectory()) {
+//            File[] files = directory.listFiles();
+//            if (files != null) {
+//                long currentTime = System.currentTimeMillis();
+//                long monthsInMillis = (long) months * 30L * 24L * 60L * 60L * 1000L;
+//
+//                for (File file : files) {
+//                    if (file.isFile() && hasValidExtension(file) && (currentTime - file.lastModified() <= monthsInMillis)) {
+//                        recentFiles.add(file);
+//                    }
+//                }
+//
+//                // Sort files by last modified date in ascending order
+//                Collections.sort(recentFiles, new Comparator<File>() {
+//                    @Override
+//                    public int compare(File file1, File file2) {
+//                        return Long.compare(file1.lastModified(), file2.lastModified());
+//                    }
+//                });
+//            }
+//        }
+//        return recentFiles;
+//    }
+
+    @Override
+    public void onIvMediaSelectClick(ArrayList<MediaModel> files, int position, ImageView imageView) {
+
+    }
+
+    @Override
+    public void onEventListener(int event) {
+        switch (event) {
+            case Utils.EVENT_ADD_TO_FAV:
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            case Utils.EVENT_CLOSE:
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                break;
+            case Utils.EVENT_DELETE:
+                setData();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                break;
+            case Utils.EVENT_COPY:
+            case Utils.EVENT_MOVE:
+                setData();
+                new Handler(Looper.getMainLooper()).post(() -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
+                break;
+        }
     }
 
 }

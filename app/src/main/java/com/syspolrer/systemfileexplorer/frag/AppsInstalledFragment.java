@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -23,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
@@ -43,18 +39,27 @@ import java.util.Objects;
 
 public class AppsInstalledFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<AppDataParcelable>> {
 
-    private FragmentAppsInstalledBinding binding;
-
-    private AppsRecyclerAdapter adapter;
-
-    private RecyclerViewPreloader<String> preloader;
-
     public static final int ID_LOADER_APP_LIST = 0;
-
     private final boolean showSystemApps = false;
+    // Registering the uninstall intent contract
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private FragmentAppsInstalledBinding binding;
+    private AppsRecyclerAdapter adapter;
+    private RecyclerViewPreloader<String> preloader;
     private AppsAdapterPreloadModel modelProvider;
     private LinearLayoutManager linearLayoutManager;
     private String packageNameUninstall = "";
+    private final ActivityResultLauncher<Intent> uninstallLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+
+                handler.postDelayed(() -> {
+                    if (!Objects.equals(packageNameUninstall, "")) {
+                        LoaderManager.getInstance(requireActivity()).restartLoader(ID_LOADER_APP_LIST, null, this);
+                        packageNameUninstall = "";
+                    }
+                }, 200);
+            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +75,7 @@ public class AppsInstalledFragment extends Fragment implements LoaderManager.Loa
 
         preloader =
                 new RecyclerViewPreloader<>(
-                        Glide.with(this), modelProvider, sizeProvider,100);
+                        Glide.with(this), modelProvider, sizeProvider, 100);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rv.setLayoutManager(linearLayoutManager);
@@ -95,18 +100,17 @@ public class AppsInstalledFragment extends Fragment implements LoaderManager.Loa
 
             }
         });
-        List<AppDataParcelable> data=    StorageUtils.INSTANCE.loadAppDataList(requireContext());
+        List<AppDataParcelable> data = StorageUtils.INSTANCE.loadAppDataList(requireContext());
 
-        if(data.isEmpty()){
+        if (data.isEmpty()) {
             LoaderManager.getInstance(this).initLoader(ID_LOADER_APP_LIST, null, this);
 
-        }else {
+        } else {
             onReleaseResources(data);
         }
 
         return binding.getRoot();
     }
-
 
     @NonNull
     @Override
@@ -146,7 +150,7 @@ public class AppsInstalledFragment extends Fragment implements LoaderManager.Loa
             });
             binding.rv.setVisibility(View.VISIBLE);
             binding.rv.setAdapter(adapter);
-            if(binding.et.getText().toString().trim().length() > 0){
+            if (binding.et.getText().toString().trim().length() > 0) {
                 adapter.getFilter().filter(binding.et.getText().toString().trim());
             }
             binding.et.setEnabled(true);
@@ -159,23 +163,9 @@ public class AppsInstalledFragment extends Fragment implements LoaderManager.Loa
         adapter.setData(Collections.emptyList(), true);
 
     }
-    // Registering the uninstall intent contract
-    private final Handler handler = new Handler(Looper.getMainLooper());
-
-    private final ActivityResultLauncher<Intent> uninstallLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-
-                handler.postDelayed(() -> {
-                    if (!Objects.equals(packageNameUninstall, "")) {
-                        LoaderManager.getInstance(requireActivity()).restartLoader(ID_LOADER_APP_LIST, null, this);
-                        packageNameUninstall = "";
-                    }
-                }, 200);
-            });
 
     private void uninstallApp(String packageName) {
-        packageNameUninstall=packageName;
+        packageNameUninstall = packageName;
         Intent intent = new Intent(Intent.ACTION_DELETE);
         intent.setData(Uri.parse("package:" + packageName));
         uninstallLauncher.launch(intent);

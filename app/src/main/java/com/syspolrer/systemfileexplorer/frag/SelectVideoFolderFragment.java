@@ -42,14 +42,13 @@ import java.util.ArrayList;
 
 public class SelectVideoFolderFragment extends Fragment implements FileSelectedListener, ActionModeListener, View.OnClickListener {
 
-    private FragmentSelectVideoFolderBinding binding;
     public static ArrayList<File> selectedList = new ArrayList<>();
     public static boolean isActionModeOn = true;
+    public static ActionModeListener actionModeListener;
+    private FragmentSelectVideoFolderBinding binding;
     private String from;
-
     private ArrayList<MediaModel> list = new ArrayList<>();
     private int position;
-    public static ActionModeListener actionModeListener;
     private boolean isMoCo = false;
     private ActionModeListener listener;
 
@@ -93,7 +92,7 @@ public class SelectVideoFolderFragment extends Fragment implements FileSelectedL
         selectedList.add(list.get(position).file);
 
         if (selectedList.size() > 0) {
-            audioFolderAdapter.addAll(list,this,null,null);
+            audioFolderAdapter.addAll(list, this, null, null);
         }
 
         binding.rv.scrollToPosition(position);
@@ -103,7 +102,7 @@ public class SelectVideoFolderFragment extends Fragment implements FileSelectedL
         binding.lyFavourite.setOnClickListener(this);
         binding.lyMove.setOnClickListener(this);
         binding.lyCopy.setOnClickListener(this);
-        binding.ivClose.setOnClickListener(v ->   requireActivity().getOnBackPressedDispatcher().onBackPressed());
+        binding.ivClose.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }

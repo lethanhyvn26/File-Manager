@@ -89,6 +89,7 @@ class FragmentSettings : Fragment() {
             Intent.createChooser(sendIntent, "Share this app with your friends !")
         startActivity(shareIntent)
     }
+
     fun Activity.showRateApp() {
         startActivity(
             Intent(

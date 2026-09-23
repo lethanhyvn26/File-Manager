@@ -27,7 +27,7 @@ public class FileUtils {
                         : null;
 
         for (File f : files) {
-            uris.add(FileProvider.getUriForFile(activity, activity.getPackageName()+ ".provider", f));
+            uris.add(FileProvider.getUriForFile(activity, activity.getPackageName() + ".provider", f));
             if (!isGenericFileType
                     && (mime == null || !mime.equals(MimeTypes.getMimeType(f.getPath(), f.isDirectory())))) {
                 isGenericFileType = true;

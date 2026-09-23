@@ -33,12 +33,38 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
-public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.ImgFolderViewHolder>  implements Filterable {
+public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.ImgFolderViewHolder> implements Filterable {
 
     Activity activity;
     FileSelectedListener fileSelectedListener;
     ArrayList<MediaModel> filterList;
     ArrayList<MediaModel> fileList = new ArrayList<>();
+    private final Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<MediaModel> filList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filList.addAll(filterList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
+                for (MediaModel mediaModel : filterList) {
+                    if (mediaModel.file.getName().toLowerCase(Locale.ROOT).trim().contains(filterPattern)) {
+                        filList.add(mediaModel);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            fileList.clear();
+            fileList.addAll(Utils.filterInstances(results.values, MediaModel.class));
+            notifyDataSetChanged();
+        }
+    };
 
     public ImageFolderAdapter(Activity activity, FileSelectedListener fileSelectedListener) {
         this.activity = activity;
@@ -70,9 +96,9 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
             if (mkLoader != null && linearLayout != null) {
                 activity.runOnUiThread(() -> {
                     mkLoader.setVisibility(View.GONE);
-                    if (fileList.size() > 0 ){
+                    if (fileList.size() > 0) {
                         linearLayout.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         linearLayout.setVisibility(View.VISIBLE);
                     }
                 });
@@ -80,6 +106,7 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
             }
         }
     }
+
     @Override
     public Filter getFilter() {
         return filter;
@@ -118,31 +145,4 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
             }
         }
     }
-
-    private final Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<MediaModel> filList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filList.addAll(filterList);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (MediaModel mediaModel : filterList) {
-                    if (mediaModel.file.getName().toLowerCase(Locale.ROOT).trim().contains(filterPattern)) {
-                        filList.add(mediaModel);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filList;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            fileList.clear();
-            fileList.addAll(Utils.filterInstances(results.values, MediaModel.class));
-            notifyDataSetChanged();
-        }
-    };
 }

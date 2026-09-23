@@ -1,4 +1,5 @@
 package com.syspolrer.systemfileexplorer.utils
+
 class AppDataSorter(var sort: Int, isAscending: Boolean) :
     Comparator<AppDataParcelable?> {
     private val asc: Int = if (isAscending) 1 else -1
@@ -11,8 +12,7 @@ class AppDataSorter(var sort: Int, isAscending: Boolean) :
         file1: AppDataParcelable?,
         file2: AppDataParcelable?,
     ): Int {
-        safeLet(file1, file2) {
-                f1, f2 ->
+        safeLet(file1, file2) { f1, f2 ->
             if (f1.isSystemApp != f2.isSystemApp) {
                 return if (f1.isSystemApp) -1 else 1
             }
@@ -22,16 +22,19 @@ class AppDataSorter(var sort: Int, isAscending: Boolean) :
                     // sort by name
                     return asc * f1.label.compareTo(f2.label, ignoreCase = true)
                 }
+
                 SORT_MODIF -> {
                     // sort by last modified
                     return asc *
-                        java.lang.Long.valueOf(f1.lastModification)
-                            .compareTo(f2.lastModification)
+                            java.lang.Long.valueOf(f1.lastModification)
+                                .compareTo(f2.lastModification)
                 }
+
                 SORT_SIZE -> {
                     // sort by size
                     return asc * java.lang.Long.valueOf(f1.size).compareTo(f2.size)
                 }
+
                 else -> return 0
             }
         }

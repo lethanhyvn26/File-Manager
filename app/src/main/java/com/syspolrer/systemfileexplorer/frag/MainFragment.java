@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -25,14 +23,25 @@ import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class MainFragment extends Fragment implements StorageClickListener, HomeAppClickListener {
 
+    private final String[] apps = {"Images", "Audio", "Videos", "Zips", "Apps", "Document", "Download", "More"};
     private FragmentMainBinding binding;
     private HomeAdapter adapter;
-    private final String[] apps = {"Images", "Audio", "Videos", "Zips", "Apps", "Document", "Download", "More"};
 
+    public static long sdCardTotal_bytes() {
+
+        File path = Environment.getExternalStorageDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long free_memory = 0;
+
+        free_memory = stat.getBlockCountLong() * stat.getBlockSizeLong(); //return value is in bytes
+
+        return free_memory;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -183,7 +192,6 @@ public class MainFragment extends Fragment implements StorageClickListener, Home
         }
     }
 
-
     private ArrayList<File> getFiles(File file) {
         ArrayList<File> arrayList = new ArrayList<>();
         File[] files = file.listFiles();
@@ -232,7 +240,6 @@ public class MainFragment extends Fragment implements StorageClickListener, Home
         return arrayList;
     }
 
-
     private ArrayList<File> getSdCardFile(File file) {
         ArrayList<File> arrayList = new ArrayList<>();
         File[] files = file.listFiles();
@@ -261,18 +268,6 @@ public class MainFragment extends Fragment implements StorageClickListener, Home
         }
 
         return arrayList;
-    }
-
-
-    public static long sdCardTotal_bytes() {
-
-        File path = Environment.getExternalStorageDirectory();
-        StatFs stat = new StatFs(path.getPath());
-        long free_memory = 0;
-
-        free_memory = stat.getBlockCountLong() * stat.getBlockSizeLong(); //return value is in bytes
-
-        return free_memory;
     }
 
     @Override

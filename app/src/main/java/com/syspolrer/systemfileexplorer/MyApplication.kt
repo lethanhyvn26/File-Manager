@@ -19,7 +19,8 @@ import com.syspolrer.systemfileexplorer.utils.isInternetAvailable
 import java.lang.ref.WeakReference
 import java.util.Date
 
-class MyApplication : Application(), Application.ActivityLifecycleCallbacks, DefaultLifecycleObserver {
+class MyApplication : Application(), Application.ActivityLifecycleCallbacks,
+    DefaultLifecycleObserver {
 
 
     private lateinit var appOpenAdManager: AppOpenAdManager
@@ -103,6 +104,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
         // class.
         appOpenAdManager.showAdIfAvailable(activity, onShowAdCompleteListener)
     }
+
     fun showAdIfAvailableSplash(
         activity: Activity,
         onShowAdCompleteListener: OnShowAdCompleteListener
@@ -111,7 +113,6 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
         // class.
         appOpenAdManager.showAdIfAvailableSplash(activity, onShowAdCompleteListener)
     }
-
 
 
     /**
@@ -149,7 +150,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
 
 
 
-            if(!isInternetAvailable(context)){
+            if (!isInternetAvailable(context)) {
                 isLoadingAd = false
                 return
             }
@@ -226,7 +227,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
             onShowAdCompleteListener: OnShowAdCompleteListener,
         ) {
 
-            if (activity is SplashActivity ) {
+            if (activity is SplashActivity) {
                 onShowAdCompleteListener.onShowAdComplete()
                 return
             }
@@ -294,7 +295,10 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks, Def
 
 
             if (AdmobHelp.getInstance().isShowingInterstitialAd) {  // if ad Interstitial is showing then not show ad open
-                Log.i("HAOHAO", " showAdIfAvailableSplash AdmobHelp.getInstance().isShowingInterstitialAd")
+                Log.i(
+                    "HAOHAO",
+                    " showAdIfAvailableSplash AdmobHelp.getInstance().isShowingInterstitialAd"
+                )
                 onShowAdCompleteListener.onShowAdComplete()
 
                 return

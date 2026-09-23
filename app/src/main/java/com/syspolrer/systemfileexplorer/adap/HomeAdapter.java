@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -21,6 +19,8 @@ import com.syspolrer.systemfileexplorer.databinding.StorageSpaceItemBinding;
 import com.syspolrer.systemfileexplorer.interfaces.HomeAppClickListener;
 import com.syspolrer.systemfileexplorer.interfaces.StorageClickListener;
 import com.syspolrer.systemfileexplorer.utils.Utils;
+
+import java.util.Locale;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -188,8 +188,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 paramsFree.width = (int) (width * freePre) / 100;
                 binding.prBlank.setLayoutParams(paramsFree);
             });
-
-
 
 
             binding.constraintLayout2.setOnClickListener(v -> {

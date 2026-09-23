@@ -26,15 +26,15 @@ public class AdmobHelp {
 
     private boolean isReload = false;
 
+    private AdmobHelp() {
+
+    }
+
     public static AdmobHelp getInstance() {
         if (instance == null) {
             instance = new AdmobHelp();
         }
         return instance;
-    }
-
-    private AdmobHelp() {
-
     }
 
     public void init(Context context) {
@@ -100,13 +100,13 @@ public class AdmobHelp {
                 mInterstitialAd.show(activity);
 
             } else {
-                if(mInterstitialAd==null){
+                if (mInterstitialAd == null) {
 
                     loadInterstitialAd(activity);
                 }
                 adCloseListener.onAdClosed();
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             adCloseListener.onAdClosed();
 
         }
@@ -117,14 +117,14 @@ public class AdmobHelp {
         return mInterstitialAd != null && context instanceof Activity;
     }
 
-    public interface AdCloseListener {
-        void onAdClosed();
-    }
-
     public Boolean isShowingInterstitialAd() {
 
         return (mInterstitialAd != null && isShowing);
 
+    }
+
+    public interface AdCloseListener {
+        void onAdClosed();
     }
 
 }

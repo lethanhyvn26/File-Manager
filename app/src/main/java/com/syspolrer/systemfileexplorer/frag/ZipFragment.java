@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.syspolrer.systemfileexplorer.activity.MainActivity;
-import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.adap.ZipAdapter;
 import com.syspolrer.systemfileexplorer.databinding.FragmentZipBinding;
 import com.syspolrer.systemfileexplorer.interfaces.ActionModeListener;
@@ -28,17 +25,17 @@ import com.syspolrer.systemfileexplorer.utils.OpenFile;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 
 public class ZipFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
-    private FragmentZipBinding binding;
-    private final ArrayList<File> zipList = new ArrayList<>();
-    private ZipAdapter adapter;
     public static ActionModeListener actionModeListener;
+    private final ArrayList<File> zipList = new ArrayList<>();
+    private FragmentZipBinding binding;
+    private ZipAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,14 +82,14 @@ public class ZipFragment extends Fragment implements FileSelectedListener, Actio
     private void setData() {
         zipList.clear();
         Executors.newSingleThreadExecutor().execute(() -> {
-        if (Utils.EXTERNAL_FILE != null) {
-            zipList.addAll(zip(Utils.EXTERNAL_FILE));
-        }
-        if (Utils.SD_CARD_FILE != null) {
-            zipList.addAll(zip(Utils.SD_CARD_FILE));
-        }
+            if (Utils.EXTERNAL_FILE != null) {
+                zipList.addAll(zip(Utils.EXTERNAL_FILE));
+            }
+            if (Utils.SD_CARD_FILE != null) {
+                zipList.addAll(zip(Utils.SD_CARD_FILE));
+            }
 
-            adapter.addAll(zipList,this,binding.loader,binding.noData);
+            adapter.addAll(zipList, this, binding.loader, binding.noData);
 
         });
     }

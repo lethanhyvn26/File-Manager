@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -26,15 +24,15 @@ import com.syspolrer.systemfileexplorer.model.MediaModel;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class ImageFolderFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
-    private FragmentImageFolderBinding binding;
-    private final ArrayList<MediaModel> f = new ArrayList<>();
     public static ActionModeListener actionModeListener;
+    private final ArrayList<MediaModel> f = new ArrayList<>();
+    private FragmentImageFolderBinding binding;
     private ImageFolderAdapter imageFolderAdapter;
 
     @Override
@@ -103,12 +101,12 @@ public class ImageFolderFragment extends Fragment implements FileSelectedListene
 
             for (File file1 : files) {
 
-                if (file1.isDirectory() && !file1.isHidden() &&!file1.getName().equals("Telegram") ) {
+                if (file1.isDirectory() && !file1.isHidden() && !file1.getName().equals("Telegram")) {
                     File directory = isDirectory(file1);
                     if (directory != null) {
                         int anInt = getInt(directory);
 //                        if (anInt>1){
-                            fileArrayList.add(new MediaModel(directory, anInt));
+                        fileArrayList.add(new MediaModel(directory, anInt));
 //                        }
                     }
                 }
@@ -222,6 +220,7 @@ public class ImageFolderFragment extends Fragment implements FileSelectedListene
         }
         showAdsFull();
     }
+
     private void showAdsFull() {
         if (checkShowAdsFull()) {
             ((MainActivity) requireActivity()).showAdsFull();

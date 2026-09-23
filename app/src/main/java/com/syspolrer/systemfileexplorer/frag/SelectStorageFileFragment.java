@@ -69,17 +69,17 @@ public class SelectStorageFileFragment extends Fragment implements FileSelectedL
             selected = SongSelectFragment.audioList;
         } else if (from.equals("vidFolder")) {
             selected = SelectVideoFolderFragment.selectedList;
-        }else if (from.equals("imgFolder")){
+        } else if (from.equals("imgFolder")) {
             selected = ImgFolderFragment.selectedList;
         }
 
         binding.rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        storageAdapter = new StorageAdapter(requireActivity(), this,"storage");
+        storageAdapter = new StorageAdapter(requireActivity(), this, "storage");
         binding.rv.setAdapter(storageAdapter);
 
         if (path != null) {
             ArrayList<File> files = shortFile(getFile(new File(path)));
-            storageAdapter.addAll(files,this,null,null);
+            storageAdapter.addAll(files, this, null, null);
         }
 
         binding.lyAction.setOnClickListener(v -> {
@@ -97,7 +97,7 @@ public class SelectStorageFileFragment extends Fragment implements FileSelectedL
     }
 
     private void copyFile() {
-        if (selected != null ||selected.size() > 0) {
+        if (selected != null || selected.size() > 0) {
             for (File file : selected) {
                 if (file.isDirectory()) {
                     try {
@@ -126,7 +126,7 @@ public class SelectStorageFileFragment extends Fragment implements FileSelectedL
                 SongSelectFragment.actionModeListener.onEventListener(Utils.EVENT_COPY);
             } else if (from.equals("vidFolder")) {
                 SelectVideoFolderFragment.actionModeListener.onEventListener(Utils.EVENT_COPY);
-            }else if (from.equals("imgFolder")){
+            } else if (from.equals("imgFolder")) {
                 ImgFolderFragment.actionModeListener.onEventListener(Utils.EVENT_COPY);
             }
         }
@@ -173,7 +173,7 @@ public class SelectStorageFileFragment extends Fragment implements FileSelectedL
                 SongSelectFragment.actionModeListener.onEventListener(Utils.EVENT_MOVE);
             } else if (from.equals("vidFolder")) {
                 SelectVideoFolderFragment.actionModeListener.onEventListener(Utils.EVENT_MOVE);
-            }else if (from.equals("imgFolder")){
+            } else if (from.equals("imgFolder")) {
                 ImgFolderFragment.actionModeListener.onEventListener(Utils.EVENT_MOVE);
             }
         }

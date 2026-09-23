@@ -15,30 +15,20 @@ import java.util.ArrayList;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    private static DbHelper mInstance = null;
     private static final String DB_NAME = "FAV.DB";
     private static final int DB_VERSION = 1;
     private static final String COL_PATH = "PATH";
+    private static DbHelper mInstance = null;
+
+    public DbHelper(@Nullable Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+    }
 
     public static DbHelper getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new DbHelper(context.getApplicationContext());
         }
         return mInstance;
-    }
-
-    public DbHelper(@Nullable Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + Utils.TABLE_FAV + " (" + COL_PATH + " TEXT PRIMARY KEY )");
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     public static void addToFavourite(String path) {
@@ -71,6 +61,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public static void removeFavourite(String path) {
         mInstance.getWritableDatabase().delete(Utils.TABLE_FAV, COL_PATH + "=?", new String[]{path});
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + Utils.TABLE_FAV + " (" + COL_PATH + " TEXT PRIMARY KEY )");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
 
 }

@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.syspolrer.systemfileexplorer.activity.MainActivity;
-import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.adap.DownloadAdapter;
 import com.syspolrer.systemfileexplorer.databinding.FragmentDownloadBinding;
 import com.syspolrer.systemfileexplorer.interfaces.ActionModeListener;
@@ -27,14 +26,13 @@ import com.syspolrer.systemfileexplorer.utils.OpenFile;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DownloadFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
-    private FragmentDownloadBinding binding;
-    private final ArrayList<File> download = new ArrayList<>();
     public static ActionModeListener actionModeListener;
+    private final ArrayList<File> download = new ArrayList<>();
+    private FragmentDownloadBinding binding;
     private DownloadAdapter downloadAdapter;
 
     @Override
@@ -75,7 +73,7 @@ public class DownloadFragment extends Fragment implements FileSelectedListener, 
     private void setData() {
         download.clear();
         download.addAll(dow(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
-            downloadAdapter.addAll(download,this,binding.loader,binding.noData);
+        downloadAdapter.addAll(download, this, binding.loader, binding.noData);
 
     }
 
@@ -147,6 +145,7 @@ public class DownloadFragment extends Fragment implements FileSelectedListener, 
         }
         showAdsFull();
     }
+
     @Override
     public void onStop() {
         super.onStop();

@@ -38,15 +38,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ImgFolderFragment extends Fragment implements FileSelectedListener, View.OnClickListener , ActionModeListener {
+public class ImgFolderFragment extends Fragment implements FileSelectedListener, View.OnClickListener, ActionModeListener {
 
-    private FragmentImgFolderBinding binding;
-    private ArrayList<MediaModel> list = new ArrayList<>();
     public static ArrayList<File> selectedList = new ArrayList<>();
     public static boolean isActionModeOn = true;
-    private  int position;
     public static ActionModeListener actionModeListener;
-    private boolean isMoCo  = false;
+    private FragmentImgFolderBinding binding;
+    private ArrayList<MediaModel> list = new ArrayList<>();
+    private int position;
+    private boolean isMoCo = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,18 +70,18 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
                              Bundle savedInstanceState) {
         binding = FragmentImgFolderBinding.inflate(inflater);
         actionModeListener = this;
-        binding.rv.setLayoutManager(new GridLayoutManager(requireActivity(),3));
-        ImageFolderAdapter imageFolderAdapter = new ImageFolderAdapter(requireActivity(),this);
+        binding.rv.setLayoutManager(new GridLayoutManager(requireActivity(), 3));
+        ImageFolderAdapter imageFolderAdapter = new ImageFolderAdapter(requireActivity(), this);
         binding.rv.setAdapter(imageFolderAdapter);
         selectedList.add(list.get(position).file);
-        imageFolderAdapter.addAll(list,this,null,null);
+        imageFolderAdapter.addAll(list, this, null, null);
 
         binding.lyDetails.setOnClickListener(this);
         binding.lyDelete.setOnClickListener(this);
         binding.lyCopy.setOnClickListener(this);
         binding.lyFavourite.setOnClickListener(this);
         binding.lyMove.setOnClickListener(this);
-        binding.ivClose.setOnClickListener(v ->   requireActivity().getOnBackPressedDispatcher().onBackPressed());
+        binding.ivClose.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         return binding.getRoot();
     }
@@ -101,7 +101,7 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
 
     @Override
     public void onBind(ImageView imageView, File file) {
-        if (isAvailable(file)){
+        if (isAvailable(file)) {
             imageView.setImageResource(R.drawable.ic_selected);
         } else {
             imageView.setImageResource(R.drawable.no_select);
@@ -115,7 +115,7 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
 
     @Override
     public void onIvMediaSelectClick(ArrayList<MediaModel> files, int position, ImageView imageView) {
-         if(imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(requireContext(), R.drawable.ic_selected).getConstantState())) {
+        if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(requireContext(), R.drawable.ic_selected).getConstantState())) {
             selectedList.remove(files.get(position).file);
             imageView.setImageResource(R.drawable.no_select);
         } else {
@@ -136,26 +136,26 @@ public class ImgFolderFragment extends Fragment implements FileSelectedListener,
 
     @Override
     public void onClick(View v) {
-        if (v.equals(binding.lyDetails)){
+        if (v.equals(binding.lyDetails)) {
             showInfoDialog();
-        }else if (v.equals(binding.lyFavourite)){
+        } else if (v.equals(binding.lyFavourite)) {
             if (selectedList.size() > 0) {
                 for (File file : selectedList) {
                     DbHelper.addToFavourite(file.getAbsolutePath());
                 }
             }
             ImageFolderFragment.actionModeListener.onEventListener(Utils.EVENT_ADD_TO_FAV);
-        }else if (v.equals(binding.lyCopy)){
+        } else if (v.equals(binding.lyCopy)) {
             Intent intent = new Intent(requireActivity(), SelectFileActivity.class);
             intent.putExtra("action", "copy");
             intent.putExtra("from", "imgFolder");
             startActivity(intent);
-        }else if (v.equals(binding.lyMove)){
+        } else if (v.equals(binding.lyMove)) {
             Intent intent = new Intent(requireActivity(), SelectFileActivity.class);
             intent.putExtra("action", "move");
             intent.putExtra("from", "imgFolder");
             startActivity(intent);
-        }else if (v.equals(binding.lyDelete)){
+        } else if (v.equals(binding.lyDelete)) {
             showDeleteDialog();
         }
     }

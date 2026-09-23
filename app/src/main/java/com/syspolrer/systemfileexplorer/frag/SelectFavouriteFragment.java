@@ -26,15 +26,15 @@ import java.util.ArrayList;
 
 public class SelectFavouriteFragment extends Fragment implements FileSelectedListener {
 
+    private final ArrayList<File> selectedList = new ArrayList<>();
+    int position;
     private FragmentSelectFavouriteBinding binding;
     private ArrayList<File> files;
-    int position;
-    private final ArrayList<File> selectedList = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             files = Utils.filterInstances(BundleCompat.getSerializable(getArguments(), "file", ArrayList.class), File.class);
             position = getArguments().getInt("position");
         }
@@ -46,15 +46,15 @@ public class SelectFavouriteFragment extends Fragment implements FileSelectedLis
         binding = FragmentSelectFavouriteBinding.inflate(inflater);
         selectedList.add(files.get(position));
         binding.rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        StorageAdapter storageAdapter = new StorageAdapter(requireActivity(),this,"storage");
+        StorageAdapter storageAdapter = new StorageAdapter(requireActivity(), this, "storage");
         binding.rv.setAdapter(storageAdapter);
-        storageAdapter.addAll(files,this,null,null);
+        storageAdapter.addAll(files, this, null, null);
         binding.rv.scrollToPosition(position);
 
         binding.lyCancel.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         binding.lyAction.setOnClickListener(v -> {
-            for (File file : selectedList){
+            for (File file : selectedList) {
                 DbHelper.removeFavourite(file.getAbsolutePath());
             }
             FavouriteFragment.actionModeListener.onEventListener(Utils.EVENT_DELETE);

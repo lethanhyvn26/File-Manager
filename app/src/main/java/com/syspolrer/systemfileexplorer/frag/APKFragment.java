@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.syspolrer.systemfileexplorer.activity.MainActivity;
 import com.syspolrer.systemfileexplorer.adap.AppsAdapter;
 import com.syspolrer.systemfileexplorer.databinding.FragmentApkBinding;
-import com.syspolrer.systemfileexplorer.databinding.FragmentAppsBinding;
 import com.syspolrer.systemfileexplorer.interfaces.ActionModeListener;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.model.MediaModel;
@@ -31,11 +30,10 @@ import java.util.concurrent.Executors;
 
 public class APKFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
-    private FragmentApkBinding binding;
-    private final ArrayList<File> appList = new ArrayList<>();
     public static ActionModeListener actionModeListener;
+    private final ArrayList<File> appList = new ArrayList<>();
+    private FragmentApkBinding binding;
     private AppsAdapter appsAdapter;
-
 
 
     @Override
@@ -73,7 +71,6 @@ public class APKFragment extends Fragment implements FileSelectedListener, Actio
     }
 
 
-
     private void setData() {
 
         appList.clear();
@@ -88,7 +85,7 @@ public class APKFragment extends Fragment implements FileSelectedListener, Actio
                 appList.addAll(getApps(Utils.SD_CARD_FILE));
             }
 
-            appsAdapter.addAll(appList,this,binding.loader,binding.noData);
+            appsAdapter.addAll(appList, this, binding.loader, binding.noData);
 
 
         });

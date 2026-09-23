@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -26,20 +24,20 @@ import com.syspolrer.systemfileexplorer.model.MediaModel;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class SongFolderFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
 
+    public static onBacks onBacks;
+    public static ActionModeListener actionModeListener;
+    ArrayList<MediaModel> f = new ArrayList<>();
     private FragmentSongFolderBinding binding;
     private String path;
     private String mParam2;
-    public static onBacks onBacks;
     private AudioFolderAdapter imageFolderAdapter;
-    ArrayList<MediaModel> f = new ArrayList<>();
-    public static ActionModeListener actionModeListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +95,7 @@ public class SongFolderFragment extends Fragment implements FileSelectedListener
                     f.addAll(f(Utils.SD_CARD_FILE));
                 }
             }
-            imageFolderAdapter.addAll(f,this,binding.loader,binding.noData);
+            imageFolderAdapter.addAll(f, this, binding.loader, binding.noData);
         });
     }
 
@@ -170,7 +168,7 @@ public class SongFolderFragment extends Fragment implements FileSelectedListener
                     isDir(file1);
 
                 } else {
-                    if (!file1.isHidden() && file1.getName().toLowerCase(Locale.ROOT).endsWith(".mp3")  || file1.getName().toLowerCase(Locale.ROOT).endsWith(".wav") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".amr")) {
+                    if (!file1.isHidden() && file1.getName().toLowerCase(Locale.ROOT).endsWith(".mp3") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".wav") || file1.getName().toLowerCase(Locale.ROOT).endsWith(".amr")) {
                         return file1;
                     }
                 }
@@ -235,12 +233,13 @@ public class SongFolderFragment extends Fragment implements FileSelectedListener
 
     }
 
-    public interface onBacks {
-        void onBacks();
-    }
     private void showAdsFull() {
         if (checkShowAdsFull()) {
             ((MainActivity) requireActivity()).showAdsFull();
         }
+    }
+
+    public interface onBacks {
+        void onBacks();
     }
 }

@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -26,17 +24,17 @@ import com.syspolrer.systemfileexplorer.model.MediaModel;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class VideoFolderFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
-    FragmentVideoFolderBinding binding;
-    private final ArrayList<MediaModel> f = new ArrayList<>();
     public static boolean isEnableActionMode = false;
-    AudioFolderAdapter audioFolderAdapter;
     public static ActionModeListener actionModeListener;
+    private final ArrayList<MediaModel> f = new ArrayList<>();
+    FragmentVideoFolderBinding binding;
+    AudioFolderAdapter audioFolderAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,11 +77,10 @@ public class VideoFolderFragment extends Fragment implements FileSelectedListene
                     f.addAll(f(Utils.SD_CARD_FILE));
                 }
 
-                audioFolderAdapter.addAll(f,VideoFolderFragment.this,binding.loader,binding.noData);
+                audioFolderAdapter.addAll(f, VideoFolderFragment.this, binding.loader, binding.noData);
             }
         });
     }
-
 
 
     private ArrayList<MediaModel> f(File file) {

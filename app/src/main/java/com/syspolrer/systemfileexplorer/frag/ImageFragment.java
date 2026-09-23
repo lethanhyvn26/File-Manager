@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.databinding.FragmentImageBinding;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
@@ -19,10 +18,10 @@ import java.util.ArrayList;
 
 public class ImageFragment extends Fragment {
 
+    public static int CON;
+    private final String[] apps = {"Images", "Audio", "Videos", "Zips", "Apps", "Document", "Download", "More"};
     private FragmentImageBinding binding;
     private String argPath;
-    private final String[] apps = {"Images", "Audio", "Videos", "Zips", "Apps", "Document", "Download", "More"};
-    public static int CON;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,31 +38,31 @@ public class ImageFragment extends Fragment {
         CON = binding.container.getId();
         ImagePagerAdapter pagerAdapter = new ImagePagerAdapter(getChildFragmentManager());
 
-        if (argPath.equals(apps[0])){
+        if (argPath.equals(apps[0])) {
             binding.tvTitle.setText(apps[0]);
-            pagerAdapter.addFragment(new AllImageFragment(),"Image");
-            pagerAdapter.addFragment(new ImageFolderFragment(),"Album");
-        }else if (argPath.equals(apps[1])){
+            pagerAdapter.addFragment(new AllImageFragment(), "Image");
+            pagerAdapter.addFragment(new ImageFolderFragment(), "Album");
+        } else if (argPath.equals(apps[1])) {
             binding.tvTitle.setText(apps[1]);
-            pagerAdapter.addFragment(new SongFragment(),"Song");
-            pagerAdapter.addFragment(new SongFolderFragment(),"Albums");
-        }else if (argPath.equals(apps[2])){
+            pagerAdapter.addFragment(new SongFragment(), "Song");
+            pagerAdapter.addFragment(new SongFolderFragment(), "Albums");
+        } else if (argPath.equals(apps[2])) {
             binding.tvTitle.setText(apps[2]);
-            pagerAdapter.addFragment(new VideoFragment(),"Video");
-            pagerAdapter.addFragment(new VideoFolderFragment(),"Folders");
-        }else if (argPath.equals(apps[3])){
+            pagerAdapter.addFragment(new VideoFragment(), "Video");
+            pagerAdapter.addFragment(new VideoFolderFragment(), "Folders");
+        } else if (argPath.equals(apps[3])) {
             binding.tvTitle.setText(apps[3]);
 
-        }else if (argPath.equals(apps[4])){
+        } else if (argPath.equals(apps[4])) {
             binding.tvTitle.setText(apps[4]);
 
-        }else if (argPath.equals(apps[5])){
+        } else if (argPath.equals(apps[5])) {
             binding.tvTitle.setText(apps[5]);
 
-        }else if (argPath.equals(apps[6])){
+        } else if (argPath.equals(apps[6])) {
             binding.tvTitle.setText(apps[6]);
 
-        }else if (argPath.equals(apps[7])){
+        } else if (argPath.equals(apps[7])) {
             binding.tvTitle.setText(apps[7]);
         }
 
@@ -75,13 +74,14 @@ public class ImageFragment extends Fragment {
 
         return binding.getRoot();
     }
+
     @Override
     public void onStop() {
         super.onStop();
         Utils.hideKeyboard(requireActivity());
     }
 
-    private class ImagePagerAdapter extends FragmentPagerAdapter{
+    private class ImagePagerAdapter extends FragmentPagerAdapter {
 
         ArrayList<Fragment> fragmentList = new ArrayList<>();
         ArrayList<String> stringList = new ArrayList<>();
@@ -90,7 +90,7 @@ public class ImageFragment extends Fragment {
             super(fm);
         }
 
-        public void addFragment(Fragment fragment, String title){
+        public void addFragment(Fragment fragment, String title) {
             fragmentList.add(fragment);
             stringList.add(title);
         }

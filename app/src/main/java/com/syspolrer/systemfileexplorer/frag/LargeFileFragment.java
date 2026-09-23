@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.syspolrer.systemfileexplorer.activity.MainActivity;
-import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.adap.StorageAdapter;
 import com.syspolrer.systemfileexplorer.databinding.FragmentLargeFileBinding;
 import com.syspolrer.systemfileexplorer.interfaces.ActionModeListener;
@@ -27,16 +24,16 @@ import com.syspolrer.systemfileexplorer.utils.OpenFile;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class LargeFileFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
+    public static ActionModeListener actionModeListener;
+    private final ArrayList<File> files = new ArrayList<>();
     private FragmentLargeFileBinding binding;
     private StorageAdapter adapter;
-    private final ArrayList<File> files = new ArrayList<>();
-    public static ActionModeListener actionModeListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +55,7 @@ public class LargeFileFragment extends Fragment implements FileSelectedListener,
                 files.addAll(getFile(Utils.SD_CARD_FILE));
             }
 
-            adapter.addAll(files, this, binding.loader,binding.noData);
+            adapter.addAll(files, this, binding.loader, binding.noData);
         });
 
 
@@ -117,7 +114,7 @@ public class LargeFileFragment extends Fragment implements FileSelectedListener,
 
     @Override
     public void onFileSelect(ImageView imageView, File file) {
-        if (file.isFile()){
+        if (file.isFile()) {
             OpenFile.open(file);
         }
     }
@@ -152,12 +149,12 @@ public class LargeFileFragment extends Fragment implements FileSelectedListener,
                 requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
             case Utils.EVENT_DELETE:
-             //   setData();
+                //   setData();
                 requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
             case Utils.EVENT_COPY:
             case Utils.EVENT_MOVE:
-              //  setData();
+                //  setData();
                 new Handler(Looper.getMainLooper()).post(() -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
                 break;
         }

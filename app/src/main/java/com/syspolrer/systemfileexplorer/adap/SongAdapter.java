@@ -1,9 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.text.format.DateFormat;
 import android.text.format.Formatter;
@@ -24,10 +20,12 @@ import com.syspolrer.systemfileexplorer.databinding.MusicItemBinding;
 import com.syspolrer.systemfileexplorer.frag.SongSelectFragment;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.utils.OpenFile;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MusicViewHolder> implements Filterable {
 
@@ -35,6 +33,32 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MusicViewHolde
     Activity activity;
     FileSelectedListener fileSelectedListener;
     ArrayList<File> filterList;
+    private final Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<File> filList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filList.addAll(filterList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
+                for (File file : filterList) {
+                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)) {
+                        filList.add(file);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            song.clear();
+            song.addAll(Utils.filterInstances(results.values, File.class));
+            notifyDataSetChanged();
+        }
+    };
 
     public SongAdapter(Activity activity, FileSelectedListener fileSelectedListener) {
         this.activity = activity;
@@ -66,9 +90,9 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MusicViewHolde
             if (mkLoader != null && linearLayout != null) {
                 activity.runOnUiThread(() -> {
                     mkLoader.setVisibility(View.GONE);
-                    if (song.size()>0){
+                    if (song.size() > 0) {
                         linearLayout.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         linearLayout.setVisibility(View.VISIBLE);
                     }
                 });
@@ -109,31 +133,4 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MusicViewHolde
             binding.getRoot().setOnClickListener(v -> OpenFile.open(file));
         }
     }
-
-    private final Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<File> filList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filList.addAll(filterList);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (File file : filterList) {
-                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)) {
-                        filList.add(file);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filList;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            song.clear();
-            song.addAll(Utils.filterInstances(results.values, File.class));
-            notifyDataSetChanged();
-        }
-    };
 }

@@ -44,10 +44,10 @@ public class AppListLoader extends AsyncTaskLoader<List<AppDataParcelable>> {
 
 
     private final PackageManager packageManager;
-    private PackageReceiver packageReceiver;
-    private List<AppDataParcelable> mApps;
     private final int sortBy;
     private final boolean isAscending;
+    private PackageReceiver packageReceiver;
+    private List<AppDataParcelable> mApps;
 
     public AppListLoader(Context context, int sortBy, boolean isAscending) {
         super(context.getApplicationContext());
@@ -68,6 +68,33 @@ public class AppListLoader extends AsyncTaskLoader<List<AppDataParcelable>> {
             return packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES);
         }
         return packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+    }
+
+    /**
+     * Check if an App is under /system or has been installed as an update to a built-in system
+     * application.
+     */
+    public static boolean isAppInSystemPartition(ApplicationInfo applicationInfo) {
+        return ((applicationInfo.flags
+                & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP))
+                != 0);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Signature[] getSigners(PackageInfo packageInfo) {
+        if (packageInfo == null) {
+            return null;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            SigningInfo signingInfo = packageInfo.signingInfo;
+            if (signingInfo == null) {
+                return null;
+            }
+            return signingInfo.hasMultipleSigners()
+                    ? signingInfo.getApkContentsSigners()
+                    : signingInfo.getSigningCertificateHistory();
+        }
+        return packageInfo.signatures;
     }
 
     @Override
@@ -148,33 +175,6 @@ public class AppListLoader extends AsyncTaskLoader<List<AppDataParcelable>> {
      */
     // TODO do something
     private void onReleaseResources(List<AppDataParcelable> layoutElementList) {
-    }
-
-    /**
-     * Check if an App is under /system or has been installed as an update to a built-in system
-     * application.
-     */
-    public static boolean isAppInSystemPartition(ApplicationInfo applicationInfo) {
-        return ((applicationInfo.flags
-                & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP))
-                != 0);
-    }
-
-    @SuppressWarnings("deprecation")
-    private static Signature[] getSigners(PackageInfo packageInfo) {
-        if (packageInfo == null) {
-            return null;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            SigningInfo signingInfo = packageInfo.signingInfo;
-            if (signingInfo == null) {
-                return null;
-            }
-            return signingInfo.hasMultipleSigners()
-                    ? signingInfo.getApkContentsSigners()
-                    : signingInfo.getSigningCertificateHistory();
-        }
-        return packageInfo.signatures;
     }
 
     @Override

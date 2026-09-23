@@ -1,9 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
@@ -21,10 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.databinding.FileItemBinding;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ZipAdapter extends RecyclerView.Adapter<ZipAdapter.ZipViewHolder> implements Filterable {
 
@@ -32,82 +30,16 @@ public class ZipAdapter extends RecyclerView.Adapter<ZipAdapter.ZipViewHolder> i
     private final ArrayList<File> files = new ArrayList<>();
     private final FileSelectedListener fileSelectedListener;
     private ArrayList<File> filterList;
-
-    public ZipAdapter(Activity activity, FileSelectedListener fileSelectedListener) {
-        this.activity = activity;
-        this.fileSelectedListener = fileSelectedListener;
-    }
-
-    @NonNull
-    @Override
-    public ZipViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ZipViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.file_item,parent,false));
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ZipViewHolder holder, int position) {
-        holder.onBind(files.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return files.size();
-    }
-
-    public void addAll(ArrayList<File> files, Fragment fragment, MKLoader mkLoader, LinearLayout linearLayout){
-        this.files.clear();
-        this.files.addAll(files);
-        this.filterList = new ArrayList<>(files);
-        if (fragment!=null) {
-            activity.runOnUiThread(() -> notifyDataSetChanged());
-            if (mkLoader != null && linearLayout != null){
-                activity.runOnUiThread(()-> {
-                    mkLoader.setVisibility(View.GONE);
-                    if (files.size()>0){
-                        linearLayout.setVisibility(View.GONE);
-                    }else {
-                        linearLayout.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        }
-    }
-
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
-
-    public class ZipViewHolder extends RecyclerView.ViewHolder {
-        FileItemBinding binding;
-        public ZipViewHolder(@NonNull FileItemBinding itemView) {
-            super(itemView.getRoot());
-            binding = itemView;
-        }
-
-        public void onBind(File file) {
-            fileSelectedListener.onBind(binding.ivSelect,file);
-            binding.imageView4.setImageResource(R.drawable.ic_zip);
-            binding.tvFileName.setText(file.getName());
-            binding.tvSize.setText(Formatter.formatFileSize(activity, file.length()));
-
-            binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect,file));
-
-            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files,getBindingAdapterPosition(),binding.ivSelect));
-
-        }
-    }
-
     private final Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<File> filList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0){
+            if (constraint == null || constraint.length() == 0) {
                 filList.addAll(filterList);
-            }else {
+            } else {
                 String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (File file : filterList){
-                    if (file.getName().contains(filterPattern)){
+                for (File file : filterList) {
+                    if (file.getName().contains(filterPattern)) {
                         filList.add(file);
                     }
                 }
@@ -124,5 +56,71 @@ public class ZipAdapter extends RecyclerView.Adapter<ZipAdapter.ZipViewHolder> i
             notifyDataSetChanged();
         }
     };
+
+    public ZipAdapter(Activity activity, FileSelectedListener fileSelectedListener) {
+        this.activity = activity;
+        this.fileSelectedListener = fileSelectedListener;
+    }
+
+    @NonNull
+    @Override
+    public ZipViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ZipViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.file_item, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ZipViewHolder holder, int position) {
+        holder.onBind(files.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return files.size();
+    }
+
+    public void addAll(ArrayList<File> files, Fragment fragment, MKLoader mkLoader, LinearLayout linearLayout) {
+        this.files.clear();
+        this.files.addAll(files);
+        this.filterList = new ArrayList<>(files);
+        if (fragment != null) {
+            activity.runOnUiThread(() -> notifyDataSetChanged());
+            if (mkLoader != null && linearLayout != null) {
+                activity.runOnUiThread(() -> {
+                    mkLoader.setVisibility(View.GONE);
+                    if (files.size() > 0) {
+                        linearLayout.setVisibility(View.GONE);
+                    } else {
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public class ZipViewHolder extends RecyclerView.ViewHolder {
+        FileItemBinding binding;
+
+        public ZipViewHolder(@NonNull FileItemBinding itemView) {
+            super(itemView.getRoot());
+            binding = itemView;
+        }
+
+        public void onBind(File file) {
+            fileSelectedListener.onBind(binding.ivSelect, file);
+            binding.imageView4.setImageResource(R.drawable.ic_zip);
+            binding.tvFileName.setText(file.getName());
+            binding.tvSize.setText(Formatter.formatFileSize(activity, file.length()));
+
+            binding.getRoot().setOnClickListener(v -> fileSelectedListener.onFileSelect(binding.ivSelect, file));
+
+            binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getBindingAdapterPosition(), binding.ivSelect));
+
+        }
+    }
 
 }

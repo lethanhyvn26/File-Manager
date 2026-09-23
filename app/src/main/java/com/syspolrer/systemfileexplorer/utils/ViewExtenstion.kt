@@ -10,8 +10,6 @@ import java.net.UnknownHostException
 var countClick: Int = 2
 
 
-
-
 fun checkShowAdsFull(): Boolean {
     return if (countClick >= 2) {
         true
@@ -31,7 +29,6 @@ fun isInternetAvailable(): Boolean {
     }
     return false
 }
-
 
 
 fun isInternetAvailable(context: Context): Boolean {

@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.syspolrer.systemfileexplorer.activity.MainActivity;
-import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.adap.StorageAdapter;
-import com.syspolrer.systemfileexplorer.databinding.FragmentFavouriteBinding;
 import com.syspolrer.systemfileexplorer.database.DbHelper;
+import com.syspolrer.systemfileexplorer.databinding.FragmentFavouriteBinding;
 import com.syspolrer.systemfileexplorer.interfaces.ActionModeListener;
 import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.model.MediaModel;
@@ -21,17 +20,16 @@ import com.syspolrer.systemfileexplorer.utils.OpenFile;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
 
 public class FavouriteFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
-    private FragmentFavouriteBinding binding;
-    private final ArrayList<File> files = new ArrayList<>();
-    private StorageAdapter adapter;
     public static ActionModeListener actionModeListener;
+    private final ArrayList<File> files = new ArrayList<>();
+    private FragmentFavouriteBinding binding;
+    private StorageAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +39,7 @@ public class FavouriteFragment extends Fragment implements FileSelectedListener,
         actionModeListener = this;
 
         binding.rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        adapter = new StorageAdapter(requireActivity(), this,"storage");
+        adapter = new StorageAdapter(requireActivity(), this, "storage");
         binding.rv.setAdapter(adapter);
 
         setData();
@@ -55,19 +53,19 @@ public class FavouriteFragment extends Fragment implements FileSelectedListener,
         files.clear();
         Executors.newSingleThreadExecutor().execute(() -> {
             files.addAll(DbHelper.getFavFile());
-            adapter.addAll(files,this,null,binding.noData);
+            adapter.addAll(files, this, null, binding.noData);
         });
     }
 
     @Override
     public void onFileSelect(ImageView imageView, File file) {
-        if (file.isDirectory()){
+        if (file.isDirectory()) {
             Bundle bundle = new Bundle();
             bundle.putString("path", file.getAbsolutePath());
             StorageFragment storageFragment = new StorageFragment();
             storageFragment.setArguments(bundle);
             requireActivity().getSupportFragmentManager().beginTransaction().add(MainActivity.MAIN_CONTAINER, storageFragment).addToBackStack(null).commit();
-        }else {
+        } else {
             OpenFile.open(file);
         }
     }

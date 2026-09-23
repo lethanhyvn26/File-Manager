@@ -18,8 +18,8 @@ import com.syspolrer.systemfileexplorer.interfaces.HomeAppClickListener;
 
 public class MoreFragment extends Fragment implements HomeAppClickListener {
 
-    private FragmentMoreBinding binding;
     private final String[] apps = {"Images", "Audio", "Videos", "Zips", "Apps", "Document", "Download"};
+    private FragmentMoreBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

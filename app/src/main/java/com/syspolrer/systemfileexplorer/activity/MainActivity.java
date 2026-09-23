@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.activity;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.frag.AppsInstalledFragment.ID_LOADER_APP_LIST;
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.setCountClick;
 
@@ -35,13 +33,14 @@ import com.syspolrer.systemfileexplorer.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<AppDataParcelable>> {
 
+    public static int MAIN_CONTAINER;
+    private final String[] apps = {"Images", "Audio", "Videos", "Zips", "Apps", "Document", "Download", "More"};
     private ActivityMainBinding binding;
     private HomeAdapter adapter;
-    private final String[] apps = {"Images", "Audio", "Videos", "Zips", "Apps", "Document", "Download", "More"};
-    public static int MAIN_CONTAINER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +89,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     public void showAdsFull() {
-        AdmobHelp.getInstance().showInterstitialAd(this, new AdmobHelp.AdCloseListener() {
-
-            @Override
-            public void onAdClosed() {
-                setCountClick(0);
-            }
-        });
+        AdmobHelp.getInstance().showInterstitialAd(this, () -> setCountClick(0));
     }
 
 

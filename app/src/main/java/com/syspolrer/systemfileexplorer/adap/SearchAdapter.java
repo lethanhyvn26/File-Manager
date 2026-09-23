@@ -1,11 +1,5 @@
 package com.syspolrer.systemfileexplorer.adap;
 
-import com.bumptech.glide.load.MultiTransformation;
-
-import com.syspolrer.systemfileexplorer.utils.Utils;
-
-import java.util.Locale;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -19,16 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.databinding.SearchItemBinding;
+import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> implements Filterable {
 
@@ -36,8 +33,34 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     private final ArrayList<File> filesList = new ArrayList<>();
     private final ArrayList<File> filterList = new ArrayList<>();
     private final onFileClick onFileClick;
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<File> files = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                files.addAll(filterList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
+                for (File file : filterList) {
+                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)) {
+                        files.add(file);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = files;
+            return filterResults;
+        }
 
-    public SearchAdapter(Activity activity,onFileClick onFileClick) {
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filesList.clear();
+            filesList.addAll(Utils.filterInstances(results.values, File.class));
+            notifyDataSetChanged();
+        }
+    };
+
+    public SearchAdapter(Activity activity, onFileClick onFileClick) {
         this.activity = activity;
         this.onFileClick = onFileClick;
     }
@@ -46,7 +69,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @NotNull
     @Override
     public SearchViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        return new SearchViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.search_item,parent,false));
+        return new SearchViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.search_item, parent, false));
     }
 
     @Override
@@ -70,8 +93,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         return filter;
     }
 
+    public interface onFileClick {
+        void onClick(File file);
+    }
+
     public class SearchViewHolder extends RecyclerView.ViewHolder {
         SearchItemBinding binding;
+
         public SearchViewHolder(@NonNull @NotNull SearchItemBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
@@ -93,7 +121,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 binding.ivIcon.setImageResource(R.drawable.ic_ppt);
             } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".pdf")) {
                 binding.ivIcon.setImageResource(R.drawable.ic_pdf);
-            }else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")){
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".mp4")) {
                 Glide.with(itemView.getContext())
                         .load(file.getPath())
                         .apply(new RequestOptions()
@@ -113,9 +141,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                                 .priority(Priority.LOW)
                                 .format(DecodeFormat.PREFER_ARGB_8888))
                         .into(binding.ivIcon);
-            }else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".apk")){
+            } else if (file.getName().toLowerCase(Locale.ROOT).endsWith(".apk")) {
                 binding.ivIcon.setImageDrawable(activity.getPackageManager().getPackageArchiveInfo(file.getAbsolutePath(), 0).applicationInfo.loadIcon(activity.getPackageManager()));
-            }else {
+            } else {
                 binding.ivIcon.setImageResource(R.drawable.ic_folder);
             }
 
@@ -124,36 +152,5 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             binding.getRoot().setOnClickListener(v -> onFileClick.onClick(file));
 
         }
-    }
-
-    Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<File> files = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0){
-                files.addAll(filterList);
-            }else {
-                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (File file:filterList){
-                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)){
-                        files.add(file);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = files;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filesList.clear();
-            filesList.addAll(Utils.filterInstances(results.values, File.class));
-            notifyDataSetChanged();
-        }
-    };
-
-    public interface onFileClick{
-       void onClick(File file);
     }
 }

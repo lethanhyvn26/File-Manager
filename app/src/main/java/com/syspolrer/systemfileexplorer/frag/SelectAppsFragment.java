@@ -46,14 +46,14 @@ import java.util.ArrayList;
 
 public class SelectAppsFragment extends Fragment implements FileSelectedListener, View.OnClickListener, ActionModeListener {
 
+    public static ArrayList<File> selectedList = new ArrayList<>();
+    public static boolean isActionModeOn = true;
+    public static ActionModeListener actionModeListener;
+    ActionModeListener listener;
     private FragmentSelectAppsBinding binding;
     private ArrayList<File> files = new ArrayList<>();
     private int position;
-    public static ArrayList<File> selectedList = new ArrayList<>();
-    public static boolean isActionModeOn = true;
     private String from;
-    ActionModeListener listener;
-    public static ActionModeListener actionModeListener;
     private boolean isMoCo = false;
 
     @Override

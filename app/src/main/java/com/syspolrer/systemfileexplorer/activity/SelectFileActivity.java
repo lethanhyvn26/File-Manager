@@ -13,8 +13,8 @@ import com.syspolrer.systemfileexplorer.utils.Utils;
 
 public class SelectFileActivity extends AppCompatActivity {
 
-    private ActivitySelectFileBinding binding;
     public static int SELECT_FILE_CON;
+    private ActivitySelectFileBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,33 +24,33 @@ public class SelectFileActivity extends AppCompatActivity {
 
         SELECT_FILE_CON = binding.container.getId();
 
-        if (Utils.IS_SD_CARD_EXIST){
+        if (Utils.IS_SD_CARD_EXIST) {
             binding.constraintLayout4.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             binding.constraintLayout4.setVisibility(View.GONE);
         }
 
         binding.constraintLayout2.setOnClickListener(v -> {
 
             Bundle bundle = new Bundle();
-            bundle.putString("path",Utils.EXTERNAL_FILE.getAbsolutePath());
-            bundle.putString("action",getIntent().getStringExtra("action"));
-            bundle.putString("from",getIntent().getStringExtra("from"));
+            bundle.putString("path", Utils.EXTERNAL_FILE.getAbsolutePath());
+            bundle.putString("action", getIntent().getStringExtra("action"));
+            bundle.putString("from", getIntent().getStringExtra("from"));
             SelectStorageFileFragment selectStorageFileFragment = new SelectStorageFileFragment();
             selectStorageFileFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(binding.container.getId(),selectStorageFileFragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(binding.container.getId(), selectStorageFileFragment).addToBackStack(null).commit();
 
         });
 
         binding.constraintLayout4.setOnClickListener(v -> {
 
             Bundle bundle = new Bundle();
-            bundle.putString("path",Utils.SD_CARD_FILE.getAbsolutePath());
-            bundle.putString("action",getIntent().getStringExtra("action"));
-            bundle.putString("from",getIntent().getStringExtra("from"));
+            bundle.putString("path", Utils.SD_CARD_FILE.getAbsolutePath());
+            bundle.putString("action", getIntent().getStringExtra("action"));
+            bundle.putString("from", getIntent().getStringExtra("from"));
             SelectStorageFileFragment selectStorageFileFragment = new SelectStorageFileFragment();
             selectStorageFileFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(binding.container.getId(),selectStorageFileFragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(binding.container.getId(), selectStorageFileFragment).addToBackStack(null).commit();
 
         });
 

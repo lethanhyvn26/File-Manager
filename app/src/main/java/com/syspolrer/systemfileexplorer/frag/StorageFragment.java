@@ -32,18 +32,17 @@ import com.syspolrer.systemfileexplorer.utils.OpenFile;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 
 public class StorageFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
+    public static ActionModeListener actionModeListener;
+    Activity activity;
     private FragmentStorageBinding binding;
     private String path;
     private StorageAdapter storageAdapter;
-    public static ActionModeListener actionModeListener;
-    Activity activity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

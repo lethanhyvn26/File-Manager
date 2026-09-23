@@ -40,11 +40,37 @@ import java.util.Locale;
 
 public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
+    private final String from;
     ArrayList<File> files = new ArrayList<>();
     Activity activity;
     FileSelectedListener fileSelectedListener;
     private ArrayList<File> filterList;
-    private final String from;
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<File> files = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                files.addAll(filterList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
+                for (File file : filterList) {
+                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)) {
+                        files.add(file);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = files;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            files.clear();
+            files.addAll(Utils.filterInstances(results.values, File.class));
+            notifyDataSetChanged();
+        }
+    };
 
     public StorageAdapter(Activity activity, FileSelectedListener fileSelectedListener, String from) {
         this.activity = activity;
@@ -106,11 +132,11 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (mkLoader != null) {
                 activity.runOnUiThread(() -> mkLoader.setVisibility(View.GONE));
             }
-            if (linearLayout != null){
+            if (linearLayout != null) {
                 activity.runOnUiThread(() -> {
-                    if (files.size()>0){
+                    if (files.size() > 0) {
                         linearLayout.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         linearLayout.setVisibility(View.VISIBLE);
                     }
                 });
@@ -121,6 +147,19 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public Filter getFilter() {
         return filter;
+    }
+
+    int getCount(File file) {
+        int count = 0;
+        File[] files = file.listFiles();
+        if (files != null) {
+            for (File singleFile : files) {
+                if (!singleFile.isHidden()) {
+                    count += 1;
+                }
+            }
+        }
+        return count;
     }
 
     class FolderViewHolder extends RecyclerView.ViewHolder {
@@ -271,45 +310,5 @@ public class StorageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.ivSelect.setOnClickListener(v -> fileSelectedListener.onIvSelectClick(files, getBindingAdapterPosition(), binding.ivSelect));
         }
     }
-
-    int getCount(File file) {
-        int count = 0;
-        File[] files = file.listFiles();
-        if (files != null) {
-            for (File singleFile : files) {
-                if (!singleFile.isHidden()) {
-                    count += 1;
-                }
-            }
-        }
-        return count;
-    }
-
-    Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<File> files = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                files.addAll(filterList);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
-                for (File file : filterList) {
-                    if (file.getName().toLowerCase(Locale.ROOT).contains(filterPattern)) {
-                        files.add(file);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = files;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            files.clear();
-            files.addAll(Utils.filterInstances(results.values, File.class));
-            notifyDataSetChanged();
-        }
-    };
 
 }

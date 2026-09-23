@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -26,27 +24,23 @@ import com.syspolrer.systemfileexplorer.model.MediaModel;
 import com.syspolrer.systemfileexplorer.utils.Utils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 
 public class SongFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
     private static final String TAG = "AllAUDIOFILES";
-    private FragmentSongBinding binding;
-
     private static final String ARG_PARAM1 = "Path";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final boolean isStartActionMode = false;
+    public static ActionModeListener actionModeListener;
     ArrayList<File> allAudio = new ArrayList<>();
     SongAdapter songAdapter;
-
+    private FragmentSongBinding binding;
     private String mParam1;
     private String mParam2;
-    public static ActionModeListener actionModeListener;
-
-    private static final boolean isStartActionMode = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,11 +105,10 @@ public class SongFragment extends Fragment implements FileSelectedListener, Acti
                         allAudio.addAll(audio(Utils.SD_CARD_FILE));
                     }
                 }
-                songAdapter.addAll(allAudio,SongFragment.this,binding.loader,binding.noData);
+                songAdapter.addAll(allAudio, SongFragment.this, binding.loader, binding.noData);
             }
         });
     }
-
 
 
     ArrayList<File> audio(File file) {
@@ -181,6 +174,7 @@ public class SongFragment extends Fragment implements FileSelectedListener, Acti
         }
         showAdsFull();
     }
+
     private void showAdsFull() {
         if (checkShowAdsFull()) {
             ((MainActivity) requireActivity()).showAdsFull();

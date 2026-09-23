@@ -53,7 +53,7 @@ public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.Nest
         } else {
             spanCount = 3;
         }
-        requestOptions =  new RequestOptions().transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
+        requestOptions = new RequestOptions().transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(18)))
                 .skipMemoryCache(true)
                 .priority(Priority.LOW)
                 .format(DecodeFormat.PREFER_ARGB_8888);
@@ -74,7 +74,7 @@ public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.Nest
         rv = holder.binding.rv;
 
         holder.binding.rv.setLayoutManager(new GridLayoutManager(activity, spanCount));
-        holder.binding.rv.setAdapter(new VideoAdapter(activity, imagesShortModel.imagesModels, imagesShortModel.date, position, from, this,requestOptions));
+        holder.binding.rv.setAdapter(new VideoAdapter(activity, imagesShortModel.imagesModels, imagesShortModel.date, position, from, this, requestOptions));
 
     }
 
@@ -152,15 +152,6 @@ public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.Nest
         }
     }
 
-    public class NestVideoViewHolder extends RecyclerView.ViewHolder {
-        NestRvItemBinding binding;
-
-        public NestVideoViewHolder(@NonNull NestRvItemBinding itemView) {
-            super(itemView.getRoot());
-            binding = itemView;
-        }
-    }
-
     private boolean isAvailable(File file) {
         for (File files : ImageSelectFragment.selectedList) {
             if (file.equals(files)) {
@@ -168,6 +159,15 @@ public class NestVideoAdapter extends RecyclerView.Adapter<NestVideoAdapter.Nest
             }
         }
         return false;
+    }
+
+    public class NestVideoViewHolder extends RecyclerView.ViewHolder {
+        NestRvItemBinding binding;
+
+        public NestVideoViewHolder(@NonNull NestRvItemBinding itemView) {
+            super(itemView.getRoot());
+            binding = itemView;
+        }
     }
 
 }

@@ -1,4 +1,5 @@
 package com.syspolrer.systemfileexplorer.utils
+
 import android.content.pm.PackageManager
 
 class PackageUtils {

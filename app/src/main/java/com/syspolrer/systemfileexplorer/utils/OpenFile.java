@@ -19,14 +19,14 @@ public class OpenFile {
         this.context = context.getApplicationContext();
     }
 
-    public static OpenFile init(Context context){
-        if (openFile == null){
+    public static OpenFile init(Context context) {
+        if (openFile == null) {
             openFile = new OpenFile(context.getApplicationContext());
         }
         return openFile;
     }
 
-    public static void open(File file){
+    public static void open(File file) {
 
         try {
 
@@ -59,7 +59,7 @@ public class OpenFile {
             }
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
             openFile.context.startActivity(intent);
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             Toast.makeText(openFile.context, "No App Found", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }

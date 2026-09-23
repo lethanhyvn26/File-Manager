@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import static com.syspolrer.systemfileexplorer.utils.ViewExtenstionKt.checkShowAdsFull;
 
 import android.os.Bundle;
@@ -18,8 +16,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.syspolrer.systemfileexplorer.activity.MainActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.syspolrer.systemfileexplorer.R;
+import com.syspolrer.systemfileexplorer.activity.MainActivity;
 import com.syspolrer.systemfileexplorer.adap.DocumentAdapter;
 import com.syspolrer.systemfileexplorer.databinding.FilterBottomSheetBinding;
 import com.syspolrer.systemfileexplorer.databinding.FragmentDocumentBinding;
@@ -28,17 +27,17 @@ import com.syspolrer.systemfileexplorer.interfaces.FileSelectedListener;
 import com.syspolrer.systemfileexplorer.model.MediaModel;
 import com.syspolrer.systemfileexplorer.utils.OpenFile;
 import com.syspolrer.systemfileexplorer.utils.Utils;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class DocumentFragment extends Fragment implements FileSelectedListener, ActionModeListener {
 
-    private FragmentDocumentBinding binding;
+    public static ActionModeListener actionModeListener;
     private final ArrayList<File> doc = new ArrayList<>();
+    private FragmentDocumentBinding binding;
     private DocumentAdapter docAdapter;
     private boolean cbPdf = false;
     private boolean cbDoc = false;
@@ -46,7 +45,6 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
     private boolean cbPpt = false;
     private boolean cbTxt = false;
     private boolean cbOthers = false;
-    public static ActionModeListener actionModeListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,7 +104,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 doc.addAll(doc(Utils.SD_CARD_FILE));
             }
 
-            docAdapter.addAll(doc,this,binding.loader,binding.noData);
+            docAdapter.addAll(doc, this, binding.loader, binding.noData);
 
         });
     }
@@ -204,7 +202,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
     }
 
     private void showBottomSheet() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(),R.style.BottomSheetStyle);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetStyle);
         FilterBottomSheetBinding bottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.filter_bottom_sheet, null, false);
         bottomSheetDialog.setContentView(bottomSheetBinding.getRoot());
         bottomSheetDialog.show();
@@ -252,7 +250,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 bottomSheetBinding.ivPdf.setImageResource(R.drawable.ic_uncheck_checkbox);
                 cbPdf = false;
             }
-            docAdapter.addAll(getFilter(doc),this,null,null);
+            docAdapter.addAll(getFilter(doc), this, null, null);
         });
 
         bottomSheetBinding.lyDoc.setOnClickListener(v -> {
@@ -263,7 +261,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 bottomSheetBinding.ivDoc.setImageResource(R.drawable.ic_uncheck_checkbox);
                 cbDoc = false;
             }
-            docAdapter.addAll(getFilter(doc),this,null,null);
+            docAdapter.addAll(getFilter(doc), this, null, null);
         });
 
         bottomSheetBinding.lyXls.setOnClickListener(v -> {
@@ -274,7 +272,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 bottomSheetBinding.ivXls.setImageResource(R.drawable.ic_uncheck_checkbox);
                 cbXls = false;
             }
-            docAdapter.addAll(getFilter(doc),this,null,null);
+            docAdapter.addAll(getFilter(doc), this, null, null);
         });
 
         bottomSheetBinding.lyPpt.setOnClickListener(v -> {
@@ -285,7 +283,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 bottomSheetBinding.ivPpt.setImageResource(R.drawable.ic_uncheck_checkbox);
                 cbPpt = false;
             }
-            docAdapter.addAll(getFilter(doc),this,null,null);
+            docAdapter.addAll(getFilter(doc), this, null, null);
         });
 
         bottomSheetBinding.lyTxt.setOnClickListener(v -> {
@@ -296,7 +294,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 bottomSheetBinding.ivTxt.setImageResource(R.drawable.ic_uncheck_checkbox);
                 cbTxt = false;
             }
-            docAdapter.addAll(getFilter(doc),this,null,null);
+            docAdapter.addAll(getFilter(doc), this, null, null);
         });
 
         bottomSheetBinding.lyOthers.setOnClickListener(v -> {
@@ -307,7 +305,7 @@ public class DocumentFragment extends Fragment implements FileSelectedListener, 
                 bottomSheetBinding.ivOthers.setImageResource(R.drawable.ic_uncheck_checkbox);
                 cbOthers = false;
             }
-            docAdapter.addAll(getFilter(doc),this,null,null);
+            docAdapter.addAll(getFilter(doc), this, null, null);
         });
 
     }

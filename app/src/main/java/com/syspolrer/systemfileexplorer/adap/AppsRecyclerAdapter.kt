@@ -36,7 +36,7 @@ class AppsRecyclerAdapter(
     private val isBottomSheet: Boolean,
     private val appDataParcelableList: MutableList<AppDataParcelable>,
     private val callback: UninstallCallback
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() ,Filterable {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
     private var appDataListItem: MutableList<ListItem> = mutableListOf()
         set(value) {
             value.clear()
@@ -61,15 +61,17 @@ class AppsRecyclerAdapter(
             }
             field = value
         }
-    private var appDataParcelableListFull: MutableList<AppDataParcelable> = ArrayList(appDataParcelableList)
+    private var appDataParcelableListFull: MutableList<AppDataParcelable> =
+        ArrayList(appDataParcelableList)
 
     init {
         appDataListItem = mutableListOf()
     }
 
-    private val mInflater: LayoutInflater get() =
-        fragment.requireActivity()
-            .getSystemService(Activity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val mInflater: LayoutInflater
+        get() =
+            fragment.requireActivity()
+                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     companion object {
         const val TYPE_ITEM = 0
@@ -88,6 +90,7 @@ class AppsRecyclerAdapter(
                 view = mInflater.inflate(R.layout.rowlayout, parent, false)
                 return AppHolder(view)
             }
+
             TYPE_HEADER_SYSTEM, TYPE_HEADER_THIRD_PARTY -> {
                 view = mInflater.inflate(R.layout.list_header, parent, false)
                 return SpecialViewHolder(
@@ -99,15 +102,17 @@ class AppsRecyclerAdapter(
                     },
                 )
             }
+
             EMPTY_LAST_ITEM -> {
                 view.minimumHeight =
                     (
-                        fragment.requireActivity().resources.getDimension(R.dimen.fab_height) +
-                            fragment.requireContext().resources
-                                .getDimension(R.dimen.fab_margin)
-                    ).roundToInt()
+                            fragment.requireActivity().resources.getDimension(R.dimen.fab_height) +
+                                    fragment.requireContext().resources
+                                        .getDimension(R.dimen.fab_margin)
+                            ).roundToInt()
                 return EmptyViewHolder(view)
             }
+
             else -> {
                 throw IllegalStateException("Illegal $viewType in apps adapter")
             }
@@ -193,8 +198,7 @@ class AppsRecyclerAdapter(
                         openFileParcelable.uri,
                         openFileParcelable.mimeType,
                         openFileParcelable.useNewStack,
-                    ) {
-                            uri, mimeType, useNewStack ->
+                    ) { uri, mimeType, useNewStack ->
                         val intent =
                             buildIntent(
                                 fragment.requireContext(),
@@ -254,24 +258,28 @@ class AppsRecyclerAdapter(
                         }
                         return@setOnMenuItemClickListener true
                     }
+
                     R.id.share -> {
                         rowItem?.let {
                             popupShare(it, colorAccent)
                         }
                         return@setOnMenuItemClickListener true
                     }
+
                     R.id.unins -> {
                         rowItem?.let {
                             callback.onUninstall(it.packageName)
                         }
                         return@setOnMenuItemClickListener true
                     }
+
                     R.id.play -> {
                         rowItem?.let {
                             popupPlay(it)
                         }
                         return@setOnMenuItemClickListener true
                     }
+
                     R.id.properties -> {
                         fragment.startActivity(
                             Intent(
@@ -321,8 +329,6 @@ class AppsRecyclerAdapter(
             colorAccent,
         )
     }
-
-
 
 
     private fun popupPlay(appDataParcelable: AppDataParcelable) {
@@ -411,8 +417,6 @@ class AppsRecyclerAdapter(
             null
         }
     }
-
-
 
 
     /**

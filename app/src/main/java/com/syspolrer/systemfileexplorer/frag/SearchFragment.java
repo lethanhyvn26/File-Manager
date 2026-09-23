@@ -1,7 +1,5 @@
 package com.syspolrer.systemfileexplorer.frag;
 
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.syspolrer.systemfileexplorer.activity.MainActivity;
-import com.syspolrer.systemfileexplorer.R;
 import com.syspolrer.systemfileexplorer.adap.SearchAdapter;
 import com.syspolrer.systemfileexplorer.databinding.FragmentSearchBinding;
 import com.syspolrer.systemfileexplorer.utils.OpenFile;
@@ -22,13 +19,14 @@ import com.syspolrer.systemfileexplorer.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 
-public class SearchFragment extends Fragment implements SearchAdapter.onFileClick{
+public class SearchFragment extends Fragment implements SearchAdapter.onFileClick {
 
-    private FragmentSearchBinding binding;
     private final ArrayList<File> fileList = new ArrayList<>();
+    private FragmentSearchBinding binding;
     private SearchAdapter searchAdapter;
 
     @Override
@@ -36,7 +34,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.onFileClic
                              Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater);
 
-        searchAdapter = new SearchAdapter(requireActivity(),this);
+        searchAdapter = new SearchAdapter(requireActivity(), this);
         binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rv.setAdapter(searchAdapter);
 
@@ -96,7 +94,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.onFileClic
             for (File singleFile : files) {
                 if (singleFile.isDirectory() && !singleFile.isHidden()) {
                     fileArrayList.addAll(getFile(singleFile));
-                }                                           else {
+                } else {
                     if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zip") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".zipx")) {
                         fileArrayList.add(singleFile);
                     } else if (!singleFile.isHidden() && singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".jpeg") || singleFile.getName().toLowerCase(Locale.ROOT).endsWith(".png")) {
@@ -120,13 +118,13 @@ public class SearchFragment extends Fragment implements SearchAdapter.onFileClic
 
     @Override
     public void onClick(File file) {
-        if (file.isDirectory()){
+        if (file.isDirectory()) {
             Bundle bundle = new Bundle();
             bundle.putString("path", file.getAbsolutePath());
             StorageFragment storageFragment = new StorageFragment();
             storageFragment.setArguments(bundle);
             requireActivity().getSupportFragmentManager().beginTransaction().add(MainActivity.MAIN_CONTAINER, storageFragment).addToBackStack(null).commit();
-        }else {
+        } else {
             OpenFile.open(file);
         }
     }

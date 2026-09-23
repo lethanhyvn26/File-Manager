@@ -41,13 +41,13 @@ import java.util.ArrayList;
 
 public class SelectStorageFragment extends Fragment implements FileSelectedListener, View.OnClickListener, ActionModeListener {
 
+    public static ArrayList<File> selectedList = new ArrayList<>();
+    public static boolean isActionModeOn = true;
+    public static ActionModeListener actionModeListener;
     private FragmentSelectStorageBinding binding;
     private ArrayList<File> files;
     private StorageAdapter storageAdapter;
-    public static ArrayList<File> selectedList = new ArrayList<>();
     private int position;
-    public static boolean isActionModeOn = true;
-    public static ActionModeListener actionModeListener;
     private boolean isMoCo = false;
 
     @Override

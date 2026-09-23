@@ -42,12 +42,12 @@ import java.util.Locale;
 
 public class SongSelectFragment extends Fragment implements FileSelectedListener, View.OnClickListener, ActionModeListener {
 
-    FragmentSongSelectBinding binding;
-    ArrayList<File> selectedList = new ArrayList<>();
     public static boolean isActionEnable = true;
     public static ArrayList<File> audioList = new ArrayList<>();
-    int position;
     public static ActionModeListener actionModeListener;
+    FragmentSongSelectBinding binding;
+    ArrayList<File> selectedList = new ArrayList<>();
+    int position;
     private boolean isMoCo = false;
 
     @Override
@@ -82,7 +82,7 @@ public class SongSelectFragment extends Fragment implements FileSelectedListener
         selectedList.add(audioList.get(position));
 
         if (audioList.size() > 0) {
-            songAdapter.addAll(audioList,this,null,null);
+            songAdapter.addAll(audioList, this, null, null);
         }
         binding.tvCounter.setText(getResources().getQuantityString(R.plurals.format_selected, selectedList.size(), selectedList.size()));
 
@@ -173,7 +173,7 @@ public class SongSelectFragment extends Fragment implements FileSelectedListener
             intent.putExtra("action", "move");
             intent.putExtra("from", "allSong");
             startActivity(intent);
-        }else if (v.equals(binding.lyCopy)) {
+        } else if (v.equals(binding.lyCopy)) {
             Intent intent = new Intent(requireActivity(), SelectFileActivity.class);
             intent.putExtra("action", "copy");
             intent.putExtra("from", "allSong");

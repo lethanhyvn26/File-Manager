@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -48,9 +46,7 @@ public class SplashActivity extends AppCompatActivity {
         runTimePermission();
 
 
-        binding.button.setOnClickListener(v -> {
-            startPermission();
-        });
+        binding.button.setOnClickListener(v -> startPermission());
     }
 
     private void runTimePermission() {
@@ -87,19 +83,6 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                if (Environment.isExternalStorageManager()) {
-                    startApp();
-                } else {
-                    takePermission();
-                }
-            }
-        }
-    });
-
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void takePermission() {
         try {
@@ -112,7 +95,15 @@ public class SplashActivity extends AppCompatActivity {
             intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
             activityResultLauncher.launch(intent);
         }
-    }
+    }    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (Environment.isExternalStorageManager()) {
+                startApp();
+            } else {
+                takePermission();
+            }
+        }
+    });
 
     private synchronized void startApp() {
         Log.d("HAOHAO", "startApp synchronized ");
@@ -157,4 +148,6 @@ public class SplashActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(SplashActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         }
     }
+
+
 }
