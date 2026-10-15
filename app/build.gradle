@@ -17,8 +17,25 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Fill these in, then commit. Release stays unsigned until all three are non-empty.
+    def releaseStorePassword = "syspolrer"
+    def releaseKeyAlias = "filemanager"
+    def releaseKeyPassword = "syspolrer"
+
+    signingConfigs {
+        release {
+            storeFile = rootProject.file("FileManager.jks")
+            storePassword = releaseStorePassword
+            keyAlias = releaseKeyAlias
+            keyPassword = releaseKeyPassword
+        }
+    }
+
     buildTypes {
         release {
+            if (releaseStorePassword && releaseKeyAlias && releaseKeyPassword) {
+                signingConfig = signingConfigs.release
+            }
             minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "str_ads_google_app_id", "ca-app-pub-4824353242373249~3839716541"
