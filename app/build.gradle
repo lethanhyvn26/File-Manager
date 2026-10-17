@@ -11,8 +11,8 @@ android {
         applicationId = "com.syspolrer.systemfileexplorer"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 6
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,10 +38,10 @@ android {
             }
             minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue "string", "str_ads_google_app_id", "ca-app-pub-4824353242373249~3839716541"
-            resValue "string", "str_ads_banner", "ca-app-pub-4824353242373249/6434090290"
-            resValue "string", "str_ads_interstitial", "ca-app-pub-4824353242373249/2494845284"
-            resValue "string", "str_ads_open", "ca-app-pub-4824353242373249/1181763616"
+            resValue "string", "str_ads_google_app_id", "ca-app-pub-4796190056177032~8538274990"
+            resValue "string", "str_ads_banner", "ca-app-pub-4796190056177032/2652722602"
+            resValue "string", "str_ads_interstitial", "ca-app-pub-4796190056177032/9228994385"
+            resValue "string", "str_ads_open", "ca-app-pub-4796190056177032/8737864786"
         }
         debug {
             minifyEnabled = false
